@@ -1,0 +1,2011 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:18:01 GMT -->
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="/assets/libs/tiny-slider/dist/tiny-slider.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/assets/libs/swiper/swiper-bundle.min.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico" />
+
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com/" />
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
+<link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="/assets/libs/simplebar/dist/simplebar.min.css" />
+
+<!-- Theme CSS -->
+<link rel="stylesheet" href="/styles/theme.min.css">
+ <!-- Analytics Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-M8S4MT3EYG");
+</script>
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] =
+            c[a] ||
+            function () {
+                (c[a].q = c[a].q || []).push(arguments);
+            };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "mzh5eyaatk");
+</script>
+<!-- Affiliate tracking script -->
+<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
+<script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
+<div class="fixed bottom-0 right-0 m-4">
+    <a href="https://codescandy.lemonsqueezy.com/buy/7b77d92f-acf6-4fdc-885b-00fa9a0786e4" target="_blank"
+        rel="noopener noreferrer"
+        class="btn gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M17 17h-11v-14h-2" />
+            <path d="M6 5l14 1l-1 7h-13" />
+        </svg>
+        Buy Theme
+    </a>
+</div>
+
+	<title>Homepage v1 - TailwindCSS eCommerce HTML Template - FreshCart</title>
+</head>
+
+<body>
+	<header>
+	<!-- navbar -->
+	<%-include('../partials/header')%>
+</header>
+<!-- Shop Cart -->
+
+<div class="offcanvas offcanvas-right" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header border-b">
+		<div>
+			<h5 id="offcanvasRightLabel">Shop Cart</h5>
+			<span>Location in 382480</span>
+		</div>
+		<button type="button" class="btn-close text-inherit" data-bs-dismiss="offcanvas" aria-label="Close">
+			<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+				height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+				stroke-linejoin="round">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M18 6l-12 12" />
+				<path d="M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
+	<div class="offcanvas-body p-4">
+		<div>
+			<!-- alert -->
+			<div class="bg-red-500 bg-opacity-25 text-red-800 mb-3 rounded-lg p-4" role="alert">
+				You’ve got FREE delivery. Start
+				<a href="#!" class="alert-link">checkout now!</a>
+			</div>
+			<ul class="list-none">
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-1.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Haldiram's Sev Bhujia</h6>
+									</a>
+									<span><small class="text-gray-500">.98 / lb</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$5.00</span>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-2.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<a href="shop-single.html" class="text-inherit">
+										<h6>NutriChoice Digestive</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-red-600">$20.00</span>
+							<div class="line-through text-gray-500 small">$26.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-3.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Cadbury 5 Star Chocolate</h6>
+									</a>
+									<span><small class="text-gray-500">1 kg</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-4.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Onion Flavour Potato</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t border-b">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-5.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Salted Instant Popcorn</h6>
+									</a>
+									<span><small class="text-gray-500">100g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$25.00</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<!-- btn -->
+			<div class="flex justify-between mt-4">
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+					Continue Shopping
+				</a>
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+					Update Cart
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body p-6">
+				<div class="flex justify-between items-start">
+					<div>
+						<h5 class="mb-1" id="locationModalLabel">Choose your Delivery Location</h5>
+						<p class="text-sm">Enter your address and we will specify the offer you area.</p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+							height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+							stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M18 6l-12 12" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+				<div class="my-5">
+					<label for="searhNavbarSecond" class="invisible hidden">Search</label>
+					<input
+						class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+						type="search" placeholder="Search for products" id="searhNavbarSecond" />
+				</div>
+				<div class="flex justify-between items-center mb-2">
+					<h6>Select Location</h6>
+					<a href="#" class="btn btn-outline-gray-400 text-gray-500 btn-sm">Clear All</a>
+				</div>
+				<div>
+					<div data-simplebar style="height: 300px">
+						<div class="list-none">
+							<a href="#"
+								class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3 active active:bg-gray-100 bg-gray-100">
+								<span>Alabama</span>
+								<span>Min:$20</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Alaska</span>
+								<span>Min:$30</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<main>
+		<section class="mt-8">
+			<div class="container">
+				<div class="swiper-container swiper" id="swiper-1" data-pagination-type="" data-speed="400"
+					data-space-between="100" data-pagination="true" data-navigation="false" data-autoplay="true"
+					data-autoplay-delay="3000" data-effect="fade"
+					data-breakpoints='{"480": {"slidesPerView": 1}, "768": {"slidesPerView": 1}, "1024": {"slidesPerView": 1}}'>
+					<div class="swiper-wrapper pb-8">
+						<div class="swiper-slide"
+							style="background: url(assets/images/slider/slide-1.jpg) no-repeat; background-size: cover; border-radius: 0.5rem; background-position: center">
+							<div class="lg:py-32 p-12 lg:pl-12 xl:w-2/5 md:w-3/5">
+								<span
+									class="inline-block p-2 text-sm align-baseline leading-none rounded-lg bg-yellow-500 text-gray-900 font-semibold">Opening
+									Sale Discount 50%</span>
+								<div class="my-7 flex flex-col gap-2">
+									<h1 class="text-gray-900 text-xl lg:text-5xl font-bold leading-tight">SuperMarket
+										For Fresh Grocery</h1>
+									<p class="text-md font-light">Introduced a new model for online grocery shopping and
+										convenient home delivery.</p>
+								</div>
+								<a href="#!"
+									class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+									Shop Now
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-arrow-right inline-block" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M5 12l14 0" />
+										<path d="M13 18l6 -6" />
+										<path d="M13 6l6 6" />
+									</svg>
+								</a>
+							</div>
+						</div>
+						
+
+						<!-- Add more slides as needed -->
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination !bottom-14"></div>
+					<!-- Add Navigation -->
+					<div class="swiper-navigation">
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mt-8">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full">
+						<h2 class="text-lg absolute z-10">Featured Categories</h2>
+					</div>
+				</div>
+				<div class="swiper-container swiper" id="swiper-1" data-pagination-type="" data-speed="400"
+					data-space-between="20" data-pagination="false" data-navigation="true" data-autoplay="true"
+					data-autoplay-delay="3000" data-effect="slide"
+					data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 6}}'>
+					<div class="swiper-wrapper py-12">
+
+						<% categories.forEach(category => { %>
+							<div class="swiper-slide">
+								<a href="/shop?category=<%= category._id %>">
+									<div
+										class="relative rounded-lg break-words border bg-white border-gray-300 transition duration-75 hover:transition hover:duration-500 ease-in-out hover:border-green-600 hover:shadow-md">
+										<div class="py-8 text-center">
+											<img src="<%= category.imageUrl %>"
+												alt="" class="mb-3 m-auto" />
+											<div class="text-base"><%= category.categoryName %></div>
+										</div>
+									</div>
+								</a>
+							</div>
+						<% }) %>
+					
+				
+
+						<!-- Add more slides as needed -->
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+					<!-- Add Navigation -->
+					<div class="swiper-navigation">
+						<div class="swiper-button-next top-[28px]"></div>
+						<div class="swiper-button-prev top-[28px] !right-0 !left-auto mx-10"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="container">
+				<div class="flex md:space-x-2 lg:space-x-6 flex-wrap md:flex-nowrap">
+					<div class="w-full md:w-1/2 mb-3 lg:">
+						<div class="py-10 px-8 rounded-lg"
+							style="background: url(assets/images/banner/grocery-banner.png) no-repeat; background-size: cover; background-position: center">
+							<div class="flex flex-col gap-5">
+								<div class="flex flex-col gap-1">
+									<h2 class="font-bold text-xl">Fruits & Vegetables</h2>
+									<p>
+										Get Upto
+										<span class="font-bold text-gray-800">30%</span>
+										Off
+									</p>
+								</div>
+
+								<div class="flex flex-wrap">
+									<a href="#!"
+										class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+										Shop Now
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="w-full md:w-1/2">
+						<div class="py-10 px-8 rounded-lg"
+							style="background: url(assets/images/banner/grocery-banner-2.jpg) no-repeat; background-size: cover; background-position: center">
+							<div class="flex flex-col gap-5">
+								<div class="flex flex-col gap-1">
+									<h2 class="font-bold text-xl">Freshly Baked Buns</h2>
+									<p>
+										Get Upto
+										<span class="font-bold text-gray-800">25%</span>
+										Off
+									</p>
+								</div>
+
+								<div class="flex flex-wrap">
+									<a href="#!"
+										class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+										Shop Now
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Popular Products Start-->
+		<section class="lg:my-14 my-8">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full mb-6">
+						<h2 class="text-lg">Popular Products</h2>
+					</div>
+				</div>
+				
+				
+					<div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:gap-4 xl:grid-cols-5">
+						<% products.forEach(product => { %>
+						<div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+							<a href="/shop/productDetail/<%=product._id%>">
+							<div class="flex-auto p-4">
+								<div class="text-center relative flex justify-center">
+									<div class="absolute top-0 left-0">
+										<span
+											class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+									</div>
+									<img src="<%= product.productPic.productImage1%>"
+											alt="Grocery Ecommerce Template" class="w-full h-auto" />
+	
+									<div class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
+										<a href="#!"
+											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+											data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
+											<span data-bs-toggle="modal" data-bs-target="#quickViewModal">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-eye" width="16" height="16"
+													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+													<path
+														d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+												</svg>
+											</span>
+										</a>
+										<a href="#!"
+											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+											data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
+											<svg xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-heart" width="16" height="16"
+												viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+												stroke-linecap="round" stroke-linejoin="round">
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path
+													d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+											</svg>
+										</a>
+										<a href="#!"
+											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+											data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
+											<svg xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-arrows-exchange" width="16" height="16"
+												viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+												stroke-linecap="round" stroke-linejoin="round">
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M7 10h14l-4 -4" />
+												<path d="M17 14h-14l4 4" />
+											</svg>
+										</a>
+									</div>
+								</div>
+								<div class="flex flex-col gap-3">
+
+									<div class="flex flex-col gap-2">
+										<h3 class="text-base truncate"><a href="/shop/productDetail/<%=product._id%>"><%= product.productName%></a></h3>
+										<div class="flex items-center">
+											<div class="flex flex-row gap-3">
+												<small class="text-yellow-500 flex items-center">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-star-filled" width="14"
+														height="14" viewBox="0 0 24 24" stroke-width="2"
+														stroke="currentColor" fill="none" stroke-linecap="round"
+														stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path
+															d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+															stroke-width="0" fill="currentColor" />
+													</svg>
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-star-filled" width="14"
+														height="14" viewBox="0 0 24 24" stroke-width="2"
+														stroke="currentColor" fill="none" stroke-linecap="round"
+														stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path
+															d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+															stroke-width="0" fill="currentColor" />
+													</svg>
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-star-filled" width="14"
+														height="14" viewBox="0 0 24 24" stroke-width="2"
+														stroke="currentColor" fill="none" stroke-linecap="round"
+														stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path
+															d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+															stroke-width="0" fill="currentColor" />
+													</svg>
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-star-filled" width="14"
+														height="14" viewBox="0 0 24 24" stroke-width="2"
+														stroke="currentColor" fill="none" stroke-linecap="round"
+														stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path
+															d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+															stroke-width="0" fill="currentColor" />
+													</svg>
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-star-half-filled" width="14"
+														height="14" viewBox="0 0 24 24" stroke-width="2"
+														stroke="currentColor" fill="none" stroke-linecap="round"
+														stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path
+															d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
+															stroke-width="0" fill="currentColor" />
+													</svg>
+												</small>
+												<div class="flex flex-row gap-1">
+													<span class="text-gray-500 text-sm">4.5</span>
+													<span class="text-gray-500 text-sm">(149)</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="flex justify-between items-center">
+										<div>
+											<% if (product.variety !== "items") { %>
+												<% 
+													let price = Object.values(product.productPrice).find(price => price !== null) || 0;
+													let variety = product.varietyDetails[0] || {};
+													let basePrice = variety.varietyMeasurement * price;
+													let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
+												%>
+											
+												<span class="text-gray-900 font-semibold">$<%= discountPrice%></span>
+											
+												<% if (discountPrice !== basePrice) { %>
+													<span class="line-through text-gray-500">$<%= basePrice%></span>
+												<% } %>
+											
+											
+												
+												
+												<% } else { %>
+													<% 
+														let variety = product.varietyDetails[0] || {};
+														let originalPrice = variety.varietyPrice || 0;
+														let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
+													%>
+												
+													<span class="text-gray-900 font-semibold">$<%= discountedPrice %></span>
+												
+													<% if (discountedPrice !== originalPrice) { %>
+														<span class="line-through text-gray-500">$<%= originalPrice %></span>
+													<% } %>
+												<% } %>
+												
+											
+											
+										</div>
+										<div>
+											<button type="button"
+												class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+													viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M12 5l0 14" />
+													<path d="M5 12l14 0" />
+												</svg>
+												<span>Add</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</a>
+							</div>
+						</div>
+						<% }) %>
+					</div>
+			
+				
+			</div>
+		</section>
+		<!-- Popular Products End-->
+
+		<section>
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="md:w-full mb-6">
+						<h2 class="text-lg">Daily Best Sells</h2>
+					</div>
+				</div>
+				<div class="block w-full overflow-x-auto scrolling-touch pb-6">
+					<div class="xl:grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 flex-nowrap flex">
+						<div class="flex-0 block w-full md:w-auto">
+							<div class="pt-8 px-6 rounded-lg"
+								style="background: url(assets/images/banner/banner-deal.jpg) no-repeat; background-size: cover; height: 470px">
+								<div class="flex flex-col gap-5">
+									<div class="flex flex-col gap-2">
+										<h3 class="text-lg text-white">100% Organic Coffee Beans.</h3>
+										<p class="text-white text-base">Get the best deal before close.</p>
+									</div>
+									<div>
+										<a href="#!"
+											class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+											<span>Shop Now</span>
+											<span>
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-arrow-right" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M5 12l14 0"></path>
+													<path d="M13 18l6 -6"></path>
+													<path d="M13 6l6 6"></path>
+												</svg>
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-0 block w-full md:w-auto">
+							<div
+								class="relative flex flex-col min-w-0 rounded-lg break-words border bg-white border-gray-300 card-product">
+								<div class="flex-auto p-4">
+									<div class="text-center relative flex justify-center">
+										<a href="shop-single.html"><img
+												src="assets/images/products/product-img-11.jpg"
+												alt="Grocery Ecommerce Template"
+												class="mb-3 m-auto max-w-full h-auto" /></a>
+
+										<div
+											class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
+												<span data-bs-toggle="modal" data-bs-target="#quickViewModal">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-eye" width="16" height="16"
+														viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+														fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+														<path
+															d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+													</svg>
+												</span>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-heart" width="16" height="16"
+													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path
+														d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+												</svg>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-arrows-exchange" width="16"
+													height="16" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M7 10h14l-4 -4" />
+													<path d="M17 14h-14l4 4" />
+												</svg>
+											</a>
+										</div>
+									</div>
+									<div class="flex flex-col gap-3">
+										<a href="#!" class="text-decoration-none text-gray-500"><small>Tea, Coffee &
+												Drinks</small></a>
+										<div class="flex flex-col gap-2">
+											<h3 class="text-base truncate"><a href="shop-single.html">Roast Ground
+													Coffee</a></h3>
+
+											<div class="flex justify-between items-center">
+												<div>
+													<span class="text-gray-900 font-semibold">$13</span>
+													<span class="line-through text-gray-500">$18</span>
+												</div>
+												<div>
+													<div class="flex items-center">
+														<small class="text-yellow-500 flex items-center">
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-half-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+														</small>
+														<span class="text-gray-700 text-sm ml-2">4.5</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="grid">
+											<button type="button"
+												class="btn bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+													viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M12 5l0 14"></path>
+													<path d="M5 12l14 0"></path>
+												</svg>
+												<span class="ml-1">Add to Cart</span>
+											</button>
+										</div>
+										<div class="flex justify-start text-center">
+											<div class="deals-countdown w-full" data-countdown="2028/10/10 00:00:00">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-0 block w-full md:w-auto">
+							<div
+								class="relative flex flex-col min-w-0 rounded-lg break-words border bg-white border-gray-300 card-product">
+								<div class="flex-auto p-4">
+									<div class="text-center relative flex justify-center">
+										<a href="shop-single.html"><img
+												src="assets/images/products/product-img-12.jpg"
+												alt="Grocery Ecommerce Template"
+												class="mb-3 m-auto max-w-full h-auto" /></a>
+										<div
+											class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
+												<span data-bs-toggle="modal" data-bs-target="#quickViewModal">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-eye" width="16" height="16"
+														viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+														fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+														<path
+															d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+													</svg>
+												</span>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-heart" width="16" height="16"
+													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path
+														d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+												</svg>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-arrows-exchange" width="16"
+													height="16" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M7 10h14l-4 -4" />
+													<path d="M17 14h-14l4 4" />
+												</svg>
+											</a>
+										</div>
+									</div>
+									<div class="flex flex-col gap-3">
+										<a href="#!" class="text-decoration-none text-gray-500"><small>Fruits &
+												Vegetables</small></a>
+
+										<div class="flex flex-col gap-2">
+											<h3 class="text-base truncate"><a href="shop-single.html">Crushed
+													Tomatoes</a></h3>
+											<div class="flex justify-between items-center">
+												<div>
+													<span class="text-gray-900 font-semibold">$13</span>
+													<span class="line-through text-gray-500">$18</span>
+												</div>
+												<div>
+													<div class="flex items-center">
+														<small class="text-yellow-500 flex items-center">
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-half-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+														</small>
+														<span class="text-gray-700 text-sm ml-2">4.5</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="grid">
+											<button type="button"
+												class="btn bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+													viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M12 5l0 14"></path>
+													<path d="M5 12l14 0"></path>
+												</svg>
+												<span class="ml-1">Add to Cart</span>
+											</button>
+										</div>
+										<div class="flex justify-start text-center w-full">
+											<div class="deals-countdown w-full" data-countdown="2028/12/9 00:00:00">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-0 block w-full md:w-auto">
+							<div
+								class="relative flex flex-col min-w-0 rounded-lg break-words border bg-white border-gray-300 card-product">
+								<div class="flex-auto p-4">
+									<div class="text-center relative flex justify-center">
+										<a href="shop-single.html"><img
+												src="assets/images/products/product-img-13.jpg"
+												alt="Grocery Ecommerce Template"
+												class="mb-3 m-auto max-w-full h-auto" /></a>
+										<div
+											class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
+												<span data-bs-toggle="modal" data-bs-target="#quickViewModal">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-eye" width="16" height="16"
+														viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+														fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+														<path
+															d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+													</svg>
+												</span>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-heart" width="16" height="16"
+													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path
+														d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+												</svg>
+											</a>
+											<a href="#!"
+												class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
+												data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-arrows-exchange" width="16"
+													height="16" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M7 10h14l-4 -4" />
+													<path d="M17 14h-14l4 4" />
+												</svg>
+											</a>
+										</div>
+									</div>
+									<div>
+										<div class="flex flex-col gap-3">
+											<a href="#!" class="text-decoration-none text-gray-500"><small>Fruits &
+													Vegetables</small></a>
+
+											<div class="flex flex-col gap-2">
+												<h3 class="text-base truncate"><a href="shop-single.html">Golden
+														Pineapple</a></h3>
+												<div class="flex justify-between items-center">
+													<div>
+														<span class="text-gray-900 font-semibold">$13</span>
+														<span class="line-through text-gray-500">$18</span>
+													</div>
+													<div class="flex items-center">
+														<small class="text-yellow-500 flex items-center">
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-star-half-filled"
+																width="14" height="14" viewBox="0 0 24 24"
+																stroke-width="2" stroke="currentColor" fill="none"
+																stroke-linecap="round" stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path
+																	d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
+																	stroke-width="0" fill="currentColor" />
+															</svg>
+														</small>
+														<span class="text-gray-700 text-sm ml-2">4.5</span>
+													</div>
+												</div>
+											</div>
+											<div class="grid">
+												<button type="button"
+													class="btn bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+														viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+														fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+														<path d="M12 5l0 14"></path>
+														<path d="M5 12l14 0"></path>
+													</svg>
+													<span class="ml-1">Add to Cart</span>
+												</button>
+											</div>
+											<div class="flex justify-start text-center">
+												<div class="deals-countdown w-full"
+													data-countdown="2028/11/11 00:00:00"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="lg:my-14 my-8">
+			<div class="container">
+				<div class="flex flex-wrap gap-y-6">
+					<div class="md:w-1/2 lg:w-1/4 px-3">
+						<div class="flex flex-col gap-4">
+							<div class="inline-block"><img src="assets/images/icons/clock.svg" alt="" /></div>
+							<div class="flex flex-col gap-2">
+								<h3 class="text-md">10 minute grocery now</h3>
+								<p>Get your order delivered to your doorstep at the earliest from FreshCart pickup
+									stores near you.</p>
+							</div>
+						</div>
+					</div>
+					<div class="md:w-1/2 lg:w-1/4 px-3">
+						<div class="flex flex-col gap-4">
+							<div class="inline-block"><img src="assets/images/icons/gift.svg" alt="" /></div>
+							<div class="flex flex-col gap-2">
+								<h3 class="text-md">Best Prices & Offers</h3>
+								<p>Cheaper prices than your local supermarket, great cashback offers to top it off. Get
+									best pricess & offers.</p>
+							</div>
+						</div>
+					</div>
+					<div class="md:w-1/2 lg:w-1/4 px-3">
+						<div class="flex flex-col gap-4">
+							<div class="inline-block"><img src="assets/images/icons/package.svg" alt="" /></div>
+							<div class="flex flex-col gap-2">
+								<h3 class="text-md">Wide Assortment</h3>
+								<p>Choose from 5000+ products across food, personal care, household, bakery, veg and
+									non-veg & other categories.</p>
+							</div>
+						</div>
+					</div>
+					<div class="md:w-1/2 lg:w-1/4 px-3">
+						<div class="flex flex-col gap-4">
+							<div class="inline-block"><img src="assets/images/icons/refresh-cw.svg" alt="" /></div>
+							<div class="flex flex-col gap-2">
+								<h3 class="text-md">Easy Returns</h3>
+								<p>
+									Not satisfied with a product? Return it at the doorstep & get a refund within hours.
+									No questions asked
+									<a href="#!" class="text-green-600">policy</a>
+									.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- footer -->
+<footer class="bg-gray-200 py-8">
+	<div class="container">
+		<div class="flex flex-wrap md:gap-4 lg:gap-0 py-4 mb-6">
+			<div class="w-full md:w-full lg:w-1/3 flex flex-col gap-4 mb-6">
+				<h6>Categories</h6>
+				<div class="flex flex-wrap">
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Vegetables & Fruits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Breakfast & instant food</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Bakery & Biscuits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Atta, rice & dal</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Sauces & spreads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Organic & gourmet</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Baby care</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cleaning essentials</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Personal care</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Dairy, bread & eggs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cold drinks & juices</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Tea, coffee & drinks</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Masala, oil & more</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Chicken, meat & fish</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Paan corner</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pharma & wellness</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Home & office</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pet care</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="w-full md:w-full lg:w-2/3">
+				<div class="flex flex-wrap">
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>Get to know us</h6>
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Company</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">About</a></li>
+							<li><a href="#!" class="inline-block">Blog</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Help Center</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Our Value</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>For Consumers</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Payments</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Shipping</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Product Returns</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">FAQ</a></li>
+							<li><a href="shop-checkout.html" class="inline-block">Shop Checkout</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Become a Shopper</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Shopper Opportunities</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Become a Shopper</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Earnings</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Ideas & Guides</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">New Retailers</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Freshcart programs</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart programs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Gift Cards</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Promos & Coupons</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart Ads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Careers</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="gap-y-4 flex flex-wrap items-center justify-center lg:justify-start">
+				<div class="lg:w-2/5 lg:text-left text-center">
+					<div class="flex md:flex-row flex-col gap-3 md:gap-6 items-center">
+						<div class="text-gray-900">Payment Partners</div>
+						<ul class="flex items-center flex-row gap-4">
+							<li>
+								<a href="#!"><img src="assets/images/payment/amazonpay.svg" alt="amazon pay" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/american-express.svg" alt="american express" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/mastercard.svg" alt="mastercard" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/paypal.svg" alt="paypal" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/visa.svg" alt="visa" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="lg:w-3/5 flex justify-end">
+					<div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+						<div class="text-gray-900">Get deliveries with FreshCart</div>
+						<ul class="flex flex-row gap-2">
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/appstore-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/googleplay-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="flex flex-col md:flex-row items-center gap-3">
+				<div class="md:w-1/2">
+					<span class="text-sm text-gray-500">
+						©
+						<span id="copyright">
+							<script>
+								document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()));
+							</script>
+						</span>
+						FreshCart TailwindCSS eCommerce HTML Template. Powered by
+						<a href="https://codescandy.com/" target="_blank" class="text-green-600">Codescandy</a>
+						.
+					</span>
+				</div>
+				<div class="md:w-1/2 flex md:justify-end items-center">
+					<div class="flex flex-row gap-5 items-center">
+						<div class="text-gray-500">Follow us on</div>
+						<ul class="flex items-center justify-end text-sm gap-1">
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-facebook"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-x"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+										<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-instagram"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+										<path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+										<path d="M16.5 7.5l0 .01" />
+									</svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- buy now template button
+Remove if you do not want.
+-->
+
+ <!-- Modal -->
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered lg:min-w-[1140px]">
+		<div class="modal-content">
+			<div class="modal-body p-8">
+				<div class="absolute top-0 right-0 p-3">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="icon icon-tabler icon-tabler-x text-gray-700"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							stroke-width="2"
+							stroke="currentColor"
+							fill="none"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M18 6l-12 12" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+				<div class="flex flex-wrap">
+					<div class="md:w-1/2">
+						<!-- img slide -->
+						<div class="product productModal" id="productModal">
+							<div class="zoom" onmousemove="zoom(event)" style="background-image: url(assets/images/products/product-single-img-1.jpg)">
+								<!-- img -->
+								<!-- img -->
+								<img src="assets/images/products/product-single-img-1.jpg" alt="" />
+							</div>
+							<div>
+								<div class="zoom" onmousemove="zoom(event)" style="background-image: url(assets/images/products/product-single-img-2.jpg)">
+									<!-- img -->
+									<img src="assets/images/products/product-single-img-2.jpg" alt="" />
+								</div>
+							</div>
+							<div>
+								<div class="zoom" onmousemove="zoom(event)" style="background-image: url(assets/images/products/product-single-img-3.jpg)">
+									<!-- img -->
+									<img src="assets/images/products/product-single-img-3.jpg" alt="" />
+								</div>
+							</div>
+							<div>
+								<div class="zoom" onmousemove="zoom(event)" style="background-image: url(assets/images/products/product-single-img-4.jpg)">
+									<!-- img -->
+									<img src="assets/images/products/product-single-img-4.jpg" alt="" />
+								</div>
+							</div>
+						</div>
+						<!-- product tools -->
+						<div class="product-tools">
+							<div class="thumbnails flex gap-3" id="productModalThumbnails">
+								<div class="w-1/4">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="assets/images/products/product-single-img-1.jpg" alt="" />
+									</div>
+								</div>
+								<div class="w-1/4">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="assets/images/products/product-single-img-2.jpg" alt="" />
+									</div>
+								</div>
+								<div class="w-1/4">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="assets/images/products/product-single-img-3.jpg" alt="" />
+									</div>
+								</div>
+								<div class="w-1/4">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="assets/images/products/product-single-img-4.jpg" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="md:w-1/2 pr-4 pl-4">
+						<div class="lg:pl-10 mt-6 md:mt-0">
+							<div class="flex flex-col gap-4">
+								<!-- content -->
+								<a href="#!" class="block text-green-600">Bakery Biscuits</a>
+								<!-- heading -->
+								<h1>Napolitanke Ljesnjak</h1>
+								<div class="flex flex-col gap-2">
+									<div class="flex items-center">
+										<!-- rating -->
+										<!-- rating -->
+										<small class="text-yellow-500 inline-flex items-center">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-star-filled"
+												width="14"
+												height="14"
+												viewBox="0 0 24 24"
+												stroke-width="2"
+												stroke="currentColor"
+												fill="none"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												<path
+													d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+													stroke-width="0"
+													fill="currentColor"
+												></path>
+											</svg>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-star-filled"
+												width="14"
+												height="14"
+												viewBox="0 0 24 24"
+												stroke-width="2"
+												stroke="currentColor"
+												fill="none"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												<path
+													d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+													stroke-width="0"
+													fill="currentColor"
+												></path>
+											</svg>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-star-filled"
+												width="14"
+												height="14"
+												viewBox="0 0 24 24"
+												stroke-width="2"
+												stroke="currentColor"
+												fill="none"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												<path
+													d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+													stroke-width="0"
+													fill="currentColor"
+												></path>
+											</svg>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-star-filled"
+												width="14"
+												height="14"
+												viewBox="0 0 24 24"
+												stroke-width="2"
+												stroke="currentColor"
+												fill="none"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												<path
+													d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+													stroke-width="0"
+													fill="currentColor"
+												></path>
+											</svg>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-star-filled"
+												width="14"
+												height="14"
+												viewBox="0 0 24 24"
+												stroke-width="2"
+												stroke="currentColor"
+												fill="none"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												<path
+													d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+													stroke-width="0"
+													fill="currentColor"
+												></path>
+											</svg>
+										</small>
+										<a href="#" class="text-green-600">(30 reviews)</a>
+									</div>
+									<div class="text-md">
+										<span class="text-gray-900 font-semibold">$18</span>
+										<span class="line-through text-gray-500">$24</span>
+
+										<span><small class="text-red-600">26% Off</small></span>
+									</div>
+								</div>
+								<!-- hr -->
+								<div class="flex flex-col gap-6">
+									<hr />
+									<div>
+										<button
+											type="button"
+											class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+										>
+											250g
+										</button>
+										<!-- btn -->
+										<button
+											type="button"
+											class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+										>
+											500g
+										</button>
+										<!-- btn -->
+										<button
+											type="button"
+											class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+										>
+											1kg
+										</button>
+									</div>
+									<div>
+										<!-- input -->
+										<div class="w-1/3 md:w-1/4 lg:w-1/5">
+											<!-- input -->
+											<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+												<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300" data-field="quantity" />
+												<input type="number" step="1" max="10" value="1" name="quantity" class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+												<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300" data-field="quantity" />
+											</div>
+										</div>
+									</div>
+									<div class="flex flex-wrap justify-start gap-2 items-center">
+										<div class="lg:w-1/3 md:w-2/5 w-full grid">
+											<!-- button -->
+											<!-- btn -->
+											<button
+												type="button"
+												class="btn bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 justify-center"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-plus mr-2"
+													width="12"
+													height="12"
+													viewBox="0 0 24 24"
+													stroke-width="3"
+													stroke="currentColor"
+													fill="none"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M12 5l0 14"></path>
+													<path d="M5 12l14 0"></path>
+												</svg>
+												Add to cart
+											</button>
+										</div>
+										<div class="md:w-1/3 w-full">
+											<!-- btn -->
+											<a
+												href="#"
+												class="mr-1 btn inline-flex items-center gap-x-2 px-0 h-10 w-10 justify-center bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-arrows-exchange"
+													width="20"
+													height="20"
+													viewBox="0 0 24 24"
+													stroke-width="2"
+													stroke="currentColor"
+													fill="none"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M7 10h14l-4 -4"></path>
+													<path d="M17 14h-14l4 4"></path>
+												</svg>
+											</a>
+											<a
+												href="#"
+												class="btn inline-flex items-center gap-x-2 px-0 h-10 w-10 justify-center bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-heart"
+													width="20"
+													height="20"
+													viewBox="0 0 24 24"
+													stroke-width="2"
+													stroke="currentColor"
+													fill="none"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+												</svg>
+											</a>
+										</div>
+									</div>
+									<!-- hr -->
+									<hr />
+								</div>
+								<div>
+									<!-- table -->
+									<table class="text-left w-full">
+										<tbody>
+											<tr>
+												<td class="px-6 py-3">Product Code:</td>
+												<td class="px-6 py-3">FBB00255</td>
+											</tr>
+											<tr>
+												<td class="px-6 py-3">Availability:</td>
+												<td class="px-6 py-3">In Stock</td>
+											</tr>
+											<tr>
+												<td class="px-6 py-3">Type:</td>
+												<td class="px-6 py-3">Fruits</td>
+											</tr>
+											<tr>
+												<td class="px-6 py-3">Shipping:</td>
+												<td class="px-6 py-3">
+													<small>
+														01 day shipping.
+														<span class="text-gray-700">( Free pickup today)</span>
+													</small>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div>
+									<!-- dropdown -->
+									<div class="relative">
+										<a
+											class="dropdown-toggle btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+											href="#"
+											role="button"
+											data-bs-toggle="dropdown"
+											aria-expanded="false"
+										>
+											Share
+										</a>
+
+										<ul class="dropdown-menu">
+											<li>
+												<a class="dropdown-item" href="#">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-brand-facebook inline-block"
+														width="18"
+														height="18"
+														viewBox="0 0 24 24"
+														stroke-width="2"
+														stroke="currentColor"
+														fill="none"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													>
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+													</svg>
+													Facebook
+												</a>
+											</li>
+											<li>
+												<a class="dropdown-item" href="#">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-brand-x"
+														width="18"
+														height="18"
+														viewBox="0 0 24 24"
+														stroke-width="2"
+														stroke="currentColor"
+														fill="none"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													>
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+														<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+													</svg>
+													Twitter
+												</a>
+											</li>
+											<li>
+												<a class="dropdown-item" href="#">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="icon icon-tabler icon-tabler-brand-instagram"
+														width="18"
+														height="18"
+														viewBox="0 0 24 24"
+														stroke-width="2"
+														stroke="currentColor"
+														fill="none"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													>
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+														<path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+														<path d="M16.5 7.5l0 .01" />
+													</svg>
+													Instagram
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+ <!-- Libs JS -->
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Theme JS -->
+
+<script src="/js/theme.min.js"></script>
+
+
+	<script src="/assets/js/vendors/countdown.js"></script>
+
+	<script src="/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+	<script src="/assets/js/vendors/tns-slider.js"></script>
+	<script src="/assets/js/vendors/zoom.js"></script>
+	<script src="/assets/js/vendors/language.js"></script>
+	<!-- Swiper JS -->
+	<script src="/assets/libs/swiper/swiper-bundle.min.js"></script>
+	<script src="/assets/js/vendors/swiper.js"></script>
+	<script src="/assets/js/vendors/validation.js"></script>
+	<script>
+		window.history.pushState(null, null, window.location.href);
+		window.onpopstate = function () {
+			window.history.go(1); // Forces the user forward, preventing back navigation
+		};
+	</script>
+</body>
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:18:39 GMT -->
+</html>

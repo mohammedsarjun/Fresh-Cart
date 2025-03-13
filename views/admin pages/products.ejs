@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table th, .table td {
+    min-width: 150px; /* Adjust width as needed */
+    word-break: break-word; /* Prevents text overflow */
+    
+}
+    </style>
+    <link rel="stylesheet" href="/styles/validationCommon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+    
+  </head>
+  <body style="overflow-x: hidden;">
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="categoryForm">
+                <div class="mb-3">
+                  <label for="productName" class="form-label">Product Name</label>
+                  <input type="text" class="form-control" id="productName" name="productName" required>
+                  <p class="error-style w-100 text-center" id="productNameError"></p>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Category</label>
+                  <div class="dropdown">
+
+                    <select name="selectCategory" id="selectCategory">
+                      <% categories.forEach(category => { %>
+                        <option value="<%= category._id %>"><%= category.categoryName %></option>
+                    <% }) %>
+                    </select>
+                  </div>
+                  <p class="error-style w-100 text-center" id="selectCategoryError"></p>
+              </div>
+              <!-- Image 1 -->
+              <div class="mb-3">
+                <label for="productImage1" class="form-label">Choose Product Image 1</label>
+                <input type="file" class="form-control" id="productImage1" name="productImages"
+                    accept=".jpg, .jpeg, .png, .gif, .webp" >
+                    <p class="error-style w-100 text-center" id="picOneError"></p>
+            </div>
+            <div class="preview-container">
+                <h5 id="previewLabel1"></h5>
+                <img id="cropPreview1" src="#" alt="Image Preview"
+                    style="display:none; max-width: 100%; max-height: 300px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-primary mt-2" id="cropImage1" style="display:none;">Set
+                Image</button>
+            <div class="preview-container">
+                <img id="croppedImagePreview1" src="#" alt="Cropped Image"
+                    style="display:none; max-width: 100%; max-height: 130px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-danger mt-2" id="removeImage1" style="display:none;">Remove
+                Image</button>
+
+            <!-- Image 2 -->
+            <div class="mb-3">
+                <label for="productImage2" class="form-label">Choose Product Image 2</label>
+                <input type="file" class="form-control" id="productImage2" name="productImages"
+                    accept=".jpg, .jpeg, .png, .gif, .webp" >
+                    <p class="error-style w-100 text-center" id="picTwoError"></p>
+            </div>
+            <div class="preview-container">
+                <h5 id="previewLabel2"></h5>
+                <img id="cropPreview2" src="#" alt="Image Preview"
+                    style="display:none; max-width: 100%; max-height: 300px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-primary mt-2" id="cropImage2" style="display:none;">Set
+                Image</button>
+            <div class="preview-container">
+                <img id="croppedImagePreview2" src="#" alt="Cropped Image"
+                    style="display:none; max-width: 100%; max-height: 130px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-danger mt-2" id="removeImage2" style="display:none;">Remove
+                Image</button>
+
+            <!-- Image 3 -->
+            <div class="mb-3">
+                <label for="productImage3" class="form-label">Choose Product Image 3</label>
+                <input type="file" class="form-control" id="productImage3" name="productImages"
+                    accept=".jpg, .jpeg, .png, .gif, .webp" >
+                    <p class="error-style w-100 text-center" id="picThreeError"></p>
+            </div>
+            <div class="preview-container">
+                <h5 id="previewLabel3"></h5>
+                <img id="cropPreview3" src="#" alt="Image Preview"
+                    style="display:none; max-width: 100%; max-height: 300px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-primary mt-2" id="cropImage3" style="display:none;">Set
+                Image</button>
+            <div class="preview-container">
+                <img id="croppedImagePreview3" src="#" alt="Cropped Image"
+                    style="display:none; max-width: 100%; max-height: 130px; border: 1px solid #ccc;">
+            </div>
+            <button type="button" class="btn btn-danger mt-2" id="removeImage3" style="display:none;">Remove
+                Image</button>
+            <div class="mb-3">
+              <label class="form-label">Select Varieties:</label>
+              <div class="form-check">
+                  <input class="variety-check-input" type="checkbox" id="mlCheckbox"name="checkVarietyOption"  onclick="toggleVarietyInput('ml')" value="ml">
+                  <label class="form-check-label" for="mlCheckbox">ML</label>
+              </div>
+              <div class="form-check">
+                  <input class="variety-check-input" type="checkbox" id="gramsCheckbox" name="checkVarietyOption" onclick="toggleVarietyInput('grams')" value="grams">
+                  <label class="form-check-label" for="gramsCheckbox">Grams</label>
+              </div>
+              <div class="form-check">
+                  <input class="variety-check-input" type="checkbox" id="itemsCheckbox" name="checkVarietyOption" onclick="toggleVarietyInput('items')" value="items">
+                  <label class="form-check-label" for="itemsCheckbox">Items</label>
+              </div>
+              <p class="error-style w-100 text-center" id="selectVarietyError"></p>
+          </div>
+
+          <!-- Dynamic Variety Input Fields -->
+          <div id="varietyInputs"></div>
+
+                <div class="mb-3">
+                  <label for="productDescription" class="form-label">Product Description</label>
+                  <textarea class="form-control" id="productDescription" name="productDescription" required></textarea>
+                  <p class="error-style w-100 text-center" id="productDescriptionError"></p>
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" form="categoryForm" id="submitProductForm">Add Product</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+    <%-include('./partials/header')%>
+    <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10">
+        <div class="content-head w-100 row mt-3">
+        <div class="product-title col-lg-6">
+          <h2 class="">Products</h2>
+        </div>
+        <div class="add-product-btn col-lg-6 text-end">
+            <button class="btn btn-success" onclick="openCategoryModal()">
+                Add New Product
+            </button>
+        </div>
+      </div>
+      <form class="d-flex mb-3 mt-3" method="GET" action="" >
+        <input class="form-control me-2 w-25" type="text" name="search" 
+            placeholder="Search Users..." id="user-search">
+        <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
+    </form>
+      <div class="content-body">
+        <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <thead >
+              <tr>
+                  <th>Images</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Availability</th>
+              </tr>
+          </thead>
+          <tbody id="table-body">
+           
+            <% products.forEach(product => { %>
+              <tr>
+                  <td><a href="/admin/products/productDetail?productId=<%= product._id%>"><img src="<%= product.productPic.productImage1%>" width="100px" height="100px" alt=""></a></td>
+                  <td><%= product.productName %></td>
+                  <td><%=product.categoryName %></td>
+                  <% if (product.availability == "in stock") { %>
+                    <td><button class="btn btn-success">In Stock</button></td>
+                <% } else { %>
+                    <td><button class="btn btn-danger" >Out of Stock</button></td>
+                <% } %>
+               
+                
+          <% }) %>
+        
+          </tbody>
+        </table>
+        <ul class="pagination mb-5">
+          <% if (page > 1) { %>
+            <li class="page-item">
+              <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page - 1 %>">Previous</a>
+            </li>
+          <% } %>
+      
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= i === page ? 'active' : '' %>">
+              <a class="page-link" href="?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a>
+            </li>
+          <% } %>
+      
+          <% if (page < totalPages) { %>
+            <li class="page-item">
+              <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page + 1 %>">Next</a>
+            </li>
+          <% } %>
+        </ul>
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/adminScript/productValidation.js"></script>
+  <script src="/js/adminScript/products.js"></script>
+
+
+</html>

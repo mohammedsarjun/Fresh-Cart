@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/csscommon.css" />
+    <link rel="stylesheet" href="/styles/validationCommon.css" />
+  </head>
+  <body>
+    <div class="validationHeader row contain-width">
+      <div class="headerLogo col-lg-6 col-2 pt-3">
+        <img src="/images/freshKartLogo/freshcart-logo.png" alt="" />
+      </div>
+    </div>
+    <div class="otpPage mt-5 mb-5 row contain-width justify-content-center">
+      <div class="col-lg-6 col-md-8 col-sm-8">
+        <h2>Authentication</h2>
+        <p>Confirm Your OTP</p>
+        <form id="verifyOtp">
+          <div class="mb-3">
+            <label for="otp" class="form-label">Enter OTP</label>
+            <input
+              type="text"
+              class="form-control text-center"
+              id="otp-value"
+              maxlength="6"
+              placeholder="6-digit OTP"
+              required
+            />
+            <span class="error-style" id="otpError"></span>
+          </div>
+          <button class="btn btn-success w-100 submit-btn" type="submit">
+            Verify OTP
+          </button>
+        </form>
+        <span id="timer"></span>
+        <p class="error-style w-100 text-center" id="wrong-otp-error"></p>
+        <div class="text-center mt-3">
+          <p class="text-muted">Didn't receive the OTP?</p>
+          <a href="#" class="text-decoration-none disabled-link"  id="resendOtp" disabled>Resend OTP</a>
+        </div>
+      </div>
+    </div>
+
+    <%-include('../partials/footer')%>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <% if (otpEmail) { %>
+
+    <script>
+      window.otpEmail = "<%= otpEmail %>";
+  
+    </script>
+    
+    <% } %> <% if (otpExpire) { %>
+    <script>
+let remainingTime =new Date("<%= otpExpire %>") - Date.now()
+const resendBtn=document.getElementById("resendOtp")
+resendBtn.classList.add('disabled-link');
+document.getElementById( "timer").innerText = `Time remaining: ${Math.floor(remainingTime/1000)} seconds`;
+if (remainingTime > 0) {
+  const timerInterval = setInterval(() => {
+    remainingTime=remainingTime-1000; // Decrease remaining time by 1 every second 
+    if (remainingTime <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById("timer").innerText = "OTP expired!";
+      resendBtn.classList.remove('disabled-link');
+      resendBtn.classList.add('enabled-link'); 
+    } else {
+      document.getElementById( "timer").innerText = `Time remaining: ${Math.floor(remainingTime/1000)} seconds`;
+    }
+  }, 1000);
+} else {
+  document.getElementById("timer").innerText = "OTP expired!";
+   // Remove disabled class
+
+}
+    </script>
+    <!-- <div id="timer"></div> -->
+    <% } else { %>
+      <script>
+     document.getElementById("timer").innerText = "OTP expiry data is missing!";
+      </script>
+    <% } %>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/otp-page.js"></script>
+  </body>
+</html>

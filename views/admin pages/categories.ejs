@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table th, .table td {
+    min-width: 150px; /* Adjust width as needed */
+    word-break: break-word; /* Prevents text overflow */
+    
+}
+    </style>
+    <link rel="stylesheet" href="/styles/validationCommon.css">
+    
+  </head>
+  <body style="overflow-x: hidden;">
+<!--edit category modal--> 
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="userFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="editCategoryModal">Update Category</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="editCategoryForm">
+             
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Category Id</label>
+                      <input type="text" class="form-control" id="ecategoryId" required readonly>
+                      <p class="error-style w-100 text-center" id="ecategoryIdError"></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Category Image</label>
+                    <input class="form-control" id="ecategoryImage" type="file" name="ecategoryImage" accept="image/*" >
+                    <p class="error-style w-100 text-center" id="eImageError"></p>
+                    <img src="" width="100px" height="100px" alt="" id="categoryEditImg">
+                </div>
+                      <div class="mb-3">
+                          <label for="name" class="form-label">Category Name</label>
+                          <input type="text" class="form-control" id="ecategoryName" required>
+                          <p class="error-style w-100 text-center" id="ecategoryNameError"></p>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Category Description</label>
+                        <input type="textarea" class="form-control" id="ecategoryDescription" required>
+                        <p class="error-style w-100 text-center" id="ecategoryDescriptionError"></p>
+                    </div>
+                    
+                      <button type="submit" class="btn btn-success" id="edit-form-submit-btn">Submit</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="categoryForm">
+            <div class="mb-3">
+              <label for="categoryName" class="form-label">Category Name</label>
+              <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+              <p class="error-style w-100 text-center" id="categoryNameError"></p>
+            </div>
+            <div class="mb-3">
+              <label for="categoryDescription" class="form-label">Category Description</label>
+              <textarea class="form-control" id="categoryDescription" name="categoryDescription" required></textarea>
+              <p class="error-style w-100 text-center" id="categoryDescriptionError"></p>
+            </div>
+            <div class="mb-3">
+            <input type="file" name="categoryImage" accept="image/*" id="category-img">
+            <p class="error-style w-100 text-center" id="categoryImgError"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" form="categoryForm" id="submitCategoryForm">Add Category</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <%-include('./partials/header')%>
+    <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10">
+        <div class="content-head w-100 row mt-3">
+        <div class="category-title col-lg-6">
+          <h2 class="">Categories</h2>
+        </div>
+        <div class="add-category-btn col-lg-6 text-end">
+            <button class="btn btn-success" onclick="openCategoryModal()" >
+                Add New Categories
+            </button>
+        </div>
+      </div>
+      <div class="content-body">
+        <form class="d-flex mb-3 mt-3" method="GET" action="" >
+          <input class="form-control me-2 w-25" type="text" name="search" 
+              placeholder="Search Categories..." id="category-search">
+          <button class="btn btn-dark" type="submit" onclick="">🔍</button>
+      </form>
+        <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <thead >
+              <tr>
+                 
+                  <th>Img</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Published</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+          </thead>
+          <tbody id="table-body">
+            <% categories.forEach(category => { %>
+              <tr>
+                  <td><img src="<%= category.imageUrl%>" width="100px" height="100px" alt=""></td>
+                  <td><%= category.categoryName %></td>
+                  <td><%=category.categoryDescription %></td>
+                  <% if (category.isPublished == true) { %>
+                    <td><button class="btn btn-danger" onclick="categoryUnpublishAction('<%= category._id %>')">UNPUBLISH</button></td>
+                <% } else { %>
+                    <td><button class="btn btn-success" onclick="categoryPublishAction('<%= category._id %>')">PUBLISH</button></td>
+                <% } %>
+                <td><button class="btn btn-warning" onclick="openEditModal('<%= category._id %>', '<%= category.categoryName %>','<%= category.categoryDescription %>','<%= category.imageUrl%>')">EDIT</button></td>
+                <td><button class="btn btn-danger" onclick="categoryDeleteAction('<%= category._id %>')">DELETE</button></td>
+                
+          <% }) %>
+          </tbody>
+            
+      </table>
+      <div>
+        <% if (totalPages > 1) { %>
+            <nav class="mb-5">
+                <ul class="pagination">
+                    <!-- Previous Button -->
+                    <li class="page-item <%= page === 1 ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= page - 1 %>&search=<%= searchQuery %>">Previous</a>
+                    </li>
+    
+                    <!-- Page Numbers -->
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= page === i ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= i %>&search=<%= searchQuery %>"><%= i %></a>
+                        </li>
+                    <% } %>
+    
+                    <!-- Next Button -->
+                    <li class="page-item <%= page === totalPages ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= page + 1 %>&search=<%= searchQuery %>">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        <% } %>
+    </div>
+    
+  
+      </div>
+      
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/adminScript/categoriesValidation.js"></script>
+  <script src="/js/adminScript/categories.js"></script>
+
+</html>

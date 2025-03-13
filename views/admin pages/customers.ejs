@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table th, .table td {
+    min-width: 150px; /* Adjust width as needed */
+    word-break: break-word; /* Prevents text overflow */
+    
+}
+    </style>
+    <link rel="stylesheet" href="/styles/validationCommon.css">
+    
+  </head>
+  <body style="overflow-x: hidden;">
+<!--Edit user Modal-->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="userFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="userFormModalLabel">Update Customer</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="userForm">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Customer Id</label>
+                      <input type="text" class="form-control" id="customerId" required readonly>
+                      <p class="error-style w-100 text-center" id="firstNameError"></p>
+                  </div>
+                      <div class="mb-3">
+                          <label for="name" class="form-label">First Name</label>
+                          <input type="text" class="form-control" id="firstName" required>
+                          <p class="error-style w-100 text-center" id="firstNameError"></p>
+                      </div>
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                        <p class="error-style w-100 text-center" id="secondNameError"></p>
+                    </div>
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="email" required>
+                          <p class="error-style w-100 text-center" id="emailError"></p>
+                      </div>
+                      <div class="mb-3">
+                          <label for="phone" class="form-label">Phone</label>
+                          <input type="tel" class="form-control" id="phone">
+                          <p class="error-style w-100 text-center" id="phoneError"></p>
+                      </div>
+                      <button type="submit" class="btn btn-success" id="edit-form-submit-btn">Submit</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!--CREATE user Modal-->
+
+
+  <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="userFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createFormModalLabel">Create Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="createUserForm"  onsubmit="createUser(event)">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="cfirstName" required>
+                        <p class="error-style w-100 text-center" id="cfirstNameError"></p>
+                    </div>
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Last Name</label>
+                      <input type="text" class="form-control" id="clastName" required>
+                      <p class="error-style w-100 text-center" id="csecondNameError"></p>
+                  </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="cemail" required>
+                        <p class="error-style w-100 text-center" id="cemailError"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="cphone">
+                        <p class="error-style w-100 text-center" id="cphoneError"></p>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="cpassword" placeholder="Create a password" required name="password">
+                      <span class="error-style" id="cpasswordError"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success" id="create-form-submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <%-include('./partials/header')%>
+    <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10 col-md-12">
+        <div class="content-head w-100 row mt-3">
+        <div class="customer-title col-lg-6">
+          <h2 class="">Customers</h2>
+        </div>
+        <div class="add-customer-btn col-lg-6 text-end">
+            <button class="btn btn-success" onclick="openCreateUserModal()">
+                Add New Customer
+            </button>
+        </div>
+      </div>
+      <form class="d-flex mb-3 mt-3" method="GET" action="" >
+        <input class="form-control me-2 w-25" type="text" name="search" 
+            placeholder="Search Users..." id="user-search">
+        <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
+    </form>
+      <div class="content-body">
+        <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <thead >
+              <tr>
+                  <th>First Name</th>
+                  <th>Second Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody id="table-body">
+            <% users.forEach(user => { %>
+              <tr>
+                  <td><%= user.firstName %></td>
+                  <td><%= user.secondName %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.phone %></td>
+                  <% if (user.isBlocked == true) { %>
+                    <td><button class="btn btn-success" onclick="customerUnblockAction('<%= user._id %>')">UNBLOCK</button></td>
+                <% } else { %>
+                    <td><button class="btn btn-danger" onclick="customerBlockAction('<%= user._id %>')">BLOCK</button></td>
+                <% } %>
+              </tr>
+          <% }) %>
+          </tbody>
+          
+      </table>
+      <ul class="pagination mb-5">
+        <% if (page > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page - 1 %>">Previous</a>
+          </li>
+        <% } %>
+    
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= i === page ? 'active' : '' %>">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+    
+        <% if (page < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page + 1 %>">Next</a>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/adminScript/adminCustomerValidator.js"></script>
+  <script src="/js/adminScript/customer.js"></script>
+ 
+</html>

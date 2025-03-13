@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-grid-3-column.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:04 GMT -->
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="/assets/libs/nouislider/dist/nouislider.min.css" rel="stylesheet" />
+	<link href="/assets/libs/tiny-slider/dist/tiny-slider.css" rel="stylesheet" />
+	
+	<link rel="stylesheet" href="/assets/libs/swiper/swiper-bundle.min.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="a/ssets/images/favicon/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com/" />
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
+<link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="/assets/libs/simplebar/dist/simplebar.min.css" />
+<style>
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+
+	.loaderContainer {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Ensures it covers the entire screen */
+    top: 0;
+    left: 0;
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    z-index: 1000000;
+}
+
+	.loader {
+		width: 80px;
+		height: 80px;
+		border: 8px solid rgba(255, 255, 255, 0.2);
+		border-top: 8px solid #ffffff;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+		display: block;
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+</style>
+<style>
+	.image-zoom-container {
+    position: relative;
+    overflow: hidden;
+    width: 500px; /* Set your desired width */
+    height: 500px; /* Set your desired height */
+}
+
+.image-zoom {
+    transition: transform 0.5s ease; /* Smooth transition */
+}
+
+.image-zoom-container:hover .image-zoom {
+    transform: scale(1.5); /* Adjust scale for zoom level */
+    cursor: zoom-in; /* Change cursor to indicate zoom */
+}
+
+.image-zoom img {
+    width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+</style>
+<!-- Theme CSS -->
+<link rel="stylesheet" href="/styles/theme.min.css">
+ <!-- Analytics Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-M8S4MT3EYG");
+</script>
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] =
+            c[a] ||
+            function () {
+                (c[a].q = c[a].q || []).push(arguments);
+            };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "mzh5eyaatk");
+</script>
+<!-- Affiliate tracking script -->
+<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
+<script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
+<div class="fixed bottom-0 right-0 m-4">
+    <a href="https://codescandy.lemonsqueezy.com/buy/7b77d92f-acf6-4fdc-885b-00fa9a0786e4" target="_blank"
+        rel="noopener noreferrer"
+        class="btn gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M17 17h-11v-14h-2" />
+            <path d="M6 5l14 1l-1 7h-13" />
+        </svg>
+        Buy Theme
+    </a>
+</div>
+
+	<title>Shop Grid 3 Column - TailwindCSS eCommerce HTML Template - FreshCart</title>
+</head>
+
+<body>
+	<div class="loaderContainer">
+		<div class="loader"></div>
+		</div>
+	<header>
+	<!-- navbar -->
+	<%-include('../partials/header')%>
+</header>
+<!-- Modal -->
+ <main>
+		<div class="container">
+			<div class="flex flex-wrap mt-4">
+				<div class="w-full">
+					<!-- breadcrumb -->
+					<nav aria-label="breadcrumb">
+						<ol class="flex flex-wrap">
+							<li class="inline-block text-green-600 mr-2">
+								<a href="#!">
+									Home
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M9 6l6 6l-6 6" />
+									</svg>
+								</a>
+							</li>
+							<li class="inline-block text-green-600 mr-2">
+								<a href="#!">
+									<%=updatedProduct.categoryName %>
+
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M9 6l6 6l-6 6" />
+									</svg>
+								</a>
+							</li>
+							<li class="inline-block text-gray-500 active" aria-current="page"><%=updatedProduct.productName %></li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<section class="my-10">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="lg:w-1/2">
+						<!-- img slide -->
+						<div class="product" id="product">
+							<div class="zoom" onmousemove="zoom(event)"
+								style="background-image: url(/assets/images/products/product-single-img-1.jpg)">
+								<!-- img -->
+								<!-- img -->
+								<img src="assets/images/products/product-single-img-1.jpg" alt="" />
+							</div>
+						
+							<div>
+								<div class="zoom" onmousemove="zoom(event)"
+									style="background-image: url(/assets/images/products/product-single-img-3.jpg)">
+									<!-- img -->
+									<img src="assets/images/products/product-single-img-3.jpg" alt="" />
+								</div>
+							</div>
+							<div class="image-zoom-container">
+								<div class="image-zoom ">
+									<img src="<%= updatedProduct.productPic.productImage1 %>" alt="Product Image" id="mainPic"/>
+								</div>
+							</div>
+						</div>
+						<!-- product tools -->
+						<div class="product-tools">
+							<div class="thumbnails flex gap-3" id="productThumbnails">
+								<div class="w-1/4" onclick="changeMainPic('<%= updatedProduct.productPic.productImage1 %>')">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="<%= updatedProduct.productPic.productImage1 %>" alt="" />
+									</div>
+								</div>
+								<div class="w-1/4" onclick="changeMainPic('<%= updatedProduct.productPic.productImage2 %>')">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="<%= updatedProduct.productPic.productImage2 %>" alt="" />
+									</div>
+								</div>
+								<div class="w-1/4" onclick="changeMainPic('<%= updatedProduct.productPic.productImage3 %>')">
+									<div class="thumbnails-img">
+										<!-- img -->
+										<img src="<%= updatedProduct.productPic.productImage3 %>" alt="" />
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="lg:w-1/2 pr-4 pl-4">
+						<div class="lg:pl-10 mt-6 md:mt-0">
+							<div class="flex flex-col gap-4">
+								<!-- content -->
+								<a href="#!" class="block text-green-600"><%= updatedProduct.categoryName %></a>
+								<!-- heading -->
+								<div class="flex flex-col">
+									<h1><%= updatedProduct.productName %></h1>
+									<div class="flex flex-col gap-4">
+										<div class="flex items-center gap-2">
+											<!-- rating -->
+											<!-- rating -->
+											<small class="text-yellow-500 inline-flex items-center">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-star-filled" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path
+														d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+														stroke-width="0" fill="currentColor"></path>
+												</svg>
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-star-filled" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path
+														d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+														stroke-width="0" fill="currentColor"></path>
+												</svg>
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-star-filled" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path
+														d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+														stroke-width="0" fill="currentColor"></path>
+												</svg>
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-star-filled" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path
+														d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+														stroke-width="0" fill="currentColor"></path>
+												</svg>
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-star-filled" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2"
+													stroke="currentColor" fill="none" stroke-linecap="round"
+													stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path
+														d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+														stroke-width="0" fill="currentColor"></path>
+												</svg>
+											</small>
+											<a href="#" class="text-green-600">(30 reviews)</a>
+										</div>
+										<div class="text-md">
+											<span class="text-gray-900 font-semibold">₹<%= varietyTotalPrice %></span> 
+											<% if(varietyTotalPrice!=varietyPrice) {%>
+												<span class="line-through text-gray-500">₹<%= varietyPrice %></span>
+												<% } %>
+									
+											<% if(varietyDiscount) {%>
+											<span><small class="text-red-600"><%= varietyDiscount %>% Off</small></span>
+											<% } %>
+										</div>
+									</div>
+								</div>
+								<!-- hr -->
+								<div class="flex flex-col gap-6">
+									<hr />
+									<div>
+                                        <% if (updatedProduct.variety != "items") { %>
+											<% if (updatedProduct.varietyDetails[0].varietyMeasurement) { %>
+												<button type="button" onclick="varietySend('event','<%= updatedProduct.varietyDetails[0].varietyMeasurement %>','<%=updatedProduct.variety%>')"
+												id="varietyMeasurementBtn1"
+													class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
+													<%= updatedProduct?.varietyDetails[0]?.varietyMeasurement %>	<%=updatedProduct.variety%>
+												</button>
+											  <% } %>
+                                         
+										<!-- btn -->
+										<% if (updatedProduct.varietyDetails[1].varietyMeasurement) { %>
+											<button type="button" onclick="varietySend('event','<%= updatedProduct.varietyDetails[1].varietyMeasurement %>','<%=updatedProduct.variety%>')"
+											id="varietyMeasurementBtn2"
+												class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
+												<%= updatedProduct?.varietyDetails[1]?.varietyMeasurement %> <%=updatedProduct.variety%>
+											</button>
+											<% } %>
+											<% if (updatedProduct?.varietyDetails[2]?.varietyMeasurement) { %>
+											<!-- btn -->
+										<button type="button" onclick="varietySend('event','<%= updatedProduct.varietyDetails[2].varietyMeasurement %>','<%=updatedProduct.variety%>')"
+										id="varietyMeasurementBtn3"
+											class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
+											<%= updatedProduct.varietyDetails[2].varietyMeasurement %> <%=updatedProduct.variety%>
+										</button>
+												<% } %>
+										
+										
+										
+                                        <% } else { %>
+                                            
+                                        <% } %>
+										
+									</div>
+									<div>
+										<!-- input -->
+										<div class="w-1/3 md:w-1/4 lg:w-1/5">
+											<!-- input -->
+											<div
+											style="flex-wrap: nowrap;"
+												class="input-group input-spinner rounded-lg flex justify-between items-center">
+												<input type="button" value="-"
+													class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+													data-field="quantity" />
+												<input type="number" step="1" max="10" value="1" name="quantity"
+													class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+												<input type="button" value="+"
+													class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+													data-field="quantity" />
+											</div>
+										</div>
+									</div>
+									<div class="flex flex-wrap justify-start gap-2 items-center">
+										<div class="lg:w-1/3 md:w-2/5 w-full grid">
+											<!-- button -->
+											<!-- btn -->
+											<% if (varietyStock == 0) { %>
+												<button type="button" class="btn btn-secondary justify-center d-flex" disabled>
+													<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+													  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag mr-3">
+													  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													  <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+													  <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+													</svg>
+													Sold Out
+												  </button>
+											  <% } else { %>
+												<button type="button" class="btn btn-success justify-center d-flex" onclick="addCart('<%=updatedProduct._id%>','<%=updatedProduct.variety%>')">
+												  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+													class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag mr-3">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+													<path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+												  </svg>
+												  Add to cart
+												</button>
+											  <% } %>
+											  
+										</div>
+										<div class="md:w-1/3 w-full">
+											<!-- btn -->
+										
+											<button href="" style="display: inline-flex;"
+											onclick="addWishlist('<%=updatedProduct?._id %>','<%= updatedProduct.variety %>')"
+												class="btn inline-flex items-center gap-x-2 px-0 h-10 w-10 justify-center bg-gray-200 text-gray-800 border-gray-200 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="icon icon-tabler icon-tabler-heart" width="20" height="20"
+													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+													fill="none" stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path
+														d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+												</svg>
+											</button>
+										</div>
+									</div>
+									<!-- hr -->
+									<hr />
+								</div>
+								<div>
+									<!-- table -->
+									<table class="text-left w-full">
+										<tbody>
+											<tr>
+												<td class="px-6 py-3">Variety:</td>
+												<td class="px-6 py-3"><%= updatedProduct.variety %></td>
+											</tr>
+											<tr>
+												<td class="px-6 py-3">Stock:</td>
+												<% if (updatedProduct.variety != "items") { %>
+												  <td class="px-6 py-3"><%= varietyStock %></td>
+												<% } else { %>
+												  <td class="px-6 py-3"><%= updatedProduct.varietyDetails[0].itemStock %></td>
+												<% } %>
+											  </tr>
+										</tbody>
+									</table>
+								</div>
+								<div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mb-10">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full">
+						<ul class="nav nav-line-bottom border-b border-gray-300 pl-0" id="myTab" role="tablist">
+							<!-- nav item -->
+							<li class="nav-item" role="presentation">
+								<!-- btn -->
+								<button class="inline-block py-3 font-semibold px-4 no-underline nav-link active"
+									id="product-tab" data-bs-toggle="tab" data-bs-target="#product-tab-pane"
+									type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true">
+									Product Details
+								</button>
+							</li>
+							
+							<!-- nav item -->
+							<li class="nav-item" role="presentation">
+								<!-- btn -->
+								<button class="inline-block py-3 font-semibold px-4 no-underline nav-link"
+									id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane"
+									type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="false"
+									tabindex="-1">
+									Reviews
+								</button>
+							</li>
+							<!-- nav item -->
+						</ul>
+						<!-- tab content -->
+						<div class="tab-content" id="myTabContent">
+							<!-- tab pane -->
+							<div class="tab-pane active opacity-100 block" id="product-tab-pane" role="tabpanel"
+								aria-labelledby="product-tab" tabindex="0">
+								<div class="my-8 flex flex-col gap-5">
+									<div class="flex flex-col gap-1">
+										<!-- text -->
+										<h3 class="text-lg font-semibold">Product Description</h3>
+										<p>
+											<%= updatedProduct.productDescription%>
+										</p>
+									</div>
+									
+								</div>
+							</div>
+							<!-- tab pane -->
+							
+					</div>
+					<section class="mt-8">
+						<div class="container">
+							<div class="flex flex-wrap">
+								<div class="w-full">
+									<h2 class="text-lg absolute z-10">Related Products</h2>
+								</div>
+							</div>
+							<div class="swiper-container swiper" id="swiper-1" data-pagination-type="" data-speed="400"
+								data-space-between="20" data-pagination="false" data-navigation="true" data-autoplay="true"
+								data-autoplay-delay="3000" data-effect="slide"
+								data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 6}}'>
+								<div class="swiper-wrapper py-12">
+			
+									<% relatedProducts.forEach(product => { %>
+										<div class="swiper-slide">
+											<a href="/shop/productDetail/<%= product._id %>">
+												<div
+													class="relative rounded-lg break-words border bg-white border-gray-300 transition duration-75 hover:transition hover:duration-500 ease-in-out hover:border-green-600 hover:shadow-md">
+													<div class="py-8 text-center">
+														<img src="<%= product.productPic.productImage1 %>"
+															alt="" class="mb-3 m-auto" />
+														<div class="text-base"><%= product.productName %></div>
+													</div>
+												</div>
+											</a>
+										</div>
+									  
+										<% }) %>
+									
+								
+								
+							
+			
+									<!-- Add more slides as needed -->
+								</div>
+								<!-- Add Pagination -->
+								<div class="swiper-pagination"></div>
+								<!-- Add Navigation -->
+								<div class="swiper-navigation">
+									<div class="swiper-button-next top-[28px]"></div>
+									<div class="swiper-button-prev top-[28px] !right-0 !left-auto mx-10"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script src="/assets/libs/nouislider/dist/nouislider.min.js"></script>
+	<script src="/assets/libs/wnumb/wNumb.min.js"></script>
+	<script src="/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+	<script src="/assets/js/vendors/tns-slider.js"></script>
+	<script src="/assets/js/vendors/language.js"></script>
+	<script src="/assets/js/vendors/zoom.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!-- Libs JS -->
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+
+<script src="/assets/libs/rater-js/index.js"></script>
+	<script src="/assets/libs/dropzone/dist/min/dropzone.min.js"></script>
+
+	<script src="/assets/js/vendors/dropzone.js"></script>
+
+
+<script>
+   
+
+	function varietySend(e,varietyMeasurement,variety){
+		fetch("/shop/productDetail/",)
+        // Set the updated URL to the anchor tag
+        window.location.href = `/shop/productDetail/<%=updatedProduct._id%>?${variety}=${varietyMeasurement}`
+
+		}
+		
+       
+		
+        // Check if 'ml=250' already exists in the URL
+       
+   
+</script>
+
+<!-- Theme JS -->
+ 
+	<!-- Swiper JS -->
+	<script src="/assets/libs/swiper/swiper-bundle.min.js"></script>
+	<script src="/assets/js/vendors/swiper.js"></script>
+	<script src="/assets/js/vendors/validation.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+	<!--sweet popper-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script src="/js/theme.min.js"></script>
+<script src="/js/shopSingle.js"></script>
+<script>
+    const zoomContainer = document.querySelector('.image-zoom-container');
+    const zoomImage = document.querySelector('.image-zoom img');
+
+    zoomContainer.addEventListener('mousemove', (e) => {
+        const { offsetX, offsetY } = e;
+        const { clientWidth, clientHeight } = zoomContainer;
+
+        const x = (offsetX / clientWidth) * 100;
+        const y = (offsetY / clientHeight) * 100;
+
+        zoomImage.style.transformOrigin = `${x}% ${y}%`;
+        zoomImage.style.transform = 'scale(2)'; // Adjust scale for zoom level
+    });
+
+    zoomContainer.addEventListener('mouseleave', () => {
+        zoomImage.style.transform = 'scale(1)'; // Reset scale
+    });
+
+
+	function changeMainPic(imageLink){
+		document.getElementById('mainPic').src=imageLink
+	}
+
+	//product increment decremnt
+	
+
+</script>
+<script>
+	const urlParams = new URLSearchParams(window.location.search);
+const grams = urlParams.get('grams');
+const ml=urlParams.get('ml');
+let isItem=false
+console.log('<%= updatedProduct.variety %>')
+if('<%= updatedProduct.variety %>'=="items"){
+	isItem=true
+}
+
+	document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".button-minus, .button-plus");
+    const inputField = document.querySelector(".quantity-field");
+
+	
+    buttons.forEach(button => {
+        button.addEventListener("click", async function () {
+          let value = parseInt(inputField.value);
+			console.log(value)
+            if (this.classList.contains("button-minus")) {
+                value = Math.max(1, value - 1);
+                inputField.value = value;
+            } else {
+                // Send request to check stock availability4
+			
+				if(value>19){
+					Swal.fire({
+                icon: "warning",
+                title: "Add to cart limit exceeded!",
+                text: "You can't add more than 20 quantity.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            });
+					return
+				}
+                const isAvailable = await checkStock('<%=updatedProduct._id%>',grams||ml,value + 1,isItem);
+
+                if (isAvailable) {
+                    inputField.value = value + 1;
+                } else {
+					Swal.fire({
+                icon: "warning",
+                title: "Stock Unavailable!",
+                text: "Not enough stock available.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            });
+                }
+            }
+        });
+    });
+
+    inputField.addEventListener("input", async function () {
+        let value = parseInt(this.value);
+
+        if (isNaN(value) || value < 1) {
+            this.value = 1;
+        } else {
+			
+			if(value>20){
+					Swal.fire({
+                icon: "warning",
+                title: "Add to cart limit exceeded!",
+                text: "You can't add more than 20 quantity.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            });
+			this.value = 1;
+					return
+				}
+            const isAvailable = await checkStock('<%=updatedProduct._id%>',grams||ml,value + 1,isItem);
+
+            if (!isAvailable) {
+				Swal.fire({
+                icon: "warning",
+                title: "Stock Unavailable!",
+                text: "Not enough stock available.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            });
+                this.value = 1;
+            }
+        }
+    });
+
+    // Function to check stock availability from the server
+    async function checkStock(productId,varietyMeasurement,quantity,isItem) {
+        try {
+			varietyMeasurement = varietyMeasurement ?? '<%=updatedProduct?.varietyDetails[0]?.varietyMeasurement%>';
+            const response = await fetch("/shop/product/checkStock", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ productId:productId,varietyMeasurement:varietyMeasurement, quantity: quantity, isItem:isItem })
+            });
+
+            const data = await response.json();
+            return data.available; // Assuming the server returns { available: true/false }
+        } catch (error) {
+            console.error("Error checking stock:", error);
+            alert("Error checking stock. Please try again later.");
+            return false;
+        }
+    }
+});
+
+
+
+if('<%=updatedProduct?.varietyDetails[0]?.varietyMeasurement%>'==grams||'<%=updatedProduct?.varietyDetails[0]?.varietyMeasurement%>'==ml || !ml &&!grams){
+	$("#varietyMeasurementBtn1").css({
+    "border": "2px solid #00ff00", // Green border
+    "box-shadow": "0 0 10px #00ff00", // Glowing effect
+    "background-color": "#ffffff", // White background
+    "color": "#000", // Black text (adjust if needed)
+    "padding": "10px 20px",
+    "border-radius": "5px", // Smooth edges
+    "transition": "0.3s ease-in-out"
+});
+}
+else if('<%=updatedProduct?.varietyDetails[1]?.varietyMeasurement%>'==grams||'<%=updatedProduct?.varietyDetails[1]?.varietyMeasurement%>'==ml){
+	$("#varietyMeasurementBtn2").css({
+    "border": "2px solid #00ff00", // Green border
+    "box-shadow": "0 0 10px #00ff00", // Glowing effect
+    "background-color": "#ffffff", // White background
+    "color": "#000", // Black text (adjust if needed)
+    "padding": "10px 20px",
+    "border-radius": "5px", // Smooth edges
+    "transition": "0.3s ease-in-out"
+});
+}
+
+else if('<%=updatedProduct?.varietyDetails[2]?.varietyMeasurement%>'==grams||'<%=updatedProduct?.varietyDetails[2]?.varietyMeasurement%>'==ml){
+
+	$("#varietyMeasurementBtn3").css({
+    "border": "2px solid #00ff00", // Green border
+    "box-shadow": "0 0 10px #00ff00", // Glowing effect
+    "background-color": "#ffffff", // White background
+    "color": "#000", // Black text (adjust if needed)
+    "padding": "10px 20px",
+    "border-radius": "5px", // Smooth edges
+    "transition": "0.3s ease-in-out"
+});
+}
+
+
+</script>
+
+</body>
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-grid-3-column.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:04 GMT -->
+</html>

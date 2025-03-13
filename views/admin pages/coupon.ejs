@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table th, .table td {
+    min-width: 150px; /* Adjust width as needed */
+    word-break: break-word; /* Prevents text overflow */
+    
+}
+    </style>
+    <link rel="stylesheet" href="/styles/validationCommon.css">
+    
+  </head>
+  <body style="overflow-x: hidden;">
+<!--edit category modal--> 
+
+    <!-- Modal -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    
+    <!-- Button to Open the Modal -->
+   
+    <!--Edit Coupon Modal-->
+    <div class="modal fade" id="updateCouponModal" tabindex="-1" aria-labelledby="updateCouponModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="couponModalLabel">Edit Coupon</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateCouponForm" onsubmit="updateCoupon(event)">
+              <input type="text" id="updateCouponId" hidden>
+              <div class="mb-3">
+                <label for="updateCouponName" class="form-label">Coupon Name</label>
+                <input type="text" class="form-control" id="updateCouponName">
+                <small class="text-danger d-none" id="updateCouponNameError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="updateDiscountPercentage" class="form-label">Discount Percentage</label>
+                <input type="number" class="form-control" id="updateDiscountPercentage" min="0" max="100">
+                <small class="text-danger d-none" id="updateDiscountPercentageError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="updateStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="updateStartDate">
+                <small class="text-danger d-none" id="updateStartDateError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="updateExpiryDate" class="form-label">Expiry Date</label>
+                <input type="date" class="form-control" id="updateExpiryDate">
+                <small class="text-danger d-none" id="updateExpiryDateError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="updateMinPurchase" class="form-label">Minimum Purchase</label>
+                <input type="number" class="form-control" id="updateMinPurchase" min="0">
+                <small class="text-danger d-none" id="updateMinPurchaseError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="updateMaxDiscount" class="form-label">Maximum Discount</label>
+                <input type="number" class="form-control" id="updateMaxDiscount" min="0">
+                <small class="text-danger d-none" id="updateMaxDiscountError"></small>
+              </div>
+            
+              <!-- Updated: Listing Status Dropdown -->
+              <div class="mb-3">
+                <label for="updateListingStatus" class="form-label">Coupon Status</label>
+                <select class="form-control" id="updateListingStatus">
+                  <option value="listed">Listed</option>
+                  <option value="unlisted">Unlisted</option>
+                </select>
+                <small class="text-danger d-none" id="updateListingStatusError"></small>
+              </div>
+            
+              <button type="submit" class="btn btn-success" id="updateSaveBtn">Save Coupon</button>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    
+    
+    <!-- The Modal -->
+    <div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="couponModalLabel">Add Coupon</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="couponForm" onsubmit="saveCoupon(event)">
+              <div class="mb-3">
+                <label for="couponName" class="form-label">Coupon Name</label>
+                <input type="text" class="form-control" id="couponName">
+                <small class="text-danger d-none" id="couponNameError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="discountPercentage" class="form-label">Discount Percentage</label>
+                <input type="number" class="form-control" id="discountPercentage" min="0" max="100">
+                <small class="text-danger d-none" id="discountPercentageError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate">
+                <small class="text-danger d-none" id="startDateError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="expiryDate" class="form-label">Expiry Date</label>
+                <input type="date" class="form-control" id="expiryDate">
+                <small class="text-danger d-none" id="expiryDateError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="minPurchase" class="form-label">Minimum Purchase</label>
+                <input type="number" class="form-control" id="minPurchase" min="0">
+                <small class="text-danger d-none" id="minPurchaseError"></small>
+              </div>
+            
+              <div class="mb-3">
+                <label for="maxDiscount" class="form-label">Maximum Discount</label>
+                <input type="number" class="form-control" id="maxDiscount" min="0">
+                <small class="text-danger d-none" id="maxDiscountError"></small>
+              </div>
+            
+              <button type="submit" class="btn btn-success" id="saveBtn">Save Coupon</button>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    
+    <%-include('./partials/header')%>
+    <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10">
+        <div class="content-head w-100 row mt-3">
+        <div class="coupon-title col-lg-6">
+          <h2 class="">Coupons</h2>
+        </div>
+        <div class="add-coupon-btn col-lg-6 text-end">
+            <button class="btn btn-success" onclick="" data-bs-toggle="modal" data-bs-target="#couponModal" >
+                Add New Coupon
+            </button>
+        </div>
+      </div>
+      <div class="content-body">
+        <form class="d-flex mb-3 mt-3" method="GET" action="" >
+          <input class="form-control me-2 w-25" type="text" name="search" 
+              placeholder="Search Coupon..." id="coupon-search">
+          <button class="btn btn-dark" type="submit" onclick="">🔍</button>
+      </form>
+      <div class="table-responsive ">
+        <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <thead >
+              <tr>
+                 
+                  <th>S.No</th>
+                  <th>Coupon Name</th>
+                  <th>Discount Percentage</th>
+                  <th>Start Date</th>
+                  <th>Expiry Date</th>
+                  <th>Minimum Purchase</th>
+                  <th>Maximum Discount</th>
+                  <th>Current Status</th>
+                  <th>Edit Coupon</th>
+                  <th>Delete Coupon</th>
+              </tr>
+          </thead>
+          <tbody id="table-body">
+          <%coupon.forEach((coupon,i)=>{%>
+            <tr>
+
+              <td><%=(page*5)+i+1-5%></td>
+              <td><%=coupon.couponCode%></td>
+              <td><%=coupon.discountPercentage%></td>
+          
+                <td><%=coupon.couponStartDate%></td>
+          
+                <td><%=coupon.couponExpiryDate%></td>
+          
+            <td><%=coupon.minimumPurchase%></td>
+            <td><%=coupon.maximumDiscount%></td>
+            <td><%if(coupon.currentStatus=="active"){%>
+              <button class="btn btn-success">Active</button>
+            <%}%>
+            <%if(coupon.currentStatus=="expired"){%>
+              <button class="btn btn-danger">Expired</button>
+            <%}%>
+            <%if(coupon.currentStatus=="upcoming"){%>
+              <button class="btn btn-warning text-white">Upcoming</button>
+            <%}%>
+            </td>
+            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCouponModal" onclick="openUpdateCouponModal(
+            '<%=coupon._id%>',
+            '<%=coupon.couponCode%>',
+            '<%=coupon.discountPercentage%>',
+            '<%=coupon.couponStartDate%>',
+            '<%=coupon.couponExpiryDate%>',
+            '<%=coupon.minimumPurchase%>',
+            '<%=coupon.maximumDiscount%>',
+            '<%=coupon.isListed%>')">Edit</button></td>
+            <td>
+              <button class="btn btn-danger" onclick="deleteCoupon('<%=coupon._id%>')">Delete</button>
+            </td>
+
+            <%})%>
+         
+                
+       
+          </tbody>
+            
+      </table>
+      <ul class="pagination mb-5">
+        <% if (page > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page - 1 %>">Previous</a>
+          </li>
+        <% } %>
+    
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= i === page ? 'active' : '' %>">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+    
+        <% if (page < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page + 1 %>">Next</a>
+          </li>
+        <% } %>
+      </ul>
+      </div>
+
+  
+      </div>
+      
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("saveBtn").addEventListener("click", function (event) {
+    ; // Prevent actual form submission
+  
+      let isValid = true; // Track form validity
+  
+      function validateInput(inputId, errorId, validationFn, errorMessage) {
+        let inputField = document.getElementById(inputId);
+        let errorElement = document.getElementById(errorId);
+        let value = inputField.value.trim();
+  
+        if (!validationFn(value)) {
+          event.preventDefault()
+          errorElement.textContent = errorMessage;
+          errorElement.classList.remove("d-none");
+          inputField.classList.add("is-invalid");
+          isValid = false;
+        } else {
+          errorElement.classList.add("d-none");
+          inputField.classList.remove("is-invalid");
+        }
+      }
+  
+      // Validation Rules
+      validateInput("couponName", "couponNameError", val => val.length > 0, "Coupon name is required!");
+      validateInput("discountPercentage", "discountPercentageError", val => val >= 0 && val <= 100, "Enter a value between 0 and 100!");
+      validateInput("startDate", "startDateError", val => val !== "", "Start date is required!");
+      validateInput("expiryDate", "expiryDateError", val => val !== "" && new Date(val) > new Date(document.getElementById("startDate").value), "Expiry date must be after start date!");
+      validateInput("minPurchase", "minPurchaseError", val => val !== "" && val >= 0, "Minimum purchase must be 0 or more!");
+      validateInput("maxDiscount", "maxDiscountError", val => val !== "" && val >= 0, "Maximum discount must be 0 or more!");
+  
+     
+    });
+  
+    // Live Validation as User Types
+    document.querySelectorAll("#couponForm input").forEach(input => {
+      input.addEventListener("input", () => {
+        document.getElementById(input.id + "Error").classList.add("d-none");
+        input.classList.remove("is-invalid");
+      });
+    });
+  </script>
+
+<!-- Update Coupon-->
+ 
+<script>
+document.getElementById("updateSaveBtn").addEventListener("click", function (event) {
+  let isValid = true; // Track form validity
+
+  function validateInput(inputId, errorId, validationFn, errorMessage) {
+    let inputField = document.getElementById(inputId);
+    let errorElement = document.getElementById(errorId);
+    let value = inputField.value.trim();
+
+    if (!validationFn(value)) {
+      event.preventDefault();
+      errorElement.textContent = errorMessage;
+      errorElement.classList.remove("d-none");
+      inputField.classList.add("is-invalid");
+      isValid = false;
+    } else {
+      errorElement.classList.add("d-none");
+      inputField.classList.remove("is-invalid");
+    }
+  }
+
+  // Validation Rules
+  validateInput("updateCouponName", "updateCouponNameError", val => val.length > 0, "Coupon name is required!");
+  validateInput("updateDiscountPercentage", "updateDiscountPercentageError", val => val >= 0 && val <= 100, "Enter a value between 0 and 100!");
+  validateInput("updateStartDate", "updateStartDateError", val => val !== "", "Start date is required!");
+  validateInput("updateExpiryDate", "updateExpiryDateError", val => val !== "" && new Date(val) > new Date(document.getElementById("updateStartDate").value), "Expiry date must be after start date!");
+  validateInput("updateMinPurchase", "updateMinPurchaseError", val => val !== "" && val >= 0, "Minimum purchase must be 0 or more!");
+  validateInput("updateMaxDiscount", "updateMaxDiscountError", val => val !== "" && val >= 0, "Maximum discount must be 0 or more!");
+});
+
+// Live Validation as User Types
+document.querySelectorAll("#updateCouponForm input").forEach(input => {
+  input.addEventListener("input", () => {
+    document.getElementById(input.id + "Error").classList.add("d-none");
+    input.classList.remove("is-invalid");
+  });
+});
+
+</script>
+  <script src="/js/adminScript/coupon.js"></script>
+  
+  
+
+
+</html>

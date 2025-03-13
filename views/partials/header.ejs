@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="assets/libs/tiny-slider/dist/tiny-slider.css" rel="stylesheet" />
+	<link rel="stylesheet" href="assets/libs/swiper/swiper-bundle.min.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon/favicon.ico" />
+
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com/" />
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
+<link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="assets/libs/simplebar/dist/simplebar.min.css" />
+
+<!-- Theme CSS -->
+<link rel="stylesheet" href="styles/theme.min.css">
+</head>
+<body>
+    <div class="border-b">
+		<div class="bg-gray-100 py-1">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="md:w-1/2 w-full text-center md:text-left"><span>Super Value Deals - Save more with coupons</span>
+					</div>
+					<div class="w-1/2 text-right hidden lg:block">
+						<div class="dropdown flex justify-end">
+							<a class="dropdown-toggle text-inherit flex items-center" href="#!" data-bs-toggle="dropdown"
+								id="dropdownMenuLink">
+								<span class="mr-2">
+									<svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+										id="languageIcon">
+										<!-- Default SVG content for English -->
+										<g clip-path="">
+											<path d="M0 0.5H16V12.5H0V0.5Z" fill="#012169" />
+											<path
+												d="M1.875 0.5L7.975 5.025L14.05 0.5H16V2.05L10 6.525L16 10.975V12.5H14L8 8.025L2.025 12.5H0V11L5.975 6.55L0 2.1V0.5H1.875Z"
+												fill="white" />
+											<path
+												d="M10.6 7.525L16 11.5V12.5L9.225 7.525H10.6ZM6 8.025L6.15 8.9L1.35 12.5H0L6 8.025ZM16 0.5V0.575L9.775 5.275L9.825 4.175L14.75 0.5H16ZM0 0.5L5.975 4.9H4.475L0 1.55V0.5Z"
+												fill="#C8102E" />
+											<path d="M6.025 0.5V12.5H10.025V0.5H6.025ZM0 4.5V8.5H16V4.5H0Z" fill="white" />
+											<path d="M0 5.325V7.725H16V5.325H0ZM6.825 0.5V12.5H9.225V0.5H6.825Z" fill="#C8102E" />
+										</g>
+									</svg>
+								</span>
+								<span id="selectedLanguage">English</span>
+							</a>
+
+							<ul class="dropdown-menu">
+								<li>
+									<a class="dropdown-item" href="#!" onclick="changeLanguage('English')">
+										<span>
+											<svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g clip-path="">
+													<path d="M0 0.5H16V12.5H0V0.5Z" fill="#012169" />
+													<path
+														d="M1.875 0.5L7.975 5.025L14.05 0.5H16V2.05L10 6.525L16 10.975V12.5H14L8 8.025L2.025 12.5H0V11L5.975 6.55L0 2.1V0.5H1.875Z"
+														fill="white" />
+													<path
+														d="M10.6 7.525L16 11.5V12.5L9.225 7.525H10.6ZM6 8.025L6.15 8.9L1.35 12.5H0L6 8.025ZM16 0.5V0.575L9.775 5.275L9.825 4.175L14.75 0.5H16ZM0 0.5L5.975 4.9H4.475L0 1.55V0.5Z"
+														fill="#C8102E" />
+													<path d="M6.025 0.5V12.5H10.025V0.5H6.025ZM0 4.5V8.5H16V4.5H0Z" fill="white" />
+													<path d="M0 5.325V7.725H16V5.325H0ZM6.825 0.5V12.5H9.225V0.5H6.825Z" fill="#C8102E" />
+												</g>
+												<defs>
+													<clipPath>
+														<rect width="16" height="12" fill="white" transform="translate(0 0.5)" />
+													</clipPath>
+												</defs>
+											</svg>
+										</span>
+										English
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#!" onclick="changeLanguage('Deutsch')">
+										<span>
+											<svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g clip-path="url(#clip0_5543_19751)">
+													<path d="M0 8.5H16V12.5H0V8.5Z" fill="#FFCE00" />
+													<path d="M0 0.5H16V4.5H0V0.5Z" fill="black" />
+													<path d="M0 4.5H16V8.5H0V4.5Z" fill="#DD0000" />
+												</g>
+												<defs>
+													<clipPath id="clip0_5543_19751">
+														<rect width="16" height="12" fill="white" transform="translate(0 0.5)" />
+													</clipPath>
+												</defs>
+											</svg>
+										</span>
+										Deutsch
+									</a>
+								</li>
+								<!-- Add more languages as needed -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pt-5">
+			<div class="container">
+				<div class="flex flex-wrap w-full items-center justify-between">
+					<div class="lg:w-1/6 md:w-1/2 w-2/5">
+						<a class="navbar-brand" href="index.html">
+							<img src="/images/freshKartLogo/freshcart-logo.png" alt="TailwindCSS eCommerce HTML Template" />
+						</a>
+					</div>
+					<div class="lg:w-2/5 hidden lg:block">
+						
+							<div class="relative">
+								<label for="searchProducts" class="invisible hidden">Search</label>
+								<input
+									class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+									type="search" placeholder="Search for products" id="searchProducts" />
+								<button class="absolute right-0 top-0 p-3" type="button" onclick="searchProduct()">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="16"
+										height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+										<path d="M21 21l-6 -6" />
+									</svg>
+								</button>
+							</div>
+						
+					</div>
+					<div class="lg:w-1/5 hidden lg:block">
+						<!-- Button trigger modal -->
+						 <a href="/auth/logout">
+						<button type="button"
+							class="btn inline-flex items-center gap-x-2 bg-transparent text-gray-600 border-gray-300 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+							data-bs-toggle="modal" data-bs-target="#locationModal">
+							<span class="flex items-center gap-1">
+								<span>Logout</span>
+							</span>
+						</button>
+					</a>
+					</div>
+					<div class="lg:w-1/5 text-end md:w-1/2 w-3/5">
+						<div class="flex gap-7 items-center justify-end">
+							<div>
+								<a href="/wishlist" class="relative">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="24"
+										height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+									</svg>
+								
+								</a>
+							</div>
+							<div>
+								<a href="/account/settings" class="text-gray-600">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="22"
+										height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+										<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+									</svg>
+								</a>
+							</div>
+							<div>
+								<a href="/cart">
+								<button type="button" class="text-gray-600 relative">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-bag" width="24"
+										height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
+										<path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+									</svg>
+									
+								</button>
+							</a>
+							</div>
+							<div class="lg:hidden leading-none">
+								<!-- Button -->
+								<button class="collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbar-default"
+									aria-controls="navbar-default" aria-label="Toggle navigation">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2 text-gray-800"
+										width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 6l16 0" />
+										<path d="M4 12l16 0" />
+										<path d="M4 18l16 0" />
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav
+			class="navbar relative navbar-expand-lg lg:flex lg:flex-wrap items-center content-between text-black navbar-default"
+			aria-label="Offcanvas navbar large">
+			<div class="container max-w-7xl mx-auto w-full xl:px-4 lg:px-0">
+				<div class="offcanvas offcanvas-left lg:visible" tabindex="-1" id="navbar-default">
+					<div class="offcanvas-header pb-1">
+						<a href=""><img src="/assets/images/logo/freshcart-logo.svg"
+								alt="TailwindCSS eCommerce HTML Template" /></a>
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+								height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+								stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M18 6l-12 12" />
+								<path d="M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+					<div class="offcanvas-body lg:flex lg:items-center">
+						<div class="block lg:hidden mb-4">
+							<form action="">
+								<div class="relative">
+									<label for="searhNavbar" class="invisible hidden">Search</label>
+									<input
+										class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+										type="text" placeholder="Search for products" id="searhNavbar" />
+									<button class="absolute right-0 top-0 p-3" type="button" onclick="hi()">
+										<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="16"
+											height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+											stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+											<path d="M21 21l-6 -6" />
+										</svg>
+									</button>
+								</div>
+							</form>
+						</div>
+						
+					
+						<div>
+							<ul class="navbar-nav lg:flex gap-3 lg:items-center">
+								<li class="nav-item dropdown w-full lg:w-auto">
+									<a class="nav-link dropdown-toggle" href="/" role="button"
+										aria-expanded="false">Home</a>
+								</li>
+								<li class="nav-item dropdown w-full lg:w-auto">
+									<a class="nav-link dropdown-toggle" href="/shop" role="button" 
+										aria-expanded="false">Shop</a>
+								
+								</li>
+								<li class="nav-item dropdown w-full lg:w-auto">
+									<a class="nav-link dropdown-toggle" href="/store" role="button" 
+										aria-expanded="false">Stores</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
+    
+    <!-- Theme JS -->
+    
+    <script src="/js/theme.min.js"></script>
+    
+    
+        <script src="assets/js/vendors/countdown.js"></script>
+    
+        <script src="assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+        <script src="assets/js/vendors/tns-slider.js"></script>
+        <script src="assets/js/vendors/zoom.js"></script>
+        <script src="assets/js/vendors/language.js"></script>
+		<script>
+			function searchProduct(){
+				let userSearch=document.getElementById("searchProducts").value
+				
+				window.location.href=`/shop/?search=${userSearch}`
+			}
+		</script>
+        <!-- Swiper JS -->
+        <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
+        <script src="assets/js/vendors/swiper.js"></script>
+        <script src="assets/js/vendors/validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

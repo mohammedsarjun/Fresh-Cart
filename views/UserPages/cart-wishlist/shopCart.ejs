@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:08 GMT -->
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico" />
+
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com/" />
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
+<link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="assets/libs/simplebar/dist/simplebar.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+<!-- Theme CSS -->
+<link rel="stylesheet" href="/assets/css/theme.min.css">
+ <!-- Analytics Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-M8S4MT3EYG");
+</script>
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] =
+            c[a] ||
+            function () {
+                (c[a].q = c[a].q || []).push(arguments);
+            };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "mzh5eyaatk");
+</script>
+<!-- Affiliate tracking script -->
+<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
+
+	<title>Shop Cart - TailwindCSS eCommerce HTML Template - FreshCart</title>
+</head>
+
+<body>
+	<div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); color: white; font-size: 24px; text-align: center; line-height: 100vh; z-index: 100;">
+		Cart Updating... please wait
+	  </div>
+	<%-include('../../partials/header')%>
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content p-8">
+			<div class="flex justify-between items-center mb-4">
+				<h3 class="font-bold text-gray-800" id="userModalLabel">Sign Up</h3>
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+						height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+						stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M18 6l-12 12" />
+						<path d="M6 6l12 12" />
+					</svg>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="needs-validation" novalidate>
+					<div class="mb-3">
+						<label for="fullName" class="mb-2 block text-gray-800">Name</label>
+						<input type="text"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="fullName" placeholder="Enter Your Name" required />
+						<div class="invalid-feedback">Please enter name.</div>
+					</div>
+					<div class="mb-3">
+						<label for="email" class="mb-2 block text-gray-800">Email address</label>
+						<input type="email"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="email" placeholder="Enter Email address" autocomplete="email" required />
+						<div class="invalid-feedback">Please enter email.</div>
+					</div>
+					<div class="mb-5">
+						<label for="password" class="mb-2 block text-gray-800">Password</label>
+						<input type="password"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="password" placeholder="Enter Password" required />
+						<div class="invalid-feedback">Please enter password.</div>
+						<span class="block mt-1 text-sm text-gray-500">
+							By Signup, you agree to our
+							<a href="#!" class="text-green-600">Terms of Service</a>
+							&
+							<a href="#!" class="text-green-600">Privacy Policy</a>
+						</span>
+					</div>
+
+					<button type="submit"
+						class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 justify-center">
+						Sign Up
+					</button>
+				</form>
+			</div>
+			<div class="modal-footer flex border-0 justify-center mt-3">
+				Already have an account?
+				<a href="#" class="text-green-600 ml-1">Sign in</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Shop Cart -->
+
+<div class="offcanvas offcanvas-right" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header border-b">
+		<div>
+			<h5 id="offcanvasRightLabel">Shop Cart</h5>
+			<span>Location in 382480</span>
+		</div>
+		<button type="button" class="btn-close text-inherit" data-bs-dismiss="offcanvas" aria-label="Close">
+			<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+				height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+				stroke-linejoin="round">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M18 6l-12 12" />
+				<path d="M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
+	<div class="offcanvas-body p-4">
+		<div>
+			<!-- alert -->
+			<div class="bg-red-500 bg-opacity-25 text-red-800 mb-3 rounded-lg p-4" role="alert">
+				You’ve got FREE delivery. Start
+				<a href="#!" class="alert-link">checkout now!</a>
+			</div>
+			<ul class="list-none">
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-1.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Haldiram's Sev Bhujia</h6>
+									</a>
+									<span><small class="text-gray-500">.98 / lb</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- input group -->
+					
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$5.00</span>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-2.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<a href="shop-single.html" class="text-inherit">
+										<h6>NutriChoice Digestive</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+				
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-red-600">$20.00</span>
+							<div class="line-through text-gray-500 small">$26.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-3.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Cadbury 5 Star Chocolate</h6>
+									</a>
+									<span><small class="text-gray-500">1 kg</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-4.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Onion Flavour Potato</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+					
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t border-b">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-5.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Salted Instant Popcorn</h6>
+									</a>
+									<span><small class="text-gray-500">100g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$25.00</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<!-- btn -->
+			<div class="flex justify-between mt-4">
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+					Continue Shopping
+				</a>
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+					Update Cart
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body p-6">
+				<div class="flex justify-between items-start">
+					<div>
+						<h5 class="mb-1" id="locationModalLabel">Choose your Delivery Location</h5>
+						<p class="text-sm">Enter your address and we will specify the offer you area.</p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+							height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+							stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M18 6l-12 12" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+				<div class="my-5">
+					<label for="searhNavbarSecond" class="invisible hidden">Search</label>
+					<input
+						class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+						type="search" placeholder="Search for products" id="searhNavbarSecond" />
+				</div>
+				<div class="flex justify-between items-center mb-2">
+					<h6>Select Location</h6>
+					<a href="#" class="btn btn-outline-gray-400 text-gray-500 btn-sm">Clear All</a>
+				</div>
+				<div>
+					<div data-simplebar style="height: 300px">
+						<div class="list-none">
+							<a href="#"
+								class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3 active active:bg-gray-100 bg-gray-100">
+								<span>Alabama</span>
+								<span>Min:$20</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Alaska</span>
+								<span>Min:$30</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<main>
+		<div class="mt-4">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full">
+						<!-- breadcrumb -->
+						<nav aria-label="breadcrumb">
+							<ol class="flex flex-wrap">
+								<li class="inline-block text-green-600 mr-2">
+									<a href="#!">
+										Home
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+											height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+											fill="none" stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M9 6l6 6l-6 6" />
+										</svg>
+									</a>
+								</li>
+								<li class="inline-block text-green-600 mr-2">
+									<a href="#!">
+										Shop
+
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+											height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+											fill="none" stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M9 6l6 6l-6 6" />
+										</svg>
+									</a>
+								</li>
+								<li class="inline-block text-gray-500 active" aria-current="page">Shop Cart</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="my-10">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full mb-6">
+						<!-- card -->
+
+						<h1 class="text-xl">Shop Cart</h1>
+						<p>There are <%=cartCount%> products in this wishlist.</p>
+					</div>
+				</div>
+
+				<div class="flex flex-wrap lg:flex-nowrap  gap-y-6">
+					<div class="lg:w-2/3 w-full">
+						<div class="flex flex-col gap-5">
+							<!-- alert -->
+							
+							<ul class="list-none">
+								
+							
+								<!-- list group -->
+								<% cart.products.forEach((product) => { %>
+									<% if (product.isStock==false) { %>
+										<li class="py-3 border border-danger pe-3 py-3 border-red-500 border">
+											<div class="flex items-center justify-between">
+												<div class="w-1/2 md:w-1/2 lg:w-3/5">
+													<div class="flex flex-row gap-5">
+														<img src="<%= product.productImg%>" alt="Ecommerce"
+															class="w-16 h-16" />
+														<div class="flex flex-col gap-2">
+															<div>
+																<a href="shop-single.html" class="text-inherit">
+																	<h6><%= product.productName%></h6>
+																</a>
+																<span class="text-gray-500 text-sm"><%= product.selectedVariety.value%><%= product.selectedVariety.type%></span>
+															</div>
+															<!-- text -->
+															<div class="leading-none">
+																<button onclick="deleteCart('<%=product.productId%>','<%= product.selectedVariety.type%>','<%= product.selectedVariety.value%>')" class="text-green-600 flex items-center gap-1">
+																	<span class="align-text-bottom">
+																		<svg xmlns="http://www.w3.org/2000/svg"
+																			class="icon icon-tabler icon-tabler-trash"
+																			width="14" height="14" viewBox="0 0 24 24"
+																			stroke-width="2" stroke="currentColor" fill="none"
+																			stroke-linecap="round" stroke-linejoin="round">
+																			<path stroke="none" d="M0 0h24v24H0z" fill="none">
+																			</path>
+																			<path d="M4 7l16 0"></path>
+																			<path d="M10 11l0 6"></path>
+																			<path d="M14 11l0 6"></path>
+																			<path
+																				d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+																			</path>
+																			<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+																			</path>
+																		</svg>
+																	</span>
+																	<span class="text-gray-500 text-sm">Remove</span>
+																</button>
+															</div>
+															<div class="leading-none">
+																<p style="color: red;">this product is currently out of stock. Please remove it to proceed to checkout!</p>
+															</div>
+														</div>
+													</div>
+												</div>
+		
+												<!-- input group -->
+												<div class="w-1/3 md:w-1/4 lg:w-1/6">
+													<!-- input -->
+													<div
+														class="input-group input-spinner rounded-lg flex justify-between items-center">
+														<input type="button" value="-"
+															class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+															data-field="quantity" />
+														<input type="number" step="1" max="10" value="<%= product.quantity %>" name="quantity"
+															class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+														<input type="button" value="+"
+															class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+															data-field="quantity" />
+															<input type="text" class="cartProductId" value="<%= product.productId %>" hidden>
+															<input type="text" class="cartProductVariety" value="<%= product.selectedVariety.type %>" hidden>
+															<input type="text" class="cartProductMeasurement" value="<%= product.selectedVariety.value %>" hidden>
+													</div>
+												</div>
+												<!-- price -->
+												<% if (product.productPrice != product.discountPrice) { %>
+													<div class="w-1/5 md:w-1/5 text-right">
+														<span class="font-bold text-red-600"><%= product.discountPrice %>₹</span>
+														<div class="line-through text-gray-500"><%= product.productPrice %>₹</div>
+													</div>
+												<% } else{%>
+													<div class="w-1/5 md:w-1/5 text-right">
+														
+														<div class=""><%= product.productPrice %>₹</div>
+													</div>
+													<% }%>
+												
+											</div>
+										</li>			
+														<% } else{%>
+															<li class="py-3 border-gray-300 border-t pe-3">
+																<div class="flex items-center justify-between">
+																	<div class="w-1/2 md:w-1/2 lg:w-3/5">
+																		<div class="flex flex-row gap-5">
+																			<img src="<%= product.productImg%>" alt="Ecommerce"
+																				class="w-16 h-16" />
+																			<div class="flex flex-col gap-2">
+																				<div>
+																					<a href="shop-single.html" class="text-inherit">
+																						<h6><%= product.productName%></h6>
+																					</a>
+																					<span class="text-gray-500 text-sm"><%= product.selectedVariety.value%><%= product.selectedVariety.type%></span>
+																				</div>
+																				<!-- text -->
+																				<div class="leading-none">
+																					<button onclick="deleteCart('<%=product.productId%>','<%= product.selectedVariety.type%>','<%= product.selectedVariety.value%>')" class="text-green-600 flex items-center gap-1">
+																						<span class="align-text-bottom">
+																							<svg xmlns="http://www.w3.org/2000/svg"
+																								class="icon icon-tabler icon-tabler-trash"
+																								width="14" height="14" viewBox="0 0 24 24"
+																								stroke-width="2" stroke="currentColor" fill="none"
+																								stroke-linecap="round" stroke-linejoin="round">
+																								<path stroke="none" d="M0 0h24v24H0z" fill="none">
+																								</path>
+																								<path d="M4 7l16 0"></path>
+																								<path d="M10 11l0 6"></path>
+																								<path d="M14 11l0 6"></path>
+																								<path
+																									d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+																								</path>
+																								<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+																								</path>
+																							</svg>
+																						</span>
+																						<span class="text-gray-500 text-sm">Remove</span>
+																					</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+							
+																	<!-- input group -->
+																	<div class="w-1/3 md:w-1/4 lg:w-1/6">
+																		<!-- input -->
+																		<div
+																			class="input-group input-spinner rounded-lg flex justify-between items-center">
+																			<input type="button" value="-"
+																				class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+																				data-field="quantity" />
+																			<input type="number" step="1" max="10" value="<%= product.quantity %>" name="quantity"
+																				class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+																			<input type="button" value="+"
+																				class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+																				data-field="quantity" />
+																				<input type="text" class="cartProductId" value="<%= product.productId %>" hidden>
+																				<input type="text" class="cartProductVariety" value="<%= product.selectedVariety.type %>" hidden>
+																				<input type="text" class="cartProductMeasurement" value="<%= product.selectedVariety.value %>" hidden>
+																		</div>
+																	</div>
+																	<!-- price -->
+																	<% if (product.productPrice != product.discountPrice) { %>
+																		<div class="w-1/5 md:w-1/5 text-right">
+																			<span class="font-bold text-red-600"><%= product.discountPrice %>₹</span>
+																			<div class="line-through text-gray-500"><%= product.productPrice %>₹</div>
+																		</div>
+																	<% } else{%>
+																		<div class="w-1/5 md:w-1/5 text-right">
+																			
+																			<div class=""><%= product.productPrice %>₹</div>
+																		</div>
+																		<% }%>
+																	
+																</div>
+															</li>
+															<% }%>
+									
+								 <% }) %>
+								 
+								
+							</ul>
+							<!-- btn -->
+							<div class="flex justify-between">
+								<a href="/shop"
+									class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+									Continue Shopping
+								</a>
+								<button
+								
+									class="btn inline-flex me-3 items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300"
+									id="updateCart">
+									Update Cart
+							</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- sidebar -->
+					<div class="w-full lg:w-1/3 md:w-full">
+						<!-- card -->
+						<div class="relative card min-w-0">
+							<div class="card-body flex flex-col gap-4">
+								<!-- heading -->
+								<h2 class="text-md">Summary</h2>
+								<div
+									class="relative flex flex-col min-w-0 rounded-lg break-words border bg-white border-1 border-gray-300">
+									<!-- list group -->
+									<ul class="flex flex-col">
+										<!-- list group item -->
+										<li
+											class="relative py-3 px-4 -mb-px border-b border-r-0 border-l-0 border-gray-300 no-underline flex justify-between items-start">
+											<div>
+												<div>Item Subtotal</div>
+											</div>
+											<span>₹<%=cart.subtotal%></span>
+										</li>
+
+										<!-- list group item -->
+										<li
+											class="relative py-3 px-4 -mb-px border-b border-r-0 border-l-0 border-gray-300 no-underline flex justify-between items-start">
+											<div>
+												<div>Shipping Cost</div>
+											</div>
+											<span>₹<%=cart.shippingCost%></span>
+										</li>
+										<!-- list group item -->
+										<li
+											class="relative py-3 px-4 -mb-px border-r-0 border-l-0 border-gray-300 no-underline flex justify-between items-start">
+											<div>
+												<div class="font-bold text-gray-800">Grand Total</div>
+											</div>
+											<span class="font-bold text-gray-800">₹<%=cart.grandTotal%></span>
+										</li>
+									</ul>
+									
+								</div>
+								<div>
+									<div class="grid">
+										<% if (!isValidCheckout || cart.grandTotal == 0 ) { %>
+											<a href="#" 
+											class="btn flex justify-between bg-gray-400 text-white border-gray-400 opacity-50 
+												   pointer-events-none hover:cursor-not-allowed btn-lg">
+											Go to Checkout
+											<span class="font-bold">₹<%=cart.grandTotal%></span>
+										 </a>
+										
+											
+										<% } else{%>
+											<a
+											href="/cart/checkout"
+												class="btn flex justify-between bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-lg"
+												type="submit">
+												Go to Checkout
+												<span class="font-bold">₹<%=cart.grandTotal%></span>
+											
+										</a>
+								
+											<% }%>
+										<!-- btn -->
+									
+
+								 
+
+									</div>
+									<!-- text -->
+									<p class="mt-1">
+										<span class="text-sm">
+											By placing your order, you agree to be bound by the Freshcart
+											<a href="#!" class="text-green-600">Terms of Service</a>
+											and
+											<a href="#!" class="text-green-600">Privacy Policy.</a>
+										</span>
+									</p>
+								</div>
+
+								<!-- heading -->
+						
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- footer -->
+<footer class="bg-gray-200 py-8">
+	<div class="container">
+		<div class="flex flex-wrap md:gap-4 lg:gap-0 py-4 mb-6">
+			<div class="w-full md:w-full lg:w-1/3 flex flex-col gap-4 mb-6">
+				<h6>Categories</h6>
+				<div class="flex flex-wrap">
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Vegetables & Fruits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Breakfast & instant food</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Bakery & Biscuits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Atta, rice & dal</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Sauces & spreads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Organic & gourmet</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Baby care</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cleaning essentials</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Personal care</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Dairy, bread & eggs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cold drinks & juices</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Tea, coffee & drinks</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Masala, oil & more</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Chicken, meat & fish</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Paan corner</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pharma & wellness</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Home & office</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pet care</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="w-full md:w-full lg:w-2/3">
+				<div class="flex flex-wrap">
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>Get to know us</h6>
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Company</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">About</a></li>
+							<li><a href="#!" class="inline-block">Blog</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Help Center</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Our Value</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>For Consumers</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Payments</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Shipping</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Product Returns</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">FAQ</a></li>
+							<li><a href="shop-checkout.html" class="inline-block">Shop Checkout</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Become a Shopper</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Shopper Opportunities</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Become a Shopper</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Earnings</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Ideas & Guides</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">New Retailers</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Freshcart programs</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart programs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Gift Cards</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Promos & Coupons</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart Ads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Careers</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="gap-y-4 flex flex-wrap items-center justify-center lg:justify-start">
+				<div class="lg:w-2/5 lg:text-left text-center">
+					<div class="flex md:flex-row flex-col gap-3 md:gap-6 items-center">
+						<div class="text-gray-900">Payment Partners</div>
+						<ul class="flex items-center flex-row gap-4">
+							<li>
+								<a href="#!"><img src="assets/images/payment/amazonpay.svg" alt="amazon pay" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/american-express.svg" alt="american express" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/mastercard.svg" alt="mastercard" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/paypal.svg" alt="paypal" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/visa.svg" alt="visa" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="lg:w-3/5 flex justify-end">
+					<div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+						<div class="text-gray-900">Get deliveries with FreshCart</div>
+						<ul class="flex flex-row gap-2">
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/appstore-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/googleplay-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="flex flex-col md:flex-row items-center gap-3">
+				<div class="md:w-1/2">
+					<span class="text-sm text-gray-500">
+						©
+						<span id="copyright">
+							<script>
+								document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()));
+							</script>
+						</span>
+						FreshCart TailwindCSS eCommerce HTML Template. Powered by
+						<a href="https://codescandy.com/" target="_blank" class="text-green-600">Codescandy</a>
+						.
+					</span>
+				</div>
+				<div class="md:w-1/2 flex md:justify-end items-center">
+					<div class="flex flex-row gap-5 items-center">
+						<div class="text-gray-500">Follow us on</div>
+						<ul class="flex items-center justify-end text-sm gap-1">
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-facebook"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-x"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+										<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-instagram"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+										<path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+										<path d="M16.5 7.5l0 .01" />
+									</svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- buy now template button
+Remove if you do not want.
+-->
+
+
+
+	<script src="/assets/js/vendors/language.js"></script>
+	<!-- Libs JS -->
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Theme JS -->
+
+<script src="/js/theme.min.js"></script>
+	<!--sweet popper-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+	
+    document.querySelectorAll(".input-group").forEach((group) => {
+        let minusBtn = group.querySelector(".button-minus");
+        let plusBtn = group.querySelector(".button-plus");
+        let inputField = group.querySelector(".quantity-field");
+		let productId = group.querySelector(".cartProductId");
+		let varietyMeasurement=group.querySelector(".cartProductMeasurement");
+		let varietyType=group.querySelector(".cartProductVariety");
+		let isItem=false
+		
+        minusBtn.addEventListener("click", function () {
+            let currentValue = parseInt(inputField.value) || 0;
+            if (currentValue > 1) {
+                inputField.value = currentValue - 1;
+                inputField.dispatchEvent(new Event('change')); // Trigger change event
+            }
+        });
+
+        plusBtn.addEventListener("click", async function () {
+			
+            let currentValue = parseInt(inputField.value)  || 0;
+            let maxValue =  20;
+			if(varietyType.value=="items"){
+			isItem=true
+		}
+			let isAvailable= await checkStock(productId.value,varietyMeasurement.value,currentValue+1,isItem)
+			if(!isAvailable){
+				Swal.fire({
+                icon: "warning",
+                title: "Not enough Stock Available!",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            })
+		return
+			}
+          if (currentValue < maxValue) {
+                inputField.value = currentValue + 1;
+                inputField.dispatchEvent(new Event('change')); // Trigger change event
+            }else {
+                // Send request to check stock availability4
+					Swal.fire({
+                icon: "warning",
+                title: "Add to cart limit exceeded!",
+                text: "You can't add more than 20 quantity.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            })
+        }});
+
+        // Ensure only numbers are allowed
+        inputField.addEventListener("input", async function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+			let currentValue = parseInt(inputField.value)  || 0;
+            let maxValue =  20;
+			if(varietyType.value=="items"){
+			isItem=true
+		}
+			let isAvailable= await checkStock(productId.value,varietyMeasurement.value,currentValue,isItem)
+			if(!isAvailable){
+				Swal.fire({
+                icon: "warning",
+                title: "Not enough Stock Available!",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            })
+			}
+
+			if (currentValue <= maxValue) {
+                inputField.value = currentValue;
+                inputField.dispatchEvent(new Event('change')); // Trigger change event
+            }else {
+                // Send request to check stock availability4
+					Swal.fire({
+                icon: "warning",
+                title: "Add to cart limit exceeded!",
+                text: "You can't add more than 20 quantity.",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Okay",
+                timer: 3000 // Auto-close after 3 seconds
+            })
+        }
+        });
+    });
+	document.getElementById("updateCart").onclick = async function() {
+		const loadingScreen = document.getElementById("loading-screen");
+		loadingScreen.style.display = "block";
+		let bodyContent=[]
+		
+		
+	document.querySelectorAll(".input-group").forEach((group) => {
+		let isItem=false
+	
+		if(group.querySelector(".cartProductMeasurement").value==''){
+			console.log('hi')
+			isItem=true
+		}
+		bodyContent.push({
+			productId:group.querySelector(".cartProductId").value,
+			productMeasurement:group.querySelector(".cartProductMeasurement").value,
+			productQuantity:group.querySelector(".quantity-field").value,
+			isItem:isItem
+		})
+})
+console.log(bodyContent)
+try {
+            const response = await fetch("/cart/updateCart", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(bodyContent)
+            });
+
+            const data = await response.json();
+			if(data.status==200&&data){
+				cartUpdateNotification(data.message)
+			}
+		}catch(err){
+			console.log("An error occured : "+err)
+		}
+	}
+
+})
+
+async function cartUpdateNotification(title){
+  Swal.fire({
+    title: title,
+    icon: "success"
+  });
+  setTimeout(()=>{
+	window.location.reload()
+  },1000)
+}
+
+
+async function checkStock(productId,varietyMeasurement,quantity,isItem) {
+        try {
+			
+			varietyMeasurement = varietyMeasurement;
+            const response = await fetch("/shop/product/checkStock", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ productId:productId,varietyMeasurement:varietyMeasurement, quantity: quantity, isItem:isItem })
+            });
+
+            const data = await response.json();
+            return data.available; // Assuming the server returns { available: true/false }
+        } catch (error) {
+            console.error("Error checking stock:", error);
+            alert("Error checking stock. Please try again later.");
+            return false;
+        }
+    }
+
+async function deleteCart(productId,variety,varietyMeasurement){
+	Swal.fire({
+    title: "Are you sure?",
+    text: "Do you really want to remove this item from your Cart?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      // Call the function to delete the wishlist item here
+      try{
+      await fetch("/cart/deleteCart",{
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+            {productId:productId,
+            varietyMeasurement:varietyMeasurement,
+            variety:variety,
+        })
+      }) .then((response) => response.json()) // Convert response to JSON
+      .then((data) => {
+        console.log(data)
+        if (data.redirectTo) {
+          window.location.href = data.redirectTo; // Use the correct property
+        }
+        if(data.status=200&&data.message){
+			deleteCartNotification(data.message)
+          setTimeout(()=>{
+            window.location.reload()
+          },2000)
+        }
+        if(data.status=400&&data.error){
+			deleteCartNotification(data.error)
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+    }catch(error){
+      console.log(error)
+    }
+    }
+  });
+}
+
+async function deleteCartNotification(title){
+        Swal.fire({
+          title: title,
+          icon: "success"
+        });
+      }
+
+// async function checkout(){
+// try{
+
+// await fetch("/cart/checkout",{
+//         method: "GET",
+//       })
+
+// }catch(error){
+//       console.log(error)
+//     }
+// }
+</script>
+</body>
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:08 GMT -->
+</html>

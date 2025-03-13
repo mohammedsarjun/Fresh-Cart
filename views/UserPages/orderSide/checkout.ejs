@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:08 GMT -->
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico" />
+
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com/" />
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
+<link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="assets/libs/simplebar/dist/simplebar.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="/styles/validationCommon.css">
+
+<!-- Theme CSS -->
+<style>
+	.placeOrderW{
+		display: none !important;
+	}
+</style>
+
+<link rel="stylesheet" href="/styles/theme.min.css">
+ <!-- Analytics Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-M8S4MT3EYG");
+</script>
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] =
+            c[a] ||
+            function () {
+                (c[a].q = c[a].q || []).push(arguments);
+            };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "mzh5eyaatk");
+</script>
+<!-- Affiliate tracking script -->
+<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
+<script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
+
+
+	<title>Shop Checkout</title>
+</head>
+
+<body>
+	<div id="loading-screen" style="
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.8); 
+    color: white; 
+    font-size: 24px; 
+    text-align: center; 
+    display: none; 
+    align-items: center; 
+    justify-content: center;
+    z-index: 9999;">
+    Address Updating... Please wait.
+</div>
+	<%-include('../../partials/header')%>
+
+<!--Add address Modal-->
+	<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAdderessyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addAddressLabel">Add Address</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addAddressForm">
+                
+                <div class="mb-3">
+                  <label for="fisrtName" class="form-label" >First Name</label>
+                  <input type="text" class="form-control" id="addAdressFirstName"  required>
+                  <p class="error-style w-100 text-center" id="addAdressFirstNameError"></p>
+                </div>
+                <div class="mb-3">
+                  <label for="firstName" class="form-label" >Last Name</label>
+                  <input type="text" class="form-control" id="addAddressLastName">
+                  <p class="error-style w-100 text-center" id="addAddressLastNameError"></p>
+                </div>
+				<div class="mb-3">
+					<label for="addressType" class="form-label" >Address Type</label>
+					<input type="text" class="form-control" id="addAdressType"  required>
+					<p class="error-style w-100 text-center" id="addAdressTypeError"></p>
+				  </div>
+                <div class="mb-3">
+                    <label for="addAddressLine1" class="form-label" >Address Line 1</label>
+                    <input type="text" class="form-control" id="addAddressLine1"  required>
+                    <p class="error-style w-100 text-center" id="addAddressLine1Error"></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="addAddressLine2" class="form-label" >Address Line 2</label>
+                    <input type="text" class="form-control" id="addAddressLine2"  required>
+                    <p class="error-style w-100 text-center" id="addAddressLine2Error"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addCity" class="form-label" >City</label>
+                    <input type="text" class="form-control" id="addCity" required>
+                    <p class="error-style w-100 text-center" id="addCityError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addState" class="form-label" >State</label>
+                    <input type="text" class="form-control" id="addState"  required>
+                    <p class="error-style w-100 text-center" id="addStateError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addCountry" class="form-label" >Country</label>
+                    <input type="text" class="form-control" id="addCountry" required>
+                    <p class="error-style w-100 text-center" id="addCountryError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addZipCode" class="form-label" >Zip Code</label>
+                    <input type="number" class="form-control" id="addZipCode"  required>
+                    <p class="error-style w-100 text-center" id="addZipCodeError"></p>
+                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary"  id="submitAddAddressForm">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+	  <!--Edit Address-->
+	  <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="addAdderessyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editAddressLabel">Edit Address</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="editAddressForm">
+				<div class="mb-3" hidden>
+					
+					<input type="text" class="form-control" id="addressId"  required >
+					
+				  </div>
+                <div class="mb-3">
+                  <label for="editFirstName" class="form-label" >First Name</label>
+                  <input type="text" class="form-control" id="editAdressFirstName"  required>
+                  <p class="error-style w-100 text-center" id="editAdressFirstNameError"></p>
+                </div>
+                <div class="mb-3">
+                  <label for="editLastName" class="form-label" >Last Name</label>
+                  <input type="text" class="form-control" id="editAddressLastName">
+                  <p class="error-style w-100 text-center" id="editAddressLastNameError"></p>
+                </div>
+				<div class="mb-3">
+					<label for="addressType" class="form-label" >Address Type</label>
+					<input type="text" class="form-control" id="editAddressType"  required>
+					<p class="error-style w-100 text-center" id="editAdressTypeError"></p>
+				  </div>
+                <div class="mb-3">
+                    <label for="addAddressLine1" class="form-label" >Address Line 1</label>
+                    <input type="text" class="form-control" id="editAddressLine1"  required>
+                    <p class="error-style w-100 text-center" id="editAddressLine1Error"></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="addAddressLine2" class="form-label" >Address Line 2</label>
+                    <input type="text" class="form-control" id="editAddressLine2"  required>
+                    <p class="error-style w-100 text-center" id="editAddressLine2Error"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addCity" class="form-label" >City</label>
+                    <input type="text" class="form-control" id="editCity" required>
+                    <p class="error-style w-100 text-center" id="editCityError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addState" class="form-label" >State</label>
+                    <input type="text" class="form-control" id="editState"  required>
+                    <p class="error-style w-100 text-center" id="editStateError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addCountry" class="form-label" >Country</label>
+                    <input type="text" class="form-control" id="editCountry" required>
+                    <p class="error-style w-100 text-center" id="editCountryError"></p>
+                  </div>
+				  <div class="mb-3">
+                    <label for="addZipCode" class="form-label" >Zip Code</label>
+                    <input type="number" class="form-control" id="editZipCode"  required>
+                    <p class="error-style w-100 text-center" id="editZipCodeError"></p>
+                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary"  id="submitAddAddressForm">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Modal -->
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content p-8">
+			<div class="flex justify-between items-center mb-4">
+				<h3 class="font-bold text-gray-800" id="userModalLabel">Sign Up</h3>
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+						height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+						stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M18 6l-12 12" />
+						<path d="M6 6l12 12" />
+					</svg>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="needs-validation" novalidate>
+					<div class="mb-3">
+						<label for="fullName" class="mb-2 block text-gray-800">Name</label>
+						<input type="text"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="fullName" placeholder="Enter Your Name" required />
+						<div class="invalid-feedback">Please enter name.</div>
+					</div>
+					<div class="mb-3">
+						<label for="email" class="mb-2 block text-gray-800">Email address</label>
+						<input type="email"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="email" placeholder="Enter Email address" autocomplete="email" required />
+						<div class="invalid-feedback">Please enter email.</div>
+					</div>
+					<div class="mb-5">
+						<label for="password" class="mb-2 block text-gray-800">Password</label>
+						<input type="password"
+							class="form-control border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+							id="password" placeholder="Enter Password" required />
+						<div class="invalid-feedback">Please enter password.</div>
+						<span class="block mt-1 text-sm text-gray-500">
+							By Signup, you agree to our
+							<a href="#!" class="text-green-600">Terms of Service</a>
+							&
+							<a href="#!" class="text-green-600">Privacy Policy</a>
+						</span>
+					</div>
+
+					<button type="submit"
+						class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 justify-center">
+						Sign Up
+					</button>
+				</form>
+			</div>
+			<div class="modal-footer flex border-0 justify-center mt-3">
+			
+				<a href="#" class="text-green-600 ml-1">Sign in</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Shop Cart -->
+
+<div class="offcanvas offcanvas-right" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header border-b">
+		<div>
+			<h5 id="offcanvasRightLabel">Shop Cart</h5>
+			<span>Location in 382480</span>
+		</div>
+		<button type="button" class="btn-close text-inherit" data-bs-dismiss="offcanvas" aria-label="Close">
+			<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+				height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+				stroke-linejoin="round">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M18 6l-12 12" />
+				<path d="M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
+	<div class="offcanvas-body p-4">
+		<div>
+			<!-- alert -->
+			<div class="bg-red-500 bg-opacity-25 text-red-800 mb-3 rounded-lg p-4" role="alert">
+				You’ve got FREE delivery. Start
+				<a href="#!" class="alert-link">checkout now!</a>
+			</div>
+			<ul class="list-none">
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="/assets/images/products/product-img-1.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Haldiram's Sev Bhujia</h6>
+									</a>
+									<span><small class="text-gray-500">.98 / lb</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$5.00</span>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-2.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<a href="shop-single.html" class="text-inherit">
+										<h6>NutriChoice Digestive</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-red-600">$20.00</span>
+							<div class="line-through text-gray-500 small">$26.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-3.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Cadbury 5 Star Chocolate</h6>
+									</a>
+									<span><small class="text-gray-500">1 kg</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-4.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Onion Flavour Potato</h6>
+									</a>
+									<span><small class="text-gray-500">250g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$20.00</div>
+						</div>
+					</div>
+				</li>
+				<!-- list group -->
+				<li class="py-3 border-t border-b">
+					<div class="flex items-center">
+						<div class="w-1/2 md:w-1/2 lg:w-3/5">
+							<div class="flex">
+								<img src="assets/images/products/product-img-5.jpg" alt="Ecommerce" class="w-16 h-16" />
+								<div class="ml-3">
+									<!-- title -->
+									<a href="shop-single.html" class="text-inherit">
+										<h6>Salted Instant Popcorn</h6>
+									</a>
+									<span><small class="text-gray-500">100g</small></span>
+									<!-- text -->
+									<div class="mt-2 small leading-none">
+										<a href="#!" class="text-green-600 flex items-center">
+											<span class="mr-1 align-text-bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="14"
+													height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+													stroke-linecap="round" stroke-linejoin="round">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M4 7l16 0" />
+													<path d="M10 11l0 6" />
+													<path d="M14 11l0 6" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</span>
+											<span class="text-gray-500 text-sm">Remove</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- input group -->
+						<div class="w-1/3 md:w-1/4 lg:w-1/5">
+							<!-- input -->
+							<div class="input-group input-spinner rounded-lg flex justify-between items-center">
+								<input type="button" value="-" class="button-minus w-8 py-1 border-r cursor-pointer border-gray-300"
+									data-field="quantity" />
+								<input type="number" step="1" max="10" value="1" name="quantity"
+									class="quantity-field w-9 px-2 text-center h-7 border-0 bg-transparent" />
+								<input type="button" value="+" class="button-plus w-8 py-1 border-l cursor-pointer border-gray-300"
+									data-field="quantity" />
+							</div>
+						</div>
+						<!-- price -->
+						<div class="w-1/5 text-center md:w-1/5">
+							<span class="font-bold text-gray-800">$15.00</span>
+							<div class="line-through text-gray-500 small">$25.00</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<!-- btn -->
+			<div class="flex justify-between mt-4">
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+					Continue Shopping
+				</a>
+				<a href="#!"
+					class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300">
+					Update Cart
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body p-6">
+				<div class="flex justify-between items-start">
+					<div>
+						<h5 class="mb-1" id="locationModalLabel">Choose your Delivery Location</h5>
+						<p class="text-sm">Enter your address and we will specify the offer you area.</p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+							height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+							stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M18 6l-12 12" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+				<div class="my-5">
+					<label for="searhNavbarSecond" class="invisible hidden">Search</label>
+					<input
+						class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+						type="search" placeholder="Search for products" id="searhNavbarSecond" />
+				</div>
+				<div class="flex justify-between items-center mb-2">
+					<h6>Select Location</h6>
+					<a href="#" class="btn btn-outline-gray-400 text-gray-500 btn-sm">Clear All</a>
+				</div>
+				<div>
+					<div data-simplebar style="height: 300px">
+						<div class="list-none">
+							<a href="#"
+								class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3 active active:bg-gray-100 bg-gray-100">
+								<span>Alabama</span>
+								<span>Min:$20</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Alaska</span>
+								<span>Min:$30</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Arizona</span>
+								<span>Min:$50</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>California</span>
+								<span>Min:$29</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Colorado</span>
+								<span>Min:$80</span>
+							</a>
+							<a href="#" class="border-b hover:bg-gray-100 flex justify-between items-center px-2 py-3">
+								<span>Florida</span>
+								<span>Min:$90</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<main>
+		<div class="mt-4">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full">
+						<!-- breadcrumb -->
+						<nav aria-label="breadcrumb">
+							<ol class="flex flex-wrap">
+								<li class="inline-block text-green-600 mr-2">
+									<a href="#!">
+										Home
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+											height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+											fill="none" stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M9 6l6 6l-6 6" />
+										</svg>
+									</a>
+								</li>
+								<li class="inline-block text-green-600 mr-2">
+									<a href="#!">
+										Shop
+
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
+											height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+											fill="none" stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M9 6l6 6l-6 6" />
+										</svg>
+									</a>
+								</li>
+								<li class="inline-block text-gray-500 active" aria-current="page">Shop Checkout</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="my-10">
+			<div class="container">
+				<div class="flex flex-wrap">
+					<div class="w-full mb-6">
+						<!-- card -->
+
+						<h1 class="text-xl">Checkout</h1>
+					
+					</div>
+				</div>
+
+				<div class="flex flex-wrap lg:flex-nowrap gap-10">
+					<div class="lg:w-3/5 md:w-full">
+						<!-- accordion -->
+						<div class="accordion accordion-flush" id="accordionFlushExample">
+							<!-- accordion item -->
+						
+								<div class="border-b border-gray-300 py-4">
+									<div class="flex justify-between items-center">
+										<!-- heading one -->
+										<a href="#"
+											class="flex flex-row gap-2 items-center text-gray-900 text-md font-bold collapsed"
+											data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+											aria-expanded="true" aria-controls="flush-collapseOne">
+											<svg xmlns="http://www.w3.org/2000/svg"
+												class="icon icon-tabler icon-tabler-map-pin inline-block text-gray-500"
+												width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" fill="none" stroke-linecap="round"
+												stroke-linejoin="round">
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+												<path
+													d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+											</svg>
+											Add delivery address
+										</a>
+										<!-- btn -->
+										<button onclick="openAddAdressModal()"
+											class="btn btn-sm gap-x-2 bg-transparent text-green-600 border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+											data-bs-toggle="modal" data-bs-target="#addAddressModal">
+											Add a new address
+									</button>
+										<!-- collapse -->
+									</div>
+									<div id="flush-collapseOne" class="accordion-collapse collapse show"
+										data-bs-parent="#accordionFlushExample">
+										<div class="my-6">
+											<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+												<% address.forEach((address, index) => { %>
+													<div class="w-full">
+														<!-- Card -->
+														<div class="card card-body flex-col gap-4 p-4 border rounded-lg shadow-md bg-white">
+															<div class="relative flex items-center gap-2">
+																<input 
+																class="form-check-input border border-secondary rounded-circle" 
+																type="radio" 
+																name="selectedAddress" 
+																id="addressRadio<%= index %>" 
+																value="<%= address._id %>"
+																<% if (address.isDefault) { %> checked <% } %>
+															/>
+															<label class="form-check-label text-dark fw-semibold" for="addressRadio<%= index %>">
+																<%= address.addressType %>
+															</label>
+															</div>
+															<!-- Address Details -->
+															<address class="not-italic text-gray-700">
+																<strong><%= address.firstName %> <%= address.lastName %></strong><br />
+																<%= address.addressLine1 %> <br />
+																<%= address.addressLine2 %> <br />
+																<%= address.city %>, <%= address.state %> <br />
+																<%= address.country %> - <%= address.zipCode %>
+															</address>
+															<!-- Default Address Indicator -->
+															<% if (address.isDefault) { %>
+																<span class="text-red-600 font-semibold">Default Address</span>
+															<% } %>
+											
+															<span class="text-green-600 font-semibold cursor-pointer" onclick="openEditAddressModal(
+																'<%=address._id%>',
+																'<%=address.addressType%>',
+																'<%=address.firstName%>',
+																'<%=address.lastName%>',
+																'<%=address.addressLine1%>',
+																'<%=address.addressLine2%>',
+																'<%=address.city%>',
+																'<%=address.state%>',
+																'<%=address.country%>',
+																'<%=address.zipCode%>',)">Edit</span>
+															<span class="text-red-600 font-semibold cursor-pointer" onclick="deleteAddress('<%= address._id%>')">Delete</span>
+															
+														</div>
+													</div>
+												<% }); %>
+											</div>
+											
+</div>
+
+									</div>
+								</div>
+
+							
+							
+
+							<!-- accordion item -->
+							<div class="py-4">
+								<div class="py-4">
+									<a href="#" class="flex flex-row gap-2 items-center text-gray-900 text-md font-bold"
+										data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false"
+										aria-controls="flush-collapseFour">
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-credit-card inline-block text-gray-500"
+											width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+											stroke="currentColor" fill="none" stroke-linecap="round"
+											stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
+											<path d="M3 10l18 0" />
+											<path d="M7 15l.01 0" />
+											<path d="M11 15l2 0" />
+										</svg>
+										Payment Method
+									</a>
+									<div id="flush-collapseFour" class="accordion-collapse collapse"
+										data-bs-parent="#accordionFlushExample">
+										<div class="mt-6 flex flex-col gap-4">
+											<div class="card">
+												<div class="flex-auto p-4">
+													<div class="flex gap-3">
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="radio" value="Razorpay" name="selectedPayement" id="razorpay-radio" />
+															<label class="form-check-label text-gray-800" for="paypal"></label>
+														</div>
+														<div class="flex flex-col gap-1">
+															<h5 class="text-base">Payment with Razorpay</h5>
+															<p class="text-sm">You will be redirected to Razorpay website to
+																complete your purchase securely.</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="card">
+												<div class="flex-col flex p-6 gap-4">
+													<div class="flex gap-3">
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="radio" name="selectedPayement" value="Cash on Delivery" id="cashonDelivery" checked />
+
+															<label class="form-check-label text-gray-800" for="cashonDelivery"></label>
+														</div>
+														<div class="flex flex-col gap-1">
+															<h5 class="text-base">Cash on Delivery</h5>
+															<p class="text-sm">Pay with cash when your order is delivered.</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="flex justify-end">
+												
+												<button onclick="placeOrder()"
+												id="placeOrderBtn"
+													class="ml-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 collapsed">
+													Place Order
+												</button>
+
+												<button onclick=""
+
+												id="placeOrderBtnWithOnline"
+													class="placeOrderW ml-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 collapsed">
+													Place Order 
+												</button>
+												<div id="paypal-button-container"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="w-full md:w-full lg:w-1/3 ">
+						<div>
+							<div class="card shadow-sm">
+								<h5 class="px-6 py-4 border-b border-gray-300">Order Details</h5>
+								<ul class="flex flex-col">
+									<!-- list group item -->
+									<% cart.products.forEach((cartProduct, index) => { %>
+										<li class="py-3 px-6 border-b border-gray-300">
+											<div class="flex flex-wrap items-center">
+												<div class="w-1/5 md:w-1/5">
+													<img src="<%=cartProduct.productImg%>" alt="Ecommerce"
+														class="w-10" />
+												</div>
+												<div class="w-2/5 md:w-2/5 flex flex-col flex-wrap gap-1">
+													<h6><%=cartProduct.productName%></h6>
+													<span class="text-gray-700 text-sm"><%=cartProduct.selectedVariety.value%><%=cartProduct.selectedVariety.type%></span>
+												</div>
+												<div class="w-1/5 md:w-1/5 text-center text-gray-700">
+													<span><%=cartProduct.quantity%></span>
+												</div>
+												<div class="w-1/5 text-center md:w-1/5">
+													<span class="font-bold text-gray-800">
+														<% if (cartProduct.discountPrice!=cartProduct.productPrice) { %>
+															₹<%=cartProduct.discountPrice%>
+														<% } else{%>
+															₹<%=cartProduct.productPrice%>
+															<% }%>
+														
+													</span>
+												</div>
+											</div>
+										</li>
+										<%})%>
+
+									<!-- list group item -->
+									<li class="py-3 px-6 border-b border-gray-300 flex flex-col gap-2">
+										<div class="flex items-center justify-between">
+											<div>Item Subtotal</div>
+											<div class="font-bold text-gray-800"> ₹<%= cart.subtotal %></div>
+										</div>
+										<div class="flex items-center justify-between">
+											<div class="flex items-center gap-2 justify-center">
+												<span>Shipping Cost</span>
+												<span class="text-gray-700" data-bs-toggle="tooltip"
+													title="Default tooltip">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+														<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+														<path d="M12 9h.01" />
+														<path d="M11 12h1v4h1" />
+													</svg>
+												</span>
+											</div>
+											<div class="font-bold text-gray-800">₹<%= cart.shippingCost %></div>
+										</div>
+									</li>
+									<!-- list group item -->
+									<li class="py-3 px-6">
+										<div class="flex items-center justify-between font-bold text-gray-800">
+											<div>Subtotal</div>
+											<div><%if(cart?.coupon?.name){%>
+												<%if(cart?.coupon?.isMax==true){%>
+												<span class="text-danger pe-3" style="text-decoration: line-through;">
+													₹<%= cart.grandTotal + cart.coupon.maxPurchase%>
+												</span><%} else{%>
+													<span class="text-danger pe-3" style="text-decoration: line-through;">
+														₹<%= cart.grandTotal / (1 - cart.coupon.discount / 100)%>
+													</span>
+												<%}%>
+												<%}%>
+												₹<%= cart.grandTotal%>
+												<%if(cart.coupon.discount!=0){%>
+													<small class="text-danger"><%=cart.coupon.discount%>%off</small>
+													<%}%>
+
+
+													<%if(cart?.coupon?.isMax==true){%>
+														<small class="text-danger">-<%=cart.coupon.maxPurchase%></small>
+														<%}%>
+											</div>
+												
+										</div>
+										
+									</li>
+								</ul>
+								<div class="flex flex-col gap-3" style="width: 80%; padding-left: 1.5rem; " >
+									<h5>Add Coupon Code</h5>
+									<form class="flex flex-col gap-3"> 
+										<%if(cart?.coupon?.name){%>
+											<div class="flex flex-col gap-2">
+												<div>
+													
+													<input type="text"
+													id="couponCode"
+														class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+														id="giftcard" value="<%=cart?.coupon?.name%>" readonly placeholder="Enter Coupon Code Here" />
+												</div>
+												
+												<!-- btn -->
+												<div class="grid">
+													<button type="submit" onclick="removeCoupon(event)"
+														class="btn btn-danger">
+														Remove Coupon
+													</button>
+												</div>
+											</div>
+											<%} else{%>
+												<div class="flex flex-col gap-2">
+													<div>
+														
+														<input type="text"
+														id="couponCode"
+															class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+															id="giftcard" placeholder="Enter Coupon Code Here" />
+													</div>
+													<!-- btn -->
+													<div class="grid">
+														<button type="submit" onclick="redeemCoupon(event)"
+															class="btn btn-success">
+															Redeem
+														</button>
+													</div>
+												</div>
+												<%}%>
+										
+
+										<p class="text-gray-500 text-sm">Terms & Conditions apply</p>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Modal -->
+	<div class="modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Delete address</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h6>Are you sure you want to delete this address?</h6>
+					<p class="mb-6">
+						Jitu Chauhan
+						<br />
+
+						4450 North Avenue Oakland,
+						<br />
+
+						Nebraska, United States,
+						<br />
+
+						402-776-1106
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-outline-gray-400"
+						data-bs-dismiss="modal">
+						Cancel
+					</button>
+					<button type="button"
+						class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700">
+						Delete
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- modal body -->
+				<div class="modal-body p-6">
+					<div class="flex justify-between items-center mb-4">
+						<div>
+							<h5 class="font-bold text-gray-800 text-base" id="userModalLabel">New Shipping Address</h5>
+							<p class="text-sm">Add new shipping address for your order delivery.</p>
+						</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700"
+								width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+								fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M18 6l-12 12" />
+								<path d="M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+
+					<div class="flex flex-wrap gap-3">
+						<div class="w-full">
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="First name" aria-label="First name" required="" />
+						</div>
+
+						<div class="w-full">
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="Last name" aria-label="Last name" required="" />
+						</div>
+
+						<div class="w-full">
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="Address Line 1" />
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="Address Line 2" />
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="City" />
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<select
+								class="border border-gray-300 text-gray-600 rounded-lg focus:ring-green-600 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base">
+								<option selected="">India</option>
+								<option value="1">UK</option>
+								<option value="2">USA</option>
+								<option value="3">UAE</option>
+							</select>
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<select
+								class="border border-gray-300 text-gray-600 rounded-lg focus:ring-green-600 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base">
+								<option selected="">Gujarat</option>
+								<option value="1">Northern Ireland</option>
+								<option value="2">Alaska</option>
+								<option value="3">Abu Dhabi</option>
+							</select>
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="Zip Code" />
+						</div>
+						<div class="w-full">
+							<!-- button -->
+							<input type="text"
+								class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+								placeholder="Business Name" />
+						</div>
+						<div class="w-full">
+							<div class="relative flex items-center gap-2">
+								<input
+									class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded-full focus:ring-green-600 focus:outline-none focus:ring-2"
+									type="checkbox" value="" id="flexCheckDefault" />
+								<!-- label -->
+								<label class="text-gray-800 inline-block" for="flexCheckDefault">Set as Default</label>
+							</div>
+						</div>
+						<!-- button -->
+						<div class="w-full text-end">
+							<button type="button"
+								class="btn inline-flex items-center gap-x-2 bg-transparent text-green-600 border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+								data-bs-dismiss="modal">
+								Cancel
+							</button>
+							<button
+								class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+								type="button">
+								Save Address
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- footer -->
+<footer class="bg-gray-200 py-8">
+	<div class="container">
+		<div class="flex flex-wrap md:gap-4 lg:gap-0 py-4 mb-6">
+			<div class="w-full md:w-full lg:w-1/3 flex flex-col gap-4 mb-6">
+				<h6>Categories</h6>
+				<div class="flex flex-wrap">
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Vegetables & Fruits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Breakfast & instant food</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Bakery & Biscuits</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Atta, rice & dal</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Sauces & spreads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Organic & gourmet</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Baby care</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cleaning essentials</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Personal care</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2">
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Dairy, bread & eggs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Cold drinks & juices</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Tea, coffee & drinks</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Masala, oil & more</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Chicken, meat & fish</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Paan corner</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pharma & wellness</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Home & office</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Pet care</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="w-full md:w-full lg:w-2/3">
+				<div class="flex flex-wrap">
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>Get to know us</h6>
+						<!-- list -->
+						<ul class="flex flex-col gap-2">
+							<li><a href="#!" class="inline-block hover:text-green-600">Company</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">About</a></li>
+							<li><a href="#!" class="inline-block">Blog</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Help Center</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Our Value</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4 mb-6">
+						<h6>For Consumers</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Payments</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Shipping</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Product Returns</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">FAQ</a></li>
+							<li><a href="shop-checkout.html" class="inline-block">Shop Checkout</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Become a Shopper</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Shopper Opportunities</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Become a Shopper</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Earnings</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Ideas & Guides</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">New Retailers</a></li>
+						</ul>
+					</div>
+					<div class="w-1/2 sm:w-1/2 md:w-1/4 flex flex-col gap-4">
+						<h6>Freshcart programs</h6>
+						<ul class="flex flex-col gap-2">
+							<!-- list -->
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart programs</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Gift Cards</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Promos & Coupons</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Freshcart Ads</a></li>
+							<li><a href="#!" class="inline-block hover:text-green-600">Careers</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="gap-y-4 flex flex-wrap items-center justify-center lg:justify-start">
+				<div class="lg:w-2/5 lg:text-left text-center">
+					<div class="flex md:flex-row flex-col gap-3 md:gap-6 items-center">
+						<div class="text-gray-900">Payment Partners</div>
+						<ul class="flex items-center flex-row gap-4">
+							<li>
+								<a href="#!"><img src="assets/images/payment/amazonpay.svg" alt="amazon pay" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/american-express.svg" alt="american express" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/mastercard.svg" alt="mastercard" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/paypal.svg" alt="paypal" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/payment/visa.svg" alt="visa" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="lg:w-3/5 flex justify-end">
+					<div class="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+						<div class="text-gray-900">Get deliveries with FreshCart</div>
+						<ul class="flex flex-row gap-2">
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/appstore-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+							<li>
+								<a href="#!"><img src="assets/images/appbutton/googleplay-btn.svg" alt="" style="width: 140px" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t py-4 border-gray-300">
+			<div class="flex flex-col md:flex-row items-center gap-3">
+				<div class="md:w-1/2">
+					<span class="text-sm text-gray-500">
+						©
+						<span id="copyright">
+							<script>
+								document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()));
+							</script>
+						</span>
+						FreshCart TailwindCSS eCommerce HTML Template. Powered by
+						<a href="https://codescandy.com/" target="_blank" class="text-green-600">Codescandy</a>
+						.
+					</span>
+				</div>
+				<div class="md:w-1/2 flex md:justify-end items-center">
+					<div class="flex flex-row gap-5 items-center">
+						<div class="text-gray-500">Follow us on</div>
+						<ul class="flex items-center justify-end text-sm gap-1">
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-facebook"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-x"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+										<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+									</svg>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#!"
+									class="inline-flex justify-center items-center align-middle text-center select-none border font-normal whitespace-no-wrap rounded leading-normal no-underline h-8 w-8 border-gray-300 hover:border-green-600 hover:text-green-600 transition ease-in-out"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-brand-instagram"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+										<path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+										<path d="M16.5 7.5l0 .01" />
+									</svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+	document.getElementById("placeOrderBtnWithOnline").addEventListener("click", async function () {
+		try {
+			const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+      const selectedPayment= document.querySelector('input[name="selectedPayement"]:checked').value;
+			const res = await fetch("/razorpay/create-order", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ amount: '<%= cart.subtotal + cart.shippingCost %>' ,selectedAddress:selectedAddress,selectedPayment:selectedPayment}) // Amount in INR
+			});
+
+			const order = await res.json();
+
+			const options = {
+				key: "rzp_test_7JLPi5q56mAlpG", // Replace with your Razorpay Key ID
+				amount: order.amount,
+				currency: "INR",
+				name: "FreshKart",
+				description: "FreshKart",
+				order_id: order.id,
+				handler: async function (response) {
+					const verifyRes = await fetch("/razorpay/verify-payment", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(response)
+					});
+
+					const verifyData = await verifyRes.json();
+					Swal.fire(verifyData.message, verifyData.test, "success");
+					setTimeout(()=>{
+                window.location.href="/account/orders";
+                },1000)
+				}
+			};
+
+			const rzp = new Razorpay(options);
+			rzp.open();
+		} catch (error) {
+			console.error("Payment failed", error);
+		}
+	});
+</script>
+<script src="/js/checkout.js" defer></script>
+	<script src="/assets/js/vendors/language.js"></script>
+	<!-- Libs JS -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Theme JS -->
+
+<script src="/assets/js/theme.min.js"></script>
+
+<script src="/js/userAddress.js"></script>
+
+</body>
+
+
+<!-- Mirrored from freshcart-tailwind.codescandy.com/shop-checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:08 GMT -->
+</html>

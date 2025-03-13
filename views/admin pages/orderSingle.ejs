@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Mirrored from freshcart-tailwind.codescandy.com/dashboard/order-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:40 GMT -->
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="../assets/images/favicon/favicon.ico"
+    />
+
+    <!-- Libs CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="../../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../assets/libs/simplebar/dist/simplebar.min.css"
+    />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../assets/css/theme.min.css" />
+
+    <title>TailwindCSS Dashboard eCommerce HTML Template - FreshCart</title>
+  </head>
+
+  <body>
+    <!-- main -->
+    <div>
+      <!-- navbr -->
+       <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">User Want to return this order</h5>
+          <button type="button" class="btn-close"  ></button>
+        </div>
+        <div class="modal-body">
+          <p>Return Reason : <%=order?.returnDetails?.reason%></p>
+          <%if(order?.returnDetails?.additionalDetails!=""){%>
+          <p>Additional Details:<%=order?.returnDetails?.additionalDetails%></p>
+          <%}%>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="rejectRequest('<%=order._id%>')" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="returnProduct('<%=order._id%>')">Verify</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <%-include('./partials/header')%>
+      <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10">
+        <main class="main-content-wrapper "  style="padding-top: 30px; width: 100%;">
+            <div class="container">
+
+                <!-- row -->
+
+                <div class="grid grid-cols-1">
+                    <!-- card -->
+                    <div class="card h-full card-lg">
+                        <div class="card-body p-6">
+                            <div class="flex flex-col md:flex-row gap-4 justify-between">
+                                <div class="flex items-center">
+                                    <h3 class="mb-0 mr-3">Order ID: <%=order.orderId%></h3>
+                                    <span
+                                        class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%=order.orderStatus%></span>
+                                </div>
+                                <!-- select option -->
+                                <div class="flex flex-col md:flex-row gap-3 md:items-center">
+                                    <div class="">
+                                        <% if (order.orderStatus === "Shipped") { %>
+                                            <select
+                                            class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Shipped" selected>Shipped</option>
+                                            <option value="Delivered">Delivered</option>
+                                            
+                                        </select>
+                                        <% } else if (order.orderStatus === "Delivered") { %>
+                                            <button class="btn btn-success">Order Delivered</button>
+                                        <% } else if (order.orderStatus === "Pending"){ %>
+                                            <select
+                                            class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                                            <option value="Pending" selected>Pending</option>
+                                            <option value="Shipped">Shipped</option>
+                                            <option value="Delivered">Delivered</option>
+                                        </select>
+                                        <% } else if (order.orderStatus === "Cancelled"){%>
+                                           <button class="btn btn-secondary">Order Cancelled</button>
+                                         
+                                         <% } else if (order.orderStatus === "Returning"){%>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">User Returned This Product Click Here To Verify!</button>
+                                                 <%}%>
+                                        
+                                    </div>
+                                    <!-- button -->
+                                    <div class="flex gap-2 items-center">
+                                    <% if (order.orderStatus != "Cancelled" && order.orderStatus !="Delivered" && order.orderStatus != "Returning") { %>
+                                        <a href="#"
+                                        onclick="changeStatus('<%=order._id%>')"
+                                            class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
+                                            Save
+                                        </a>
+                                        <%}%>
+                                    
+                                      
+                                        <a href="#"
+                                            class="btn inline-flex items-center gap-x-2 bg-gray-200 text-gray-800 border-gray-200 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
+                                            Download Invoice
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <div class="grid grid-cols-12">
+                                    <!-- address -->
+                                    <div class="lg:col-span-4 md:col-span-4 col-span-12">
+                                        <div class="mb-6">
+                                            <h6>Customer Details : </h6>
+                                            <p class="mb-2 leading-relaxed">
+                                                <%=order.userName%>
+                                                <br />
+                                                <%=order.userEmail%>
+                                            </p>
+                                            <!-- <a href="#" class="text-green-600">View Profile</a> -->
+                                        </div>
+                                    </div>
+                                    <!-- address -->
+                                    <div class="lg:col-span-4 md:col-span-4 col-span-12">
+                                        <div class="mb-6">
+                                            <h6>Shipping Address :</h6>
+                                            <p class="mb-1 leading-relaxed">
+                                                <%=order.shippingAddress.firstName%> <%=order.shippingAddress.lastName%>
+                                                <br />
+                                                <%=order.shippingAddress.addressLine1%> ,  <%=order.shippingAddress.addressLine2%> , <%=order.shippingAddress.city%>  , <%=order.shippingAddress.zipCode%> 
+                                                <br />
+                                                <%=order.shippingAddress.state%> 
+                                                <br />
+                                                <%=order.shippingAddress.country%>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- address -->
+                                    <div class="lg:col-span-4 md:col-span-4 col-span-12">
+                                        <div class="mb-6">
+                                            <h6>Order Details</h6>
+                                            <p class="mb-1 leading-relaxed">
+                                                Order ID:
+                                                <span class="text-gray-800"><%=order.orderId%></span>
+                                                <br />
+                                                Order Date:
+                                                <span class="text-gray-800"><%=order.renderOrderDateAndTime%></span>
+                                                <br />
+                                                Order Total:
+                                                <span class="text-gray-800">₹<%=order.subTotal%></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1">
+                            <div class="relative overflow-x-auto">
+                                <table class="text-left w-full whitespace-nowrap">
+                                    <thead class="bg-gray-200 text-gray-700">
+                                        <tr class="border-transparent !border-b-0">
+                                            <th scope="col" class="px-6 py-3">Products</th>
+                                            <th scope="col" class="px-6 py-3">Quantity</th>
+                                            <th scope="col" class="px-6 py-3">Variety</th>
+                                            <th scope="col" class="px-6 py-3">Vareity Measurement</th>
+                                            <th scope="col" class="px-6 py-3">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- tbody -->
+                                    <tbody>
+                                        <%order.products.forEach((order)=>{%>
+                                            <tr class="border-b border-gray-300">
+                                                <td class="py-3 px-6 text-left">
+                                                    <a href="#" class="text-inherit">
+                                                        <div class="flex items-center gap-2 w-full">
+                                                            <div class="flex-0">
+                                                                <img src="<%=order.productPic%>"
+                                                                    alt="" class="h-12 w-12" />
+                                                            </div>
+                                                            <div class="">
+                                                                <h5 class="mb-0 text-base"><%=order.name%></h5>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td class="py-3 px-6 text-left"><%=order.quantity%></td>
+                                                <td class="py-3 px-6 text-left"><%=order.variety%></td>
+                                                <td class="py-3 px-6 text-left"><%=order.varietyMeasurement%></td>
+                                                <td class="py-3 px-6 text-left">₹<%=order.price%></td>
+                                            </tr>
+                                            <%})%>
+                                      
+                                            <tr class="">
+                                             
+                                                <td colspan="1"
+                                                    class="font-medium text-gray-800 py-3 px-6 text-left border-b border-gray-300">
+                                                    <!-- text -->
+                                                    Sub Total
+                                                </td>
+                                                <td class="font-medium text-gray-800 border-b border-gray-300">
+                                                    <!-- text -->
+                                                    ₹<%=order.subTotal-order.shippingCost%>
+                                                </td>
+                                            </tr>
+                                        <tr class="">
+                                             
+                                            <td colspan="1"
+                                                class="font-medium text-gray-800 py-3 px-6 text-left border-b border-gray-300">
+                                                <!-- text -->
+                                                Shipping Cost
+                                            </td>
+                                            <td class="font-medium text-gray-800 border-b border-gray-300">
+                                                <!-- text -->
+                                                ₹<%=order.shippingCost%>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="">
+                                       
+                                            <td colspan="1"
+                                                class="font-semibold text-gray-800 py-3 px-6 text-left border-b border-gray-300">
+                                                <!-- text -->
+                                                Grand Total
+                                            </td>
+                                            <td class="font-semibold text-gray-800 py-3 border-b border-gray-300">
+                                                <!-- text -->
+                                                ₹<%=order.subTotal%>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="">
+                                    <h6 class="mb-2">Payment Info</h6>
+                                    <span><%=order.paymentDetails.method%></span>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Libs JS -->
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+    <!-- Theme JS -->
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+
+  <!-- Mirrored from freshcart-tailwind.codescandy.com/dashboard/order-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:40 GMT -->
+</html>
+
+
+
+
+
+		
+
+
+	<!-- Libs JS -->
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Theme JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../assets/js/theme.min.js"></script>
+
+<script>
+    async function returnProduct(orderId){
+        try{
+            fetch("/admin/orderDetail/returnProduct",{
+                  method: "put",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({orderId:orderId}),
+              }).then((response)=>response.json())
+              .then((data)=>{
+                  if(data.message){
+                      Swal.fire({
+                          title: data.message,
+                        
+                          icon: "success"
+                        });
+                        setTimeout(()=>{
+                          window.location.reload()
+                        },1000)
+                        
+                  }
+                  else{
+                      Swal.fire({
+                          title: data.error,
+                          text: "",
+                          icon: "success"
+                        });
+                  }
+                  
+              })
+    }catch(err){
+            console.log(err)
+        }
+    }
+   async function changeStatus(orderId){
+        console.log(orderId)
+        let statusSelect=document.querySelector(".statusSelect").value
+        
+        try{
+
+              fetch("/admin/orderDetail/changeStatus",{
+                  method: "put",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({orderId:orderId,selectedStatus:statusSelect}),
+              }).then((response)=>response.json())
+              .then((data)=>{
+                  if(data.message){
+                      Swal.fire({
+                          title: data.message,
+                        
+                          icon: "success"
+                        });
+                        setTimeout(()=>{
+                          window.location.reload()
+                        },1000)
+                        
+                  }
+                  else{
+                      Swal.fire({
+                          title: data.error,
+                          text: "",
+                          icon: "success"
+                        });
+                  }
+                  
+              })
+            }catch (error) {
+                console.error("An error occurred:", error);
+            } 
+    }
+</script>
+
+</body>
+
+
+<!-- Mirrored from freshcart.codescandy.com/tailwindcss/dashboard/order-single.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Mar 2025 06:18:40 GMT -->
+</html>
