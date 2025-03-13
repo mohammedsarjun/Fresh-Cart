@@ -100,6 +100,10 @@ app.get("/test",(req,res)=>{
   .render(
     path.join("../", "views", "admin pages","coupon"));
 })
+
+app.use((req, res) => {
+  res.status(404).render(path.join("../", "views", "404"));
+});
 app.listen(PORT,(err)=>{
     console.log(`server is running on port ${PORT}`)
 })
