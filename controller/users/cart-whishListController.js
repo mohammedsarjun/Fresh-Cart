@@ -14,9 +14,8 @@ async function cartPageRender(req, res) {
     let isStock=false
     let isValidCheckout=true
     let userCart = await Cart.findOne({ userId: req.session.userId });
-    userCart.coupon.name=null
-    userCart.coupon.discount=0
-    await userCart.save()
+   
+    
     if (!userCart) {
         userCart = new Cart({
             userId: req.session.userId,
@@ -33,7 +32,9 @@ async function cartPageRender(req, res) {
         userCart.grandTotal=0
         await userCart.save()
     }
-
+    userCart.coupon.name=null
+    userCart.coupon.discount=0
+    await userCart.save()
     //deleting Unlist Product 
     for(let i=0;i<userCart.products.length;i++){
       const productDetail= await Product.findOne({_id:userCart.products[i].productId})
@@ -490,7 +491,7 @@ async function wishlistPageRender(req, res) {
     let wishlist = await Wishlist.findOne({ userId: req.session.userId });
     let wishlistObj = [];
 
-    for (let i = 0; i < wishlist.products.length; i++) {
+    for (let i = 0; i < wishlist?.products?.length; i++) {
       if (wishlist.products[i].variety.varietyName != "items") {
         let productDetail = await Product.findOne({
           _id: wishlist.products[i].productId,

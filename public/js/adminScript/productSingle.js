@@ -234,12 +234,12 @@ async function productDeleteAction(productId){
                <span class="delete-icon d-flex align-items-center col-md-12 mt-3 mb-3"  onclick="removeVariety(event)"><i class="fa fa-trash"onclick="iRemoveVariety(event)"></i></span>
                 
                 <div class="col-md-4">
+                <small>Enter ${type}</small>
                     <input type="number" class="form-control varietyMeasurement varietyInputs" name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" id="" value="${varietyMeasurement}">
                 </div>
-                <div class="col-md-4">
-                    <input type="number" class="form-control varietyDiscount varietyInputs" name="${type}Discount" placeholder="Enter Discount"  id="" value="${varietyDiscount}">
-                </div>
+                
                  <div class="col-md-4">
+                 <small>Enter Stock</small>
                     <input type="number" class="form-control varietyStock varietyInputs" name="${type}Stock" placeholder="Enter Stock"  id="" value="${varietyStock}">
                 </div>
                  
@@ -269,9 +269,7 @@ async function productDeleteAction(productId){
                 <div class="col-md-4">
                     <input type="text" class="form-control itemPrice varietyInputs" name="${type}Variety" placeholder="Enter ${type} Price" value="${varietyMeasurement}">
                 </div>
-                <div class="col-md-4">
-                    <input type="number" class="form-control itemDiscount varietyInputs" name="${type}Discount" placeholder="Enter Discount" value="${varietyDiscount}">
-                </div>
+              
                 <div class="col-md-4">
                     <input type="number" class="form-control itemStock varietyInputs" name="${type}Stock" placeholder="Enter Stock" value="${varietyStock}">
                 </div>
@@ -418,7 +416,7 @@ console.log("hi")
     // If variety is not "items", process variety details
     if (variety && variety !== "items") {
         let varietyMeasurement = Array.from(document.querySelectorAll(".varietyMeasurement"));
-        let varietyDiscount = Array.from(document.querySelectorAll(".varietyDiscount"));
+   
         let varietyStock = Array.from(document.querySelectorAll(".varietyStock"));
 
         let perUnitRate=document.getElementById("editVarietyPrice");
@@ -431,11 +429,10 @@ console.log("hi")
         formData.append("variety", JSON.stringify(varietyValues)); // Convert to JSON string
     
         let varietyDetails = [];
-    
+    console.log(varietyStock)
         for (let i = 0; i < varietyMeasurement.length; i++) {
             varietyDetails.push({
                 varietyMeasurement: varietyMeasurement[i].value,
-                varietyDiscount: varietyDiscount[i].value,
                 varietyStock:varietyStock[i].value
             });
         }
@@ -450,7 +447,7 @@ console.log("hi")
     } else {
         // If variety is "items", process item-specific details
         let itemPrice = document.querySelector(".itemPrice");
-        let itemDiscount = document.querySelector(".itemDiscount");
+
         let itemStock=document.querySelector(".itemStock")
 
         let varietyDetails = [];
@@ -461,7 +458,7 @@ console.log("hi")
    
     varietyDetails.push({
         varietyPrice: itemPrice.value,
-        varietyDiscount: itemDiscount.value,
+
         itemStock:itemStock.value
     });
  

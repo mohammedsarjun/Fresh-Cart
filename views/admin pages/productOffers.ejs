@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .table th, .table td {
+    min-width: 150px; /* Adjust width as needed */
+    word-break: break-word; /* Prevents text overflow */
+    
+}
+    </style>
+    <link rel="stylesheet" href="/styles/validationCommon.css">
+    
+  </head>
+  <body style="overflow-x: hidden;">
+<!-- Edit Product Offer Modal -->
+<div class="modal fade" id="editOfferModal" tabindex="-1" aria-labelledby="editOfferModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editOfferModalLabel">Edit Product Offer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editOfferForm">
+                    <!-- Product Name (Disabled) -->
+                     <input type="text" name="" id="productOfferId" hidden>
+                    <div class="mb-3">
+                        <label for="editProductName" class="form-label">Product Name</label>
+                        <input type="text" id="editProductName" class="form-control" disabled>
+                    </div>
+
+                    <!-- Variety (Disabled) -->
+                    <div class="mb-3">
+                        <label for="editVariety" class="form-label">Variety</label>
+                        <input type="text" id="editVariety" class="form-control" disabled>
+                    </div>
+
+                    <!-- Variety Measurement (Disabled) -->
+                    <div class="mb-3">
+                        <label for="editVarietyMeasurement" class="form-label">Variety Measurement</label>
+                        <input type="text" id="editVarietyMeasurement" class="form-control" disabled>
+                    </div>
+
+                    <!-- Offer Percentage -->
+                    <div class="mb-3">
+                        <label for="editOfferPercentage" class="form-label">Offer Percentage</label>
+                        <input type="number" id="editOfferPercentage" class="form-control" min="0" max="100">
+                        <small id="offerPercentageError" class="text-danger"></small>
+                    </div>
+
+                    <!-- Start Date -->
+                    <div class="mb-3">
+                        <label for="editStartDate" class="form-label">Start Date</label>
+                        <input type="date" id="editStartDate" class="form-control">
+                        <small id="startDateError" class="text-danger"></small>
+                    </div>
+
+                    <!-- End Date -->
+                    <div class="mb-3">
+                        <label for="editEndDate" class="form-label">End Date</label>
+                        <input type="date" id="editEndDate" class="form-control">
+                        <small id="endDateError" class="text-danger"></small>
+                    </div>
+
+                    <!-- List/Unlist -->
+                    <div class="mb-3">
+                        <label for="editStatus" class="form-label">Status</label>
+                        <select id="editStatus" class="form-select">
+                            <option value="list">List</option>
+                            <option value="unlist">Unlist</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--add offer modal--> 
+
+<div class="modal fade" id="offerModal" tabindex="-1" aria-labelledby="offerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="offerModalLabel">Add Product Offer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="offerForm" onsubmit="event.preventDefault();">
+                    <!-- Select Product -->
+                    <div class="mb-3">
+                        <label for="productSelect" class="form-label">Select Product</label>
+                        <select class="form-select" id="productSelect" onchange="fetchProductVariety()">
+                            <option value="">Choose...</option>
+                            <% product.forEach((item) => { %>
+                                <option value="<%= item._id %>"><%= item.productName %></option>
+                            <% }) %>
+                        </select>
+                        <small class="text-danger" id="productError"></small>
+                    </div>
+
+                    <!-- Select Variety -->
+                    <div class="mb-3">
+                        <label for="varietySelect" class="form-label">Select Variety</label>
+                        <select class="form-select" id="varietySelect" disabled>
+                            <option value="">Choose...</option>
+                        </select>
+                        <small class="text-danger" id="varietyError"></small>
+                    </div>
+
+                    <!-- Select Start Date -->
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="startDate">
+                        <small class="text-danger" id="startDateError"></small>
+                    </div>
+
+                    <!-- Select End Date -->
+                    <div class="mb-3">
+                        <label for="endDate" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="endDate">
+                        <small class="text-danger" id="endDateError"></small>
+                    </div>
+
+                    <!-- Offer Percentage -->
+                    <div class="mb-3">
+                        <label for="offerPercentage" class="form-label">Offer Percentage</label>
+                        <input type="number" class="form-control" id="offerPercentage" min="0" max="100" placeholder="Enter discount %">
+                        <small class="text-danger" id="offerError"></small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success"  onclick="validateForm()">Save Offer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <%-include('./partials/header')%>
+    <div class="row">
+      <%-include('./partials/sidebar')%>
+      <div class="content col-lg-10">
+        <div class="content-head w-100 row mt-3">
+        <div class="offer-title col-lg-6">
+          <h2 class="">Product Offer</h2>
+        </div>
+        <div class="add-coupon-btn col-lg-6 text-end">
+            <button class="btn btn-success" onclick="" data-bs-toggle="modal" data-bs-target="#offerModal" >
+                Add Product Offer
+            </button>
+        </div>
+      </div>
+      <div class="content-body">
+        <form class="d-flex mb-3 mt-3" method="GET" action="" >
+          <input class="form-control me-2 w-25" type="text" name="search" 
+              placeholder="Search Product Offer..." id="product-search">
+          <button class="btn btn-dark" type="submit" onclick="">🔍</button>
+      </form>
+      <div class="table-responsive ">
+        <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <thead >
+              <tr>
+                 
+                  <th>S.No</th>
+                  <th>Product Name</th>
+                  <th>Variety</th>
+                  <th>Variety Meaurement</th>
+                  <th>Offer Percentage</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Current Status</th>
+                  <th>Edit Offer</th>
+                  <th>Delete Offer</th>
+              </tr>
+          </thead>
+          <tbody id="table-body">
+          <%offer.forEach((offer,i)=>{%>
+            <tr>
+                <td><%=i+1%></td>
+                <td><%=offer.selectProduct%></td>
+                <td><%=offer.selectVariety%></td>
+                <td><%=offer.selectedVarietyMeasurement%></td>
+                <td><%=offer.offerPercentage%></td>
+                  <td><%=offer.startDate%></td>
+            
+                  <td><%=offer.endDate%></td>
+                  <td><%if(offer.currentStatus=="active"){%>
+                    <button class="btn btn-success">Active</button>
+                  <%}%>
+                  <%if(offer.currentStatus=="expired"){%>
+                    <button class="btn btn-danger">Expired</button>
+                  <%}%>
+                  <%if(offer.currentStatus=="upcoming"){%>
+                    <button class="btn btn-warning text-white">Upcoming</button>
+                  <%}%>
+              <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editOfferModal" onclick="openUpdateProductOfferModal(
+                '<%=offer.productId%>',
+                '<%=offer.selectProduct%>',
+                '<%=offer.selectVariety%>',
+                '<%=offer.selectedVarietyMeasurement%>',
+                '<%=offer.offerPercentage%>',
+                '<%=offer.startDate%>',
+                '<%=offer.endDate%>',
+                '<%=offer.isListed%>'
+              )">Edit</button></td>
+              <td>
+                <button class="btn btn-danger" onclick="deleteProductOffer('<%=offer.productId%>')">Delete</button>
+              </td>
+  
+           
+          </tr>    
+            <%})%>
+       
+       
+          </tbody>
+            
+      </table>
+      <ul class="pagination mb-5">
+        <% if (page > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page - 1 %>">Previous</a>
+          </li>
+        <% } %>
+    
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= i === page ? 'active' : '' %>">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+    
+        <% if (page < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="?search=<%= searchQuery %>&page=<%= page + 1 %>">Next</a>
+          </li>
+        <% } %>
+      </ul>
+      </div>
+
+  
+      </div>
+      
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <script>
+
+function fetchProductVariety() {
+    const selectedProduct = document.getElementById("productSelect").value;
+    const varietySelect = document.getElementById("varietySelect");
+
+    if (selectedProduct) {
+        fetch(`/admin/productOffers/fetchVarietyDetail/${selectedProduct}`, {
+            method: "GET",
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();  // Convert response to JSON
+        })
+        .then(data => {
+        
+            if(data.productVariety!="items"){
+            console.log("Variety details:", data);
+
+            // **Clear previous options**
+            varietySelect.innerHTML = '<option value="">Choose...</option>';
+            varietySelect.disabled = false; // Enable the select
+
+            // **Add new options**
+            data.productMeasurement.forEach(measurement => {
+                const option = document.createElement("option");
+                option.value = measurement;
+                option.textContent = measurement;
+                varietySelect.appendChild(option);
+            });
+        }
+        else{
+            varietySelect.innerHTML = '<option value="">Choose...</option>';
+            varietySelect.disabled = true; // Enable the select
+        }
+        })
+        .catch(error => {
+            console.error("Error fetching variety details:", error);
+        });
+    } else {
+        // If no product is selected, disable and reset variety dropdown
+        varietySelect.innerHTML = '<option value="">Choose...</option>';
+        varietySelect.disabled = true;
+    }
+}
+
+  </script>
+  
+  <script>
+  async  function validateForm() {
+        let isValid = true;
+
+        // Get form fields
+        let productSelect = document.getElementById("productSelect");
+        let varietySelect = document.getElementById("varietySelect");
+        let startDate = document.getElementById("startDate");
+        let endDate = document.getElementById("endDate");
+        let offerPercentage = document.getElementById("offerPercentage");
+
+        // Get error fields
+        let productError = document.getElementById("productError");
+        let varietyError = document.getElementById("varietyError");
+        let startDateError = document.getElementById("startDateError");
+        let endDateError = document.getElementById("endDateError");
+        let offerError = document.getElementById("offerError");
+
+        // Clear previous errors
+        clearError(productSelect, productError);
+        clearError(varietySelect, varietyError);
+        clearError(startDate, startDateError);
+        clearError(endDate, endDateError);
+        clearError(offerPercentage, offerError);
+
+        // Validate Product
+        if (productSelect.value === "") {
+            showError(productSelect, productError, "Please select a product.");
+            isValid = false;
+        }
+
+        // Validate Variety
+        if (!varietySelect.disabled && varietySelect.value === "") {
+            showError(varietySelect, varietyError, "Please select a variety.");
+            isValid = false;
+        }
+
+        // Validate Start Date
+        if (startDate.value === "") {
+            showError(startDate, startDateError, "Please select a start date.");
+            isValid = false;
+        }
+
+        // Validate End Date
+        if (endDate.value === "") {
+            showError(endDate, endDateError, "Please select an end date.");
+            isValid = false;
+        } else if (startDate.value && new Date(endDate.value) <= new Date(startDate.value)) {
+            showError(endDate, endDateError, "End date must be after the start date.");
+            isValid = false;
+        }
+
+        // Validate Offer Percentage
+        let offerValue = parseFloat(offerPercentage.value);
+        if (isNaN(offerValue) || offerValue < 0 || offerValue > 100) {
+            showError(offerPercentage, offerError, "Please enter a valid percentage between 0 and 100.");
+            isValid = false;
+        }
+
+        if (isValid) {
+            const bodyContent={
+                selectedProduct:productSelect.value,
+                selectedVariety:varietySelect.value,
+                startDate:startDate.value,
+                endDate:endDate.value,
+                offerPercentage:offerPercentage.value,
+
+            }
+            console.log("its valid")
+            await fetch("/admin/productOffers/addOffer", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bodyContent)
+})
+.then(response => response.json()) // Convert response to JSON
+.then(data => {
+    if(data.message){
+        Swal.fire({
+        title: "Success!",
+        text: data.message, // Show message from the response
+        icon: "success",
+        confirmButtonText: "OK"
+    }).then(() => {
+        location.reload(); // Refresh the page when "OK" is clicked
+    });
+    }
+    if(data.error){
+        Swal.fire({
+        title: "Error!",
+        text: data.error, // Show message from the response
+        icon: "error",
+        confirmButtonText: "OK"
+    })
+    }
+   
+})
+.catch(error => {
+    Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK"
+    });
+    console.error("Fetch error:", error);
+});
+
+
+        }
+    }
+
+    function showError(input, errorElement, message) {
+        errorElement.textContent = message;
+        input.classList.add("is-invalid");
+    }
+
+    function clearError(input, errorElement) {
+        input.addEventListener("input", function () {
+            errorElement.textContent = "";
+            input.classList.remove("is-invalid");
+        });
+    }
+</script>
+
+    <script>
+
+document.getElementById("editOfferForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    // Get field values
+    const productOfferId=document.getElementById("productOfferId").value
+    const variety=document.getElementById("editVariety").value;
+    const varietyMeasurement=document.getElementById("editVarietyMeasurement").value;
+    const offerPercentage = document.getElementById("editOfferPercentage").value;
+    const startDate = document.getElementById("editStartDate").value;
+    const endDate = document.getElementById("editEndDate").value;
+    const status = document.getElementById("editStatus").value;
+    
+    // Get error elements
+    const offerError = document.getElementById("offerPercentageError");
+    const startDateError = document.getElementById("startDateError");
+    const endDateError = document.getElementById("endDateError");
+
+    // Reset errors
+    offerError.textContent = "";
+    startDateError.textContent = "";
+    endDateError.textContent = "";
+
+    let isValid = true;
+
+    // Validate Offer Percentage
+    if (offerPercentage === "" || offerPercentage < 0 || offerPercentage > 100) {
+        offerError.textContent = "Please enter a valid percentage between 0 and 100.";
+        isValid = false;
+    }
+
+    // Validate Start Date
+    if (!startDate) {
+        startDateError.textContent = "Start date is required.";
+        isValid = false;
+    }
+
+    // Validate End Date
+    if (!endDate) {
+        endDateError.textContent = "End date is required.";
+        isValid = false;
+    } else if (new Date(endDate) <= new Date(startDate)) {
+        endDateError.textContent = "End date must be after the start date.";
+        isValid = false;
+    }
+
+    // Stop submission if validation fails
+    if (!isValid) return;
+
+    // Fetch request
+    const response = await fetch("/admin/productOffers/updateOffer", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            productOfferId,
+            variety,
+            varietyMeasurement,
+            offerPercentage,
+            startDate,
+            endDate,
+            status
+        })
+    });
+
+    const result = await response.json();
+
+    // Show success message with SweetAlert
+    Swal.fire({
+        title: result.message,
+        icon: "success",
+        confirmButtonText: "OK"
+    }).then(() => {
+        location.reload(); // Refresh page after clicking OK
+    });
+});
+
+// Remove error when user types
+document.querySelectorAll("#editOfferForm input").forEach(input => {
+    input.addEventListener("input", function () {
+        this.nextElementSibling.textContent = "";
+    });
+});
+
+    </script>
+
+<script>
+
+
+    async function openUpdateProductOfferModal(productId,productName,productVariety,productVarietyMeasurement,offerPercentage,startDate,endDate,isListed){
+        let editProductName=document.getElementById("editProductName");
+        let editVariety=document.getElementById("editVariety");
+        let editVarietyMeasurement=document.getElementById("editVarietyMeasurement");
+        let editOfferPercentage=document.getElementById("editOfferPercentage");
+        let editStartDate=document.getElementById("editStartDate");
+        let editEndDate=document.getElementById("editEndDate");
+        let editStatus=document.getElementById("editStatus");
+        let productOfferId=document.getElementById("productOfferId")
+    
+        productOfferId.value=productId
+        editProductName.value=productName
+        editVariety.value=productVariety
+        editVarietyMeasurement.value=productVarietyMeasurement
+        editOfferPercentage.value=offerPercentage
+
+        editStartDate.value = formatDateForInput(startDate);
+        editEndDate.value = formatDateForInput(endDate);
+      
+        if(isListed=="true"){
+            editStatus.value="list"
+        }
+        else{
+            editStatus.value="unlist"
+        }
+       
+    }
+
+    function formatDateForInput(dateString) {
+    if (!dateString) return ""; // Handle empty or undefined values
+
+    // Check if date is already in valid format (yyyy-MM-dd)
+    if (dateString.includes("-") && dateString.split("-")[0].length === 4) {
+        return dateString;
+    }
+
+    // If the format is dd-MM-yyyy, split and rearrange
+    let parts = dateString.split("-");
+    if (parts.length === 3) {
+        let dd = parts[0];
+        let mm = parts[1];
+        let yyyy = parts[2];
+        return `${yyyy}-${mm}-${dd}`; // Convert to yyyy-MM-dd
+    }
+
+    return ""; // Return empty if format is unrecognized
+}
+
+</script>
+
+<script>
+   async function deleteProductOffer(productOfferId) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(`/admin/productOffers/delete/${productOfferId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    Swal.fire("Deleted!", data.message, "success").then(() => {
+                        location.reload(); // Refresh page after deletion
+                    });
+                } else {
+                    Swal.fire("Error!", data.message || "Something went wrong.", "error");
+                }
+            } catch (error) {
+                Swal.fire("Error!", "Failed to delete offer.", "error");
+                console.error("Delete Error:", error);
+            }
+        }
+    });
+}
+
+</script>
+</html>

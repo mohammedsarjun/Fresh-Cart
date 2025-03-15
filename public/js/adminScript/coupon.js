@@ -1,7 +1,6 @@
 async function saveCoupon(e){
     try {
         e.preventDefault()
-        console.log("dshjkbhdsjabhjasbdfhfjbs")
         let couponName=document.getElementById("couponName").value
         let discountPercentage=document.getElementById("discountPercentage").value
         let startDate=document.getElementById("startDate").value
@@ -120,13 +119,21 @@ async function openUpdateCouponModal(couponId,couponCode,discountPercentage,coup
     let expiryParts=couponExpiryDate.split("/");
     couponExpiryDate = `${expiryParts[2]}-${expiryParts[1]}-${expiryParts[0]}`;
     // myModal.show();
+   
+    let status="unlisted"
+
+    console.log(isListed=="true")
+    if(isListed==="true"){
+status="listed"
+    }
+     isListed=
     document.getElementById("updateCouponName").value = couponCode
     document.getElementById("updateDiscountPercentage").value = discountPercentage
     document.getElementById("updateStartDate").value = couponStartDate
     document.getElementById("updateExpiryDate").value = couponExpiryDate
     document.getElementById("updateMinPurchase").value = minimumPurchase
     document.getElementById("updateMaxDiscount").value = maximumDiscount
-    document.getElementById("updateListingStatus").value = isListed ? "listed" : "unlisted";
+    document.getElementById("updateListingStatus").value = status;
     document.getElementById("updateCouponId").value = couponId
 }
 

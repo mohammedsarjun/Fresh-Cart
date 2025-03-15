@@ -87,7 +87,7 @@
             margin-bottom: 20px;
         }
         .btn {
-            background-color: #008CFF;
+        
             color: white;
             padding: 10px 20px;
             border: none;
@@ -140,6 +140,27 @@
 <body>
 	<%-include('../../partials/header')%>
     
+	<div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Add Money to Wallet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="walletForm">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Enter Amount</label>
+                            <input type="number" class="form-control" id="amount" min="1" placeholder="Enter amount" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success" id="addMoney">Add Money</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 	<main>
 		<!-- section -->
 		<section>
@@ -273,7 +294,7 @@
                             <!-- Wallet Section -->
                             <div class="wallet-container">
                                 <div class="wallet-balance">Wallet Balance: 32</div>
-                                <button class="btn">ADD MONEY TO WALLET</button>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMoneyModal">ADD MONEY TO WALLET</button>
                             
                                 <table class="transaction-table">
                                     <thead>
@@ -445,6 +466,7 @@ Remove if you do not want.
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <!-- Theme JS -->
 <script>
@@ -455,6 +477,53 @@ Remove if you do not want.
 </script>
 <script src="/assets/js/theme.min.js"></script>
 <script src="/js/userProfile.js"></script>
+
+<script>
+	document.getElementById("addMoney").addEventListener("click", async function (e) {
+		try {
+		e.preventDefault()
+const amount=document.getElementById("amount").value
+		
+			const res = await fetch("/razorpay/create-order", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ amount,isWallet:true}) // Amount in INR
+			});
+
+			const order = await res.json();
+
+			const options = {
+				key: "rzp_test_7JLPi5q56mAlpG", // Replace with your Razorpay Key ID
+				amount: order.amount,
+				currency: "INR",
+				name: "FreshKart",
+				description: "FreshKart",
+				order_id: order.id,
+				handler: async function (response) {
+					const verifyRes = await fetch("/razorpay/verify-payment", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(response)
+					});
+
+					const verifyData = await verifyRes.json();
+					if(verifyData.message){
+						Swal.fire(verifyData.message, "success");
+					setTimeout(()=>{
+                window.location.reload();
+                },1000)
+					}
+				
+				}
+			};
+
+			const rzp = new Razorpay(options);
+			rzp.open();
+		} catch (error) {
+			console.error("Payment failed", error);
+		}
+	});
+</script>
 
 </body>
 

@@ -167,7 +167,12 @@ if (varietyDetail) {
   const user =await User.findOne({_id:req.session.userId})
   if(cart?.coupon?.name){
     user.usedCoupons.push(cart?.coupon?.name)
-    user.save()
+    cart.coupon.discount=0
+    cart.coupon.name=null
+    cart.coupon.isMax=false
+    cart.coupon.maxPurchase=0
+    await cart.save()
+   await user.save()
   }
    res.status(200).json({
     status: 200,

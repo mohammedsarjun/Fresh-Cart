@@ -10,6 +10,7 @@
  const checkoutController=require("../../controller/users/checkoutController")
 const orderController=require("../../controller/users/orderController")
 
+
  router.get("",homeController.homePageRender)
  router.get("/home",homeController.homePageRender)
 
@@ -101,5 +102,7 @@ router.post("/cart/verifyCoupon",checkoutController.verifyCoupon)
 
 //remove Coupon
 router.delete("/cart/removeCoupon",checkoutController.removeCoupon)
+
+
 
  module.exports=router

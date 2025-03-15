@@ -4,9 +4,13 @@ const Category = require("../../model/category")
 const Product=require("../../model/productModel")
 const bcrypt=require('bcrypt')
 const fs=require('fs')
+const productOffer=require("../../model/productOffers")
 const { ObjectId } = require('mongoose').Types;
 async function renderProductDetails(req, res) {
     try {
+
+        
+        
         let page = parseInt(req.query.page) || 1;  // Default to page 1
         let limit = 5; // Number of products per page
         let skip = (page - 1) * limit;
@@ -20,6 +24,40 @@ async function renderProductDetails(req, res) {
 
         // Fetch products with pagination and search
         const products = await Product.find(filter).skip(skip).limit(limit);
+
+        for (let product of products) {
+            const offers = await productOffer.find({ selectProduct: product._id }); // "offers" since find() returns an array
+        
+            if (offers.length > 0) {
+                let modified = false; // Track if any modification happens
+        
+                for (let offer of offers) {
+                    if (offer.endDate > Date.now() && offer.startDate < Date.now()) {
+                        
+                        if (offer.selectVariety !== "items") {
+                            for (let i = 0; i < product.varietyDetails.length; i++) {
+                                if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                    product.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                                    modified = true;
+                                }
+                            }
+                        } else {
+                            product.varietyDetails.forEach(variety => {
+                                variety.varietyDiscount = offer.offerPercentage;
+                            });
+                            modified = true;
+                        }
+                    }
+                }
+        
+                if (modified) {
+                    product.markModified("varietyDetails");
+                    await product.save();
+                }
+            }
+        }
+        
+
         const totalProducts = await Product.countDocuments(filter);
         const totalPages = Math.ceil(totalProducts / limit);
 
@@ -262,7 +300,6 @@ async function updateProduct(req,res){
             product.productDescription=req.body.productDescription
            JSON.parse(req.body.varietyDetails).forEach((varietyDetail,i) => {
                 varietyDetails[i].varietyMeasurement=varietyDetail.varietyMeasurement
-                varietyDetails[i].varietyDiscount=varietyDetail.varietyDiscount
                 varietyDetails[i].varietyStock=varietyDetail.varietyStock
 
             });

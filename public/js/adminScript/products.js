@@ -69,9 +69,6 @@ window.addVariety=function (type) {
             <div class="col-md-4">
                 <input type="number" class="form-control varietyMeasurement varietyInputs" name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" id="">
             </div>
-            <div class="col-md-4">
-                <input type="number" class="form-control varietyDiscount varietyInputs" name="${type}Discount" placeholder="Enter Discount"  id="">
-            </div>
              <div class="col-md-4">
                 <input type="number" class="form-control varietyStock varietyInputs" name="${type}Stock" placeholder="Enter Stock"  id="">
             </div>
@@ -102,9 +99,6 @@ window.addVariety=function (type) {
             
             <div class="col-md-4">
                 <input type="text" class="form-control itemPrice varietyInputs" name="${type}Variety" placeholder="Enter ${type} Price">
-            </div>
-            <div class="col-md-4">
-                <input type="number" class="form-control itemDiscount varietyInputs" name="${type}Discount" placeholder="Enter Discount">
             </div>
             <div class="col-md-4">
                 <input type="number" class="form-control itemStock varietyInputs" name="${type}Discount" placeholder="Enter Stock">
@@ -271,7 +265,6 @@ document.getElementById("categoryForm").addEventListener("submit", async functio
         for (let i = 0; i < varietyMeasurement.length; i++) {
             varietyDetails.push({
                 varietyMeasurement: varietyMeasurement[i].value,
-                varietyDiscount: varietyDiscount[i].value,
                 varietyStock:varietyStock[i].value
             });
         }
@@ -286,7 +279,7 @@ document.getElementById("categoryForm").addEventListener("submit", async functio
     } else {
         // If variety is "items", process item-specific details
         let itemPrice = document.querySelector(".itemPrice");
-        let itemDiscount = document.querySelector(".itemDiscount");
+
         let itemStock=document.querySelector(".itemStock")
 
         let varietyDetails = [];
@@ -297,7 +290,6 @@ document.getElementById("categoryForm").addEventListener("submit", async functio
    
     varietyDetails.push({
         varietyPrice: itemPrice.value,
-        varietyDiscount: itemDiscount.value,
         itemStock:itemStock.value
     });
       

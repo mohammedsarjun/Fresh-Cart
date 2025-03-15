@@ -8,6 +8,7 @@ const orderController=require("../../controller/admin/orderController")
 const couponController=require("../../controller/admin/couponController")
 const adminAuthMiddleware=require("../../middleware/adminAuth")
 const {uploadCategory,uploadProduct} = require('../../services/multer'); 
+const productOfferController=require("../../controller/admin/productOfferController")
 
 
 //Dasboard
@@ -102,4 +103,24 @@ router.put("/coupon/updateCoupon",couponController.updateCoupon)
 
 //delete
 router.delete("/coupon/deleteCoupon",couponController.deleteCoupon)
+
+
+//Product Offers
+
+router.get("/productOffers",productOfferController.renderProductOffersPage)
+
+router.get("/productOffers/fetchVarietyDetail/:id",productOfferController.fetchVarietyDetail)
+
+
+//add product offer
+
+router.post("/productOffers/addOffer",productOfferController.addProductOffer)
+
+
+//update product offer
+router.put("/productOffers/updateOffer",productOfferController.updateProductOffer)
+
+//delete product offer
+
+router.delete("/productOffers/delete/:id",productOfferController.deleteProductOffer)
 module.exports=router
