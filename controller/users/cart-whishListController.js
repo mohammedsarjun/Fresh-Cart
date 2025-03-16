@@ -3,10 +3,11 @@ const bcrypt = require("bcrypt");
 const User = require("../../model/userSchema");
 const fs = require("fs");
 const Cart = require("../../model/cartSchema");
-const Product = require("../../model/productModel");
 const cartSchema = require("../../model/cartSchema");
 const Wishlist = require("../../model/wishlistSchema");
 const Category=require("../../model/category")
+const Product=require("../../model/productModel")
+const productOffer=require("../../model/productOffers")
 //cart
 
 async function cartPageRender(req, res) {
@@ -14,7 +15,10 @@ async function cartPageRender(req, res) {
     let isStock=false
     let isValidCheckout=true
     let userCart = await Cart.findOne({ userId: req.session.userId });
-   
+
+      
+    
+    
     
     if (!userCart) {
         userCart = new Cart({
@@ -35,13 +39,134 @@ async function cartPageRender(req, res) {
     userCart.coupon.name=null
     userCart.coupon.discount=0
     await userCart.save()
+    for (let product of userCart.products) {
+        productDetail=await Product.findOne({_id:product.productId})
+        const offers = await productOffer.find({ selectProduct: productDetail._id }); // "offers" since find() returns an array
+    
+        if (offers.length > 0) {
+            let modified = false; // Track if any modification happens
+    
+            for (let offer of offers) {
+                if (offer.endDate > Date.now() && offer.startDate < Date.now() && offer.isListed==true ) {
+                    
+                    if (offer.selectVariety !== "items") {
+                        for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                            if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                              productDetail.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                                modified = true;
+                            }
+                        }
+                    } else {
+                      productDetail.varietyDetails.forEach(variety => {
+                            variety.varietyDiscount = offer.offerPercentage;
+                        });
+                        modified = true;
+                    }
+                }else{
+                    if (offer.selectVariety !== "items") {
+                        for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                            if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                              productDetail.varietyDetails[i].varietyDiscount = 0
+                                modified = true;
+                            }
+                        }
+                    } else {
+                      productDetail.varietyDetails.forEach(variety => {
+                            variety.varietyDiscount = 0
+                        });
+                        modified = true;
+                    }
+                }
+            }
+    
+            if (modified) {
+              productDetail.markModified("varietyDetails");
+                await productDetail.save();
+            }
+
+           
+        }else{
+          productDetail.varietyDetails.forEach((varietyDetail)=>{
+                varietyDetail.varietyDiscount=0
+            })
+            productDetail.markModified("varietyDetails");
+                await productDetail.save();
+        }
+    }
+
+//updating database for product offer
+    for (let product of userCart.products) {
+      productDetail=await Product.findOne({_id:product.productId})
+      const offers = await productOffer.find({ selectProduct: productDetail._id }); // "offers" since find() returns an array
+  
+      if (offers.length > 0) {
+          let modified = false; // Track if any modification happens
+  
+          for (let offer of offers) {
+              if (offer.endDate > Date.now() && offer.startDate < Date.now() && offer.isListed==true ) {
+                  
+                  if (offer.selectVariety !== "items") {
+                      for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                          if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            productDetail.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                              modified = true;
+                          }
+                      }
+                  } else {
+                    productDetail.varietyDetails.forEach(variety => {
+                          variety.varietyDiscount = offer.offerPercentage;
+                      });
+                      modified = true;
+                  }
+              }else{
+                  if (offer.selectVariety !== "items") {
+                      for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                          if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            productDetail.varietyDetails[i].varietyDiscount = 0
+                              modified = true;
+                          }
+                      }
+                  } else {
+                    productDetail.varietyDetails.forEach(variety => {
+                          variety.varietyDiscount = 0
+                      });
+                      modified = true;
+                  }
+              }
+          }
+  
+          if (modified) {
+            productDetail.markModified("varietyDetails");
+              await productDetail.save();
+          }
+
+         
+      }else{
+        productDetail.varietyDetails.forEach((varietyDetail)=>{
+              varietyDetail.varietyDiscount=0
+          })
+          productDetail.markModified("varietyDetails");
+              await productDetail.save();
+      }
+  }
+
+for(let i=0;i<userCart.products.length;i++){
+  const product=await Product.findOne({_id:userCart.products[i].productId})
+  let productDiscount=0
+  if(userCart.products[i].selectedVariety.type!="items"){
+    productDiscount=product.varietyDetails.find((varietyDetail)=>varietyDetail.varietyMeasurement==userCart.products[i].selectedVariety.value).varietyDiscount
+  }else{
+    productDiscount=product.varietyDetails[0].varietyDiscount
+  }
+  userCart.products[i].selectedVariety.productDiscount=productDiscount
+ await userCart.save()
+}
     //deleting Unlist Product 
     for(let i=0;i<userCart.products.length;i++){
       const productDetail= await Product.findOne({_id:userCart.products[i].productId})
       const categoryDetail=await Category.findOne({_id:productDetail.categoryId})
       if(productDetail.isListed==false || categoryDetail.isPublished==false){
         userCart.products.splice(i,1)
-       
         await userCart.save()
         i--
       }
@@ -232,6 +357,7 @@ async function addCart(req, res) {
     // Check if the user already has a cart
     let cart = await Cart.findOne({ userId: req.session.userId });
     const product = await Product.findOne({ _id: req.body.productId });
+    let varietyMeasurement=req.body.varietyMeasurement||product.varietyDetails[0].varietyMeasurement
     let responed = false;
 
     if (!cart) {
@@ -255,8 +381,10 @@ async function addCart(req, res) {
         p.productId.toString() === req.body.productId &&
         (!req.body.variety ||
           (p.selectedVariety.type === req.body.variety &&
-            p.selectedVariety.value == req.body.varietyMeasurement))
+            p.selectedVariety.value == varietyMeasurement))
     );
+
+    console.log(existingProduct)
 
     if (req.body.variety !== "items") {
       let selectedVariety =

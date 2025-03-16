@@ -9,7 +9,7 @@ const { ObjectId } = require('mongoose').Types;
 const orderSchema=require("../../model/orderSchema");
 const cartSchema = require("../../model/cartSchema");
 const Product = require("../../model/productModel");
-
+const Wallet=require("../../model/walletSchema")
 async function renderOrderPage(req,res){
   try{
     const orderDetails = await orderSchema.find({ userId: req.session.userId });
@@ -207,7 +207,33 @@ try{
 }
 async function cancelOrder(req,res){
 try{
-  const order=await orderSchema.findOne({_id:req.body.orderId})
+  const order = await orderSchema.findOne({ _id: req.body.orderId });
+
+  if (order && order.paymentDetails.method === "Razorpay") {
+      let wallet = await Wallet.findOne({ userId: req.session.userId });
+  
+      // If wallet doesn't exist, create a new one
+      if (!wallet) {
+          wallet = new Wallet({
+              userId: req.session.userId,
+              balance: 0,
+              transactions: []
+          });
+      }
+  
+      // Update wallet balance and add transaction
+      wallet.balance += order.subTotal;
+      wallet.transactions.push({
+          amount: order.subTotal,
+          type: "Razorpay",
+          status: "completed",
+          transactionDetail: "Order Cancelled. Payment returned to wallet",
+          createdAt: Date.now()
+      });
+  
+      await wallet.save();
+  }
+ 
   order.orderStatus="Cancelled"
   order.save()
   for (let i = 0; i < order.products.length; i++) {

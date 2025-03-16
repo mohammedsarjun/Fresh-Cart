@@ -31,6 +31,9 @@ const WalletSchema = new mongoose.Schema({
             createdAt: {
                 type: Date,
                 default: Date.now
+            },
+            transactionDetail:{
+                type:String
             }
         }
     ],

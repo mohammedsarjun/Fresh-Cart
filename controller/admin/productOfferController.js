@@ -154,8 +154,22 @@ async function updateProductOffer(req, res) {
 }
 async function deleteProductOffer(req, res) {
     try {
+       let deletedOffer=""
         console.log(req.params.id)
-        const deletedOffer = await productOffer.findOneAndDelete({ selectProduct: req.params.id });
+        const product=await Product.findOne({_id:req.params.id})
+        if(req.body.productVariety!="items"){
+           product.varietyDetails.find((varietyDetail)=>varietyDetail.varietyMeasurement==req.body.varietyMeasurement).varietDiscount=0
+           product.markModified("varietyDetails")
+          await product.save()
+             deletedOffer = await productOffer.findOneAndDelete({ selectProduct: req.params.id ,selectedVarietyMeasurement:req.body.varietyMeasurement});
+
+        }else{
+            product.varietyDetails.varietDiscount=0
+            product.markModified("varietyDetails")
+            await product.save()
+           deletedOffer = await productOffer.findOneAndDelete({ selectProduct: req.params.id });
+        }
+        
 
         if (!deletedOffer) {
             return res.status(404).json({ message: "Offer not found" });
@@ -169,4 +183,5 @@ async function deleteProductOffer(req, res) {
     }
 }
 
-module.exports={renderProductOffersPage,fetchVarietyDetail,addProductOffer,updateProductOffer,deleteProductOffer}
+
+module.exports={renderProductOffersPage,fetchVarietyDetail,addProductOffer,updateProductOffer,deleteProductOffer,}

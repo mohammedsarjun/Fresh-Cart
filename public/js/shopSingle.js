@@ -4,6 +4,7 @@ async function addCart(productId,variety){
     const urlParams = new URLSearchParams(window.location.search);
     const grams = urlParams.get('grams');
     const ml=urlParams.get('ml');
+    console.log(grams,ml)
     const varietyMeasurement=grams||ml
     let isItem=false
     if(variety=="items"){

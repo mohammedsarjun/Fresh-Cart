@@ -6,11 +6,9 @@ const bcrypt=require('bcrypt')
 const fs=require('fs')
 const productOffer=require("../../model/productOffers")
 const { ObjectId } = require('mongoose').Types;
+const CategoryOffer=require("../../model/categoryOffer")
 async function renderProductDetails(req, res) {
     try {
-
-        
-        
         let page = parseInt(req.query.page) || 1;  // Default to page 1
         let limit = 5; // Number of products per page
         let skip = (page - 1) * limit;
@@ -26,13 +24,13 @@ async function renderProductDetails(req, res) {
         const products = await Product.find(filter).skip(skip).limit(limit);
 
         for (let product of products) {
-            const offers = await productOffer.find({ selectProduct: product._id }); // "offers" since find() returns an array
+            const offers = await productOffer.find({ selectProduct: product._id }); 
         
             if (offers.length > 0) {
                 let modified = false; // Track if any modification happens
         
                 for (let offer of offers) {
-                    if (offer.endDate > Date.now() && offer.startDate < Date.now()) {
+                    if (offer.endDate > Date.now() && offer.startDate < Date.now() && offer.isListed==true ) {
                         
                         if (offer.selectVariety !== "items") {
                             for (let i = 0; i < product.varietyDetails.length; i++) {
@@ -47,6 +45,20 @@ async function renderProductDetails(req, res) {
                             });
                             modified = true;
                         }
+                    }else{
+                        if (offer.selectVariety !== "items") {
+                            for (let i = 0; i < product.varietyDetails.length; i++) {
+                                if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                    product.varietyDetails[i].varietyDiscount = 0
+                                    modified = true;
+                                }
+                            }
+                        } else {
+                            product.varietyDetails.forEach(variety => {
+                                variety.varietyDiscount = 0
+                            });
+                            modified = true;
+                        }
                     }
                 }
         
@@ -54,6 +66,12 @@ async function renderProductDetails(req, res) {
                     product.markModified("varietyDetails");
                     await product.save();
                 }
+            }else{
+                product.varietyDetails.forEach((varietyDetail)=>{
+                    varietyDetail.varietyDiscount=0
+                })
+                product.markModified("varietyDetails");
+                    await product.save();
             }
         }
         
@@ -91,6 +109,117 @@ async function renderSingleProductDetails(req,res){
     const productId=req.query.productId
    
     const productDetail=await Product.findOne({_id: new ObjectId(productId)})
+    let modified = false;
+    const offers = await productOffer.find({ selectProduct: productDetail._id });
+    
+
+    if (offers.length > 0) {
+        
+        const categoryOffer= await CategoryOffer.findOne({category:productDetail.categoryId})
+        for (let offer of offers) {
+            let offerPercentage=offer?.offerPercentage!=undefined?offer?.offerPercentage:0
+            if ((offerPercentage < categoryOffer?.offerPercentage || offer.isListed == false) &&
+            categoryOffer?.endDate > Date.now() &&
+            categoryOffer?.startDate < Date.now() &&
+            categoryOffer?.isListed == true){
+
+                if (offer.selectVariety !== "items") {
+                    for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                        if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            productDetail.varietyDetails[i].varietyDiscount = categoryOffer.offerPercentage;
+                            modified = true;
+                        }
+                    }
+                } else {
+                    productDetail.varietyDetails.forEach(variety => {
+                        variety.varietyDiscount =categoryOffer.offerPercentage;
+                    });
+                    modified = true;
+                }
+                
+            }else{
+                productDetail.varietyDetails.forEach((varietyDetail)=>{
+                    varietyDetail.varietyDiscount=0
+                })
+                
+            if (offer?.endDate > Date.now() && offer?.startDate < Date.now() && offer?.isListed==true ) {
+                
+                if (offer.selectVariety !== "items") {
+                    for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                        if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            productDetail.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                            modified = true;
+                            
+                        }
+                    }
+                } else {
+                    productDetail.varietyDetails.forEach(variety => {
+                        variety.varietyDiscount = offer.offerPercentage;
+                    });
+                    modified = true;
+                }
+            }else{
+                if (offer.selectVariety !== "items") {
+                    for (let i = 0; i < productDetail.varietyDetails.length; i++) {
+                        if (productDetail.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            productDetail.varietyDetails[i].varietyDiscount = 0
+                            modified = true;
+                        }
+                    }
+                } else {
+                    productDetail.varietyDetails.forEach(variety => {
+                        variety.varietyDiscount = 0
+                    });
+                    modified = true;
+                }
+            }
+        }
+        }
+
+        
+    }else{
+       const categoryOffer= await CategoryOffer.findOne({category:productDetail.categoryId})
+        if(categoryOffer){
+            productDetail.varietyDetails.forEach((varietyDetail)=>{
+                varietyDetail.varietyDiscount=categoryOffer.offerPercentage
+            })
+            modified = true
+        }else{
+            productDetail.varietyDetails.forEach((varietyDetail)=>{
+                varietyDetail.varietyDiscount=0
+            })
+            modified = true
+        }
+      
+    }
+
+    if(productDetail.variety!="items"){
+        const categoryOffer= await CategoryOffer.findOne({category:productDetail.categoryId});
+        if(categoryOffer&&categoryOffer.endDate > Date.now() && categoryOffer.startDate < Date.now() && categoryOffer.isListed==true){
+            const productVarieties=[]
+            for(let i=0;i<productDetail.varietyDetails.length;i++){
+                productVarieties.push(productDetail.varietyDetails[i].varietyMeasurement)
+            }
+            const offerVarieties=[]
+            for(let i=0;i<offers.length;i++){
+                offerVarieties.push(offers[i].selectedVarietyMeasurement)
+            }
+
+            for(let i=0;i<productVarieties.length;i++){
+                if(!offerVarieties.includes(productVarieties[i])){
+                    productDetail.varietyDetails.find((varietyDetail)=>varietyDetail.varietyMeasurement==productVarieties[i]).varietyDiscount=categoryOffer.offerPercentage
+                    modified = true
+                }
+            }
+        
+        }
+      
+        
+    }
+if (modified) {
+            productDetail.markModified("varietyDetails");
+            await productDetail.save();
+        }
     const category = await Category.findOne({_id:new ObjectId(productDetail.categoryId)});
 
     const updatedProducts = { ...productDetail.toObject(), categoryName: category ? category.categoryName : "Unknown" };

@@ -1406,7 +1406,7 @@
 			const res = await fetch("/razorpay/create-order", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ amount: '<%= cart.subtotal + cart.shippingCost %>' ,selectedAddress:selectedAddress,selectedPayment:selectedPayment}) // Amount in INR
+				body: JSON.stringify({ amount: '<%= cart.grandTotal%>' ,selectedAddress:selectedAddress,selectedPayment:selectedPayment}) // Amount in INR
 			});
 
 			const order = await res.json();

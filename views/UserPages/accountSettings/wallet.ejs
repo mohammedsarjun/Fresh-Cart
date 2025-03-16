@@ -293,7 +293,7 @@
                       
                             <!-- Wallet Section -->
                             <div class="wallet-container">
-                                <div class="wallet-balance">Wallet Balance: 32</div>
+                                <div class="wallet-balance">Wallet Balance: <%=wallet.balance%></div>
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMoneyModal">ADD MONEY TO WALLET</button>
                             
                                 <table class="transaction-table">
@@ -305,12 +305,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                            <tr>
-                                                <td>sda</td>
-                                                <td>sad</td>
-                                                <td>asd</td>
+										<%wallet.transactions.forEach((transaction)=>{%>
+											<tr>
+                                                <td><%=transaction.createdAt%></td>
+                                                <td><%=transaction.amount%></td>
+                                                <td><%=transaction.transactionDetail%></td>
                                             </tr>
+											<%})%>
+                                        
+                                            
                                      
                                     </tbody>
                                 </table>
@@ -483,7 +486,8 @@ Remove if you do not want.
 		try {
 		e.preventDefault()
 const amount=document.getElementById("amount").value
-		
+let modal = new bootstrap.Modal(document.getElementById("addMoneyModal"));
+modal.hide();
 			const res = await fetch("/razorpay/create-order", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -508,7 +512,13 @@ const amount=document.getElementById("amount").value
 
 					const verifyData = await verifyRes.json();
 					if(verifyData.message){
-						Swal.fire(verifyData.message, "success");
+						
+						Swal.fire({
+    title: "Success!",  
+    text: verifyData.message,  
+    icon: "success",  // Adds a success icon
+    confirmButtonColor: "#28a745",  // Bootstrap success green
+});
 					setTimeout(()=>{
                 window.location.reload();
                 },1000)

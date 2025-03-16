@@ -9,7 +9,7 @@
  const cartWishlistController=require("../../controller/users/cart-whishListController")
  const checkoutController=require("../../controller/users/checkoutController")
 const orderController=require("../../controller/users/orderController")
-
+const walletController=require("../../controller/users/walletController")
 
  router.get("",homeController.homePageRender)
  router.get("/home",homeController.homePageRender)
@@ -28,7 +28,7 @@ const orderController=require("../../controller/users/orderController")
 
  //account wallet
 
- router.get("/account/wallet",authMiddleware,accountController.walletPageRender)
+ router.get("/account/wallet",authMiddleware,walletController.walletPageRender)
 
 
  //put
@@ -102,6 +102,7 @@ router.post("/cart/verifyCoupon",checkoutController.verifyCoupon)
 
 //remove Coupon
 router.delete("/cart/removeCoupon",checkoutController.removeCoupon)
+
 
 
 

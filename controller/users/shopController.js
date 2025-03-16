@@ -5,6 +5,8 @@ const Product=require("../../model/productModel")
 const bcrypt=require('bcrypt')
 const fs=require('fs')
 const { ObjectId } = require('mongoose').Types;
+const productOffer=require("../../model/productOffers")
+const CategoryOffer=require("../../model/categoryOffer")
 async function shopPageRender(req, res) {
     try {
         let page = parseInt(req.query.page) || 1;  
@@ -33,8 +35,90 @@ async function shopPageRender(req, res) {
 
         
         let products = await Product.find(filter).skip(skip).limit(limit);
+        let modified = false;
+        for (let product of products) {
+            const offers = await productOffer.find({ selectProduct: product._id }); // "offers" since find() returns an array
+            const categoryOffer= await CategoryOffer.findOne({category:product.categoryId})
+            if (offers.length > 0) {
+                
 
-       
+        
+                for (let offer of offers) {
+                    let offerPercentage=offer?.offerPercentage!=undefined?offer?.offerPercentage:0
+                    if ((offerPercentage < categoryOffer?.offerPercentage || offer.isListed == false) &&
+                    categoryOffer?.endDate > Date.now() &&
+                    categoryOffer?.startDate < Date.now() &&
+                    categoryOffer?.isListed == true){
+                        if (offer.selectVariety !== "items") {
+                            for (let i = 0; i < product.varietyDetails.length; i++) {
+                                if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                    product.varietyDetails[i].varietyDiscount = categoryOffer.offerPercentage;
+                                    modified = true;
+                                }
+                            }
+                        } else {
+                            product.varietyDetails.forEach(variety => {
+                                variety.varietyDiscount =categoryOffer.offerPercentage;
+                            });
+                            modified = true;
+                        }
+                    }else{
+     if (offer.endDate > Date.now() && offer.startDate < Date.now() && offer.isListed==true ) {
+                        
+                        if (offer.selectVariety !== "items") {
+                            for (let i = 0; i < product.varietyDetails.length; i++) {
+                                if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                    product.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                                    modified = true;
+                                }
+                            }
+                        } else {
+                            product.varietyDetails.forEach(variety => {
+                                variety.varietyDiscount = offer.offerPercentage;
+                            });
+                            modified = true;
+                        }
+                    }else{
+                        if (offer.selectVariety !== "items") {
+                            for (let i = 0; i < product.varietyDetails.length; i++) {
+                                if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                    product.varietyDetails[i].varietyDiscount = 0
+                                    modified = true;
+                                }
+                            }
+                        } else {
+                            product.varietyDetails.forEach(variety => {
+                                variety.varietyDiscount = 0
+                            });
+                            modified = true;
+                        }
+                    }
+                }
+        
+                
+                    }
+
+               
+            }else{
+                const categoryOffer= await CategoryOffer.findOne({category:product.categoryId})
+                if(categoryOffer){
+                    product.varietyDetails.forEach((varietyDetail)=>{
+                        varietyDetail.varietyDiscount=categoryOffer.offerPercentage
+                    })
+                    modified = true
+                }else{
+                    product.varietyDetails.forEach((varietyDetail)=>{
+                        varietyDetail.varietyDiscount=0
+                    })
+                    modified = true
+                }
+            }
+
+            if (modified) {
+                product.markModified("varietyDetails");
+                await product.save();
+            }
+        }
         const category = await Category.find({ isPublished: true });
 
        
@@ -72,6 +156,114 @@ async function shopSinglePageRender(req,res){
 
         const productId = req.params.id;
         const product = await Product.findOne({ _id: productId });
+        const offers = await productOffer.find({ selectProduct: product._id });
+        let modified = false; // Track if any modification happens
+    if (offers.length > 0) {
+    
+        const categoryOffer= await CategoryOffer.findOne({category:product.categoryId})
+        for (let offer of offers) {
+            let offerPercentage=offer?.offerPercentage!=undefined?offer?.offerPercentage:0
+            if ((offerPercentage < categoryOffer?.offerPercentage || offer.isListed == false) &&
+            categoryOffer?.endDate > Date.now() &&
+            categoryOffer?.startDate < Date.now() &&
+            categoryOffer?.isListed == true){
+
+                if (offer.selectVariety !== "items") {
+                    for (let i = 0; i < product.varietyDetails.length; i++) {
+                        if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                            product.varietyDetails[i].varietyDiscount = categoryOffer.offerPercentage;
+                            modified = true;
+                        }
+                    }
+                } else {
+                    product.varietyDetails.forEach(variety => {
+                        variety.varietyDiscount =categoryOffer.offerPercentage;
+                    });
+                    modified = true;
+                }
+                
+            }else{
+
+                product.varietyDetails.forEach((varietyDetail)=>{
+                    varietyDetail.varietyDiscount=0
+                })
+
+                if (offer.endDate > Date.now() && offer.startDate < Date.now() && offer.isListed==true ) {
+                
+                    if (offer.selectVariety !== "items") {
+    
+                        
+                        for (let i = 0; i < product.varietyDetails.length; i++) {
+                            if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                product.varietyDetails[i].varietyDiscount = offer.offerPercentage;
+                                modified = true;
+                                
+                            }
+                        }
+                    } else {
+                        product.varietyDetails.forEach(variety => {
+                            variety.varietyDiscount = offer.offerPercentage;
+                        });
+                        modified = true;
+                    }
+                }else{
+                    if (offer.selectVariety !== "items") {
+                        for (let i = 0; i < product.varietyDetails.length; i++) {
+                            if (product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement) {
+                                product.varietyDetails[i].varietyDiscount = 0
+                                modified = true;
+                            }
+                        }
+                    } 
+                }
+            }
+
+            if(product.variety!="items"){
+                const categoryOffer= await CategoryOffer.findOne({category:product.categoryId});
+                if(categoryOffer&&categoryOffer.endDate > Date.now() && categoryOffer.startDate < Date.now() && categoryOffer.isListed==true){
+                    const productVarieties=[]
+                    for(let i=0;i<product.varietyDetails.length;i++){
+                        productVarieties.push(product.varietyDetails[i].varietyMeasurement)
+                    }
+                    const offerVarieties=[]
+                    for(let i=0;i<offers.length;i++){
+                        offerVarieties.push(offers[i].selectedVarietyMeasurement)
+                    }
+        
+                    for(let i=0;i<productVarieties.length;i++){
+                        if(!offerVarieties.includes(productVarieties[i])){
+                            product.varietyDetails.find((varietyDetail)=>varietyDetail.varietyMeasurement==productVarieties[i]).varietyDiscount=categoryOffer.offerPercentage
+                            modified = true
+                        }
+                    }
+                
+                }
+              
+                
+            }
+        if (modified) {
+            product.markModified("varietyDetails");
+                    await product.save();
+                }
+            
+          
+        }
+    }else{
+        const categoryOffer= await CategoryOffer.findOne({category:product.categoryId})
+        if(categoryOffer){
+            product.varietyDetails.forEach((varietyDetail)=>{
+                varietyDetail.varietyDiscount=categoryOffer.offerPercentage
+            })
+            modified = true
+        }else{
+            product.varietyDetails.forEach((varietyDetail)=>{
+                varietyDetail.varietyDiscount=0
+            })
+            modified = true
+        }
+      
+    }
+
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }

@@ -218,7 +218,7 @@
                 '<%=offer.isListed%>'
               )">Edit</button></td>
               <td>
-                <button class="btn btn-danger" onclick="deleteProductOffer('<%=offer.productId%>')">Delete</button>
+                <button class="btn btn-danger" onclick="deleteProductOffer('<%=offer.productId%>','<%=offer.selectVariety%>','<%=offer.selectedVarietyMeasurement%>')">Delete</button>
               </td>
   
            
@@ -575,7 +575,7 @@ document.querySelectorAll("#editOfferForm input").forEach(input => {
 </script>
 
 <script>
-   async function deleteProductOffer(productOfferId) {
+   async function deleteProductOffer(productOfferId,productVariety,varietyMeasurement) {
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -591,7 +591,11 @@ document.querySelectorAll("#editOfferForm input").forEach(input => {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
-                    }
+                    },
+                    body:JSON.stringify({
+        productVariety,
+        varietyMeasurement
+    })
                 });
 
                 const data = await response.json();

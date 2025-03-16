@@ -62,7 +62,7 @@ const razorpay = new Razorpay({
         orderController.placeOrder(req,res,isOnlinePayment)
       }
       
-      // res.json({ success: true, message: "Payment Verified" });
+      res.json({ success: true, message: "Payment Verified" });
     } else {
       res.status(400).json({ success: false, message: "Invalid Payment" });
     }

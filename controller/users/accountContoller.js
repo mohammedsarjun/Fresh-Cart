@@ -111,14 +111,6 @@ async function userChangePassword(req,res){
 }  
 
 
-async function walletPageRender(req,res){
-    try {
-        
-        res.status(200).render(path.join("../", "views", "UserPages", "accountSettings","wallet"))
-    } catch (error) {
-        console.error("An error occurred:", error);
-    } 
-}
 
 //address
 
@@ -128,5 +120,5 @@ module.exports={
     userUpdate,
     changeUserPassword,
     userChangePassword,
-    walletPageRender
+    
 }

@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const CartSchema = new mongoose.Schema({
-    subtotal: { type: Number, required: true },
+    subtotal: { type: Number, required: true,set: (value) => Math.round(value), },
     shippingCost: { type: Number, required: true, default:40 },
-    grandTotal: { type: Number, required: true },
+    grandTotal: { type: Number, required: true,set: (value) => Math.round(value), },
     coupon: {
         name: { type: String, default: null },
         discount: { type: Number, default: 0 },

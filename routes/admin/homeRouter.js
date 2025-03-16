@@ -9,7 +9,7 @@ const couponController=require("../../controller/admin/couponController")
 const adminAuthMiddleware=require("../../middleware/adminAuth")
 const {uploadCategory,uploadProduct} = require('../../services/multer'); 
 const productOfferController=require("../../controller/admin/productOfferController")
-
+const categoryOfferController=require("../../controller/admin/categoryOfferController")
 
 //Dasboard
 router.get("/",adminAuthMiddleware,dashboardController.renderDashboardPage)
@@ -123,4 +123,22 @@ router.put("/productOffers/updateOffer",productOfferController.updateProductOffe
 //delete product offer
 
 router.delete("/productOffers/delete/:id",productOfferController.deleteProductOffer)
+
+
+//Category offer
+
+router.get("/categoryOffers",categoryOfferController.renderCategoryOffersPage)
+
+//add category offer
+
+router.post("/categoryOffer/addCategoryOffer",categoryOfferController.addCategoryOffer)
+
+
+//edit category Offer
+router.put("/categoryOffer/updateCategoryOffer",categoryOfferController.editCategoryOffer)
+
+
+//delete category Offer
+
+router.delete("/categoryOffers/delete/:id",categoryOfferController.deleteCategoryOffer)
 module.exports=router

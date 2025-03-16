@@ -98,7 +98,7 @@ app.get("/test",(req,res)=>{
   res
   .status(200)
   .render(
-    path.join("../", "views", "admin pages","coupon"));
+    path.join("../", "views", "admin pages","categoryOffer"));
 })
 
 app.use((req, res) => {

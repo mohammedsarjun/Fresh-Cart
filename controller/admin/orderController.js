@@ -7,6 +7,7 @@ const Product = require("../../model/productModel");
 const cartSchema = require("../../model/cartSchema");
 const Wishlist = require("../../model/wishlistSchema");
 const orderSchema=require("../../model/orderSchema");
+const Wallet=require("../../model/walletSchema")
 ;
 
 
@@ -117,7 +118,37 @@ let order=await orderSchema.findOne({_id:req.body.orderId})
 }
 
 async function returnProduct(req,res){
-  const order=await orderSchema.findOne({_id:req.body.orderId})
+  const order = await orderSchema.findOne({ _id: req.body.orderId });
+
+  if (!order) {
+      return res.status(404).json({ error: "Order not found." });
+  }
+  
+  // Find the wallet, create one if it doesn’t exist
+  let wallet = await Wallet.findOne({ userId: order.userId });
+  
+  if (!wallet) {
+      wallet = new Wallet({
+          userId: order.userId,
+          balance: 0,
+          transactions: []
+      });
+  }
+  
+  // Update wallet balance and add transaction
+  wallet.balance += order.subTotal;
+  wallet.transactions.push({
+      amount: order.subTotal,
+      type: "Razorpay",
+      status: "completed",
+      transactionDetail: "Order Returned. Payment returned to wallet",
+      createdAt: Date.now()
+  });
+  
+  await wallet.save();
+  
+
+  
   order.orderStatus="Returned"
   await order.save()
   res.status(200).json({
