@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .success-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            max-width: 32rem;
+            width: 100%;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-icon::before {
+            content: "✓";
+            font-size: 40px;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #111827;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-details {
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .order-details p {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .order-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .order-number {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            background-color: #3b82f6;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-card">
+        <div class="success-icon"></div>
+        <h1>Thank you for order</h1>
+        <div class="order-details">
+            <p>Your Order is confirmed.</p>
+            <p>Your Order: <span class="order-number"><%=orderId%></span></p>
+            <p>Your order will be shipped to: <span class="order-number"><%=orderAddress%></span></p>
+        </div>
+        <a href="/account/orders" class="button">Go to order page</a>
+    </div>
+</body>
+</html>

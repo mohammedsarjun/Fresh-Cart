@@ -12,6 +12,8 @@
 }
     </style>
     <link rel="stylesheet" href="/styles/validationCommon.css">
+    <link rel="stylesheet" href="/styles/emptyTable.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     
   </head>
   <body style="overflow-x: hidden;">
@@ -150,22 +152,36 @@
               placeholder="Search Category Offer..." id="category-search">
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
+
+      <% if(offer.length==0) { %>
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i data-lucide="tag"></i>
+          </div>
+          <h2>No Category Offer Found</h2>
+      
+     
+        </div> 
+        <%}%>
       <div class="table-responsive ">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
-          <thead >
-              <tr>
-                 
-                  <th>S.No</th>
-                  <th>Category Name</th>
-                  <th>Offer Percentage</th>
-             
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Current Status</th>
-                  <th>Edit Offer</th>
-                  <th>Delete Offer</th>
-              </tr>
-          </thead>
+            <% if(offer.length!=0) { %>
+                <thead >
+                    <tr>
+                       
+                        <th>S.No</th>
+                        <th>Category Name</th>
+                        <th>Offer Percentage</th>
+                   
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Current Status</th>
+                        <th>Edit Offer</th>
+                        <th>Delete Offer</th>
+                    </tr>
+                </thead>
+                <%}%>
+    
           <tbody id="table-body">
           <%offer.forEach((offer,i)=>{%>
             <tr>
@@ -560,4 +576,8 @@ function formatDate(dateString) {
      }
      
      </script>
+       <script>
+        lucide.createIcons();
+      </script>
+    
 </html>

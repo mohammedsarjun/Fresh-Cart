@@ -12,7 +12,8 @@
 }
     </style>
     <link rel="stylesheet" href="/styles/validationCommon.css">
-    
+    <link rel="stylesheet" href="/styles/emptyTable.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body style="overflow-x: hidden;">
 <!-- Edit Product Offer Modal -->
@@ -170,22 +171,35 @@
               placeholder="Search Product Offer..." id="product-search">
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
+
+      <% if(offer.length==0) { %>
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i data-lucide="tag"></i>
+          </div>
+          <h2>No Product Offer Found</h2>
+      
+     
+        </div> 
+        <%}%>
       <div class="table-responsive ">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
           <thead >
-              <tr>
-                 
-                  <th>S.No</th>
-                  <th>Product Name</th>
-                  <th>Variety</th>
-                  <th>Variety Meaurement</th>
-                  <th>Offer Percentage</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Current Status</th>
-                  <th>Edit Offer</th>
-                  <th>Delete Offer</th>
-              </tr>
+            <% if(offer.length!=0) { %>
+                <tr>
+                    <th>S.No</th>
+                    <th>Product Name</th>
+                    <th>Variety</th>
+                    <th>Variety Meaurement</th>
+                    <th>Offer Percentage</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Current Status</th>
+                    <th>Edit Offer</th>
+                    <th>Delete Offer</th>
+                </tr>
+                <%}%>
+             
           </thead>
           <tbody id="table-body">
           <%offer.forEach((offer,i)=>{%>
@@ -616,4 +630,9 @@ document.querySelectorAll("#editOfferForm input").forEach(input => {
 }
 
 </script>
+
+<script>
+    lucide.createIcons();
+  </script>
+
 </html>

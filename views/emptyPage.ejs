@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empty State Examples</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Reset and base styles */
+        :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  background-color: #f5f5f5;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px;
+}
+
+.empty-state__icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-state__title {
+  color: #333;
+  font-size: 24px;
+  margin: 0 0 12px 0;
+}
+
+.empty-state__description {
+  color: #666;
+  margin: 0;
+  font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #242424;
+  }
+  
+  .empty-state {
+    background: #1a1a1a;
+  }
+  
+  .empty-state__title {
+    color: #fff;
+  }
+  
+  .empty-state__description {
+    color: #888;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+          <div id="app">
+            <div class="empty-state">
+              <div class="empty-state__icon">📦</div>
+              <h1 class="empty-state__title">No Products Found</h1>
+              <p class="empty-state__description">There are currently no products available in the database.</p>
+            </div>
+          </div>
+      
+</body>
+</html>
