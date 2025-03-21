@@ -66,6 +66,71 @@
     </a>
 </div>
 
+<style>
+	    .filter-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+    
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+		:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: #ffffff;
+  color: #213547;
+}
+
+
+
+
+.no-products {
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.noProducticon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  color: #1a1a1a;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}	
+    </style>
+	
+
 	<title>Shop Grid 3 Column - TailwindCSS eCommerce HTML Template - FreshCart</title>
 </head>
 
@@ -325,93 +390,19 @@
 									</ul>
 								</div>
 
+								
 								<div class="flex flex-col gap-3">
-									<h5>Stores</h5>
-									<div class="flex flex-col gap-4">
-										<!-- input -->
-										<input type="search"
-											class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
-											placeholder="Search by store" />
+									
+    <div class="filter-box">
+        <h3>Filter Price</h3>
+        <input type="number" id="minPrice" placeholder="Min Price">
+        <input type="number" id="maxPrice" placeholder="Max Price">
+        <button onclick="validatePrices()">Search</button>
+        <p class="error" id="errorMessage"></p>
+    </div>
 
-										<!-- form check -->
-										<div class="flex flex-col gap-2">
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="eGrocery" checked />
-												<label class="text-gray-800" for="eGrocery">E-Grocery</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="DealShare" />
-												<label class="text-gray-800" for="DealShare">DealShare</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="Dmart" />
-												<label class="text-gray-800" for="Dmart">DMart</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="Blinkit" />
-												<label class="text-gray-800" for="Blinkit">Blinkit</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="BigBasket" />
-												<label class="text-gray-800" for="BigBasket">BigBasket</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="StoreFront" />
-												<label class="text-gray-800" for="StoreFront">StoreFront</label>
-											</div>
-											<!-- form check -->
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="Spencers" />
-												<label class="text-gray-800" for="Spencers">Spencers</label>
-											</div>
-											<div class="relative flex gap-2 items-center">
-												<!-- input -->
-												<input
-													class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-													type="checkbox" value="" id="onlineGrocery" />
-												<label class="text-gray-800" for="onlineGrocery">Online Grocery</label>
-											</div>
-										</div>
-									</div>
-									<!-- form check -->
-								</div>
-								<div class="flex flex-col gap-3">
-									<!-- price -->
-									<h5>Price</h5>
-									<div class="flex flex-col gap-3">
-										<!-- range -->
-										<div id="priceRange"></div>
-										<div class="flex flex-row gap-2 items-center">
-											<span class="text-gray-800">Price:</span>
-											<span id="priceRange-value" class="text-xs"></span>
-										</div>
-									</div>
+
+									
 								</div>
 								<!-- rating -->
 								<div class="flex flex-col gap-3">
@@ -422,7 +413,7 @@
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="" id="ratingFive" />
+												type="checkbox" value="5" name="rating" id="ratingFive" />
 											<label class="text-gray-800" for="ratingFive">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -483,7 +474,7 @@
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="" id="ratingFour" checked />
+												type="checkbox" name="rating" value="4" id="ratingFour" checked />
 											<label class="text-gray-800" for="ratingFour">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -542,7 +533,7 @@
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="" id="ratingThree" />
+												type="checkbox" name="rating" value="3" id="ratingThree" />
 											<label class="text-gray-800" for="ratingThree">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -599,7 +590,7 @@
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="" id="ratingTwo" />
+												type="checkbox" name="rating" value="2" id="ratingTwo" />
 											<label class="text-gray-800" for="ratingTwo">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -654,7 +645,7 @@
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="" id="ratingOne" />
+												type="checkbox" name="rating" value="1" id="ratingOne" />
 											<label class="text-gray-800" for="ratingOne">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -762,8 +753,16 @@
 							<!-- icon -->
 						
 						</div>
+
+						<%if(products.length==0){%>
+							<div class="no-products">
+								<div class="noProducticon">📦</div>
+								<h1>No Products Found</h1>
+								<p>It seems there are no products available in the database at the moment.</p>
+							  </div>
+							<%}%>
 						
-						<div class="grid lg:grid-cols-3 md:grid-cols-3 gap-4">
+						<div class="grid lg:grid-cols-3 md:grid-cols-3 gap-4 product-parent">
 							<% products.forEach(product => { %>
 								
 								  <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
@@ -786,60 +785,16 @@
 												<div class="flex items-center">
 													<div class="flex flex-row gap-3">
 														<small class="text-yellow-500 flex items-center">
-															<svg xmlns="http://www.w3.org/2000/svg"
-																class="icon icon-tabler icon-tabler-star-filled" width="14"
-																height="14" viewBox="0 0 24 24" stroke-width="2"
-																stroke="currentColor" fill="none" stroke-linecap="round"
-																stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<path
-																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-																	stroke-width="0" fill="currentColor" />
-															</svg>
-															<svg xmlns="http://www.w3.org/2000/svg"
-																class="icon icon-tabler icon-tabler-star-filled" width="14"
-																height="14" viewBox="0 0 24 24" stroke-width="2"
-																stroke="currentColor" fill="none" stroke-linecap="round"
-																stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<path
-																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-																	stroke-width="0" fill="currentColor" />
-															</svg>
-															<svg xmlns="http://www.w3.org/2000/svg"
-																class="icon icon-tabler icon-tabler-star-filled" width="14"
-																height="14" viewBox="0 0 24 24" stroke-width="2"
-																stroke="currentColor" fill="none" stroke-linecap="round"
-																stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<path
-																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-																	stroke-width="0" fill="currentColor" />
-															</svg>
-															<svg xmlns="http://www.w3.org/2000/svg"
-																class="icon icon-tabler icon-tabler-star-filled" width="14"
-																height="14" viewBox="0 0 24 24" stroke-width="2"
-																stroke="currentColor" fill="none" stroke-linecap="round"
-																stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<path
-																	d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
-																	stroke-width="0" fill="currentColor" />
-															</svg>
-															<svg xmlns="http://www.w3.org/2000/svg"
-																class="icon icon-tabler icon-tabler-star-half-filled"
-																width="14" height="14" viewBox="0 0 24 24" stroke-width="2"
-																stroke="currentColor" fill="none" stroke-linecap="round"
-																stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<path
-																	d="M12 1a.993 .993 0 0 1 .823 .443l.067 .116l2.852 5.781l6.38 .925c.741 .108 1.08 .94 .703 1.526l-.07 .095l-.078 .086l-4.624 4.499l1.09 6.355a1.001 1.001 0 0 1 -1.249 1.135l-.101 -.035l-.101 -.046l-5.693 -3l-5.706 3c-.105 .055 -.212 .09 -.32 .106l-.106 .01a1.003 1.003 0 0 1 -1.038 -1.06l.013 -.11l1.09 -6.355l-4.623 -4.5a1.001 1.001 0 0 1 .328 -1.647l.113 -.036l.114 -.023l6.379 -.925l2.853 -5.78a.968 .968 0 0 1 .904 -.56zm0 3.274v12.476a1 1 0 0 1 .239 .029l.115 .036l.112 .05l4.363 2.299l-.836 -4.873a1 1 0 0 1 .136 -.696l.07 -.099l.082 -.09l3.546 -3.453l-4.891 -.708a1 1 0 0 1 -.62 -.344l-.073 -.097l-.06 -.106l-2.183 -4.424z"
-																	stroke-width="0" fill="currentColor" />
-															</svg>
+															<% 
+																let fullStars = Math.floor(product.avgRating); 
+																let halfStar = product.avgRating % 1 >= 0.5 ? "★" : ""; 
+																let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+															%>
+															<%= "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars) %>
 														</small>
 														<div class="flex flex-row gap-1">
-															<span class="text-gray-500 text-sm">4.5</span>
-															<span class="text-gray-500 text-sm">(149)</span>
+															<span class="text-gray-500 text-sm"><%=product.avgRating%></span>
+															<span class="text-gray-500 text-sm">(<%=product.totalRating%>)</span>
 														</div>
 													</div>
 												</div>
@@ -854,7 +809,7 @@
 															let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 														%>
 													
-														<span class="text-gray-900 font-semibold">$<%= discountPrice%></span>
+														<span class="text-gray-900 font-semibold">$<%= discountPrice.toFixed(1)%></span>
 													
 														<% if (discountPrice !== basePrice) { %>
 															<span class="line-through text-gray-500">$<%= basePrice%></span>
@@ -870,7 +825,7 @@
 																let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 															%>
 														
-															<span class="text-gray-900 font-semibold">$<%= discountedPrice %></span>
+															<span class="text-gray-900 font-semibold">$<%= Number(discountedPrice)?.toFixed(1) %></span>
 														
 															<% if (discountedPrice !== originalPrice) { %>
 																<span class="line-through text-gray-500">$<%= originalPrice %></span>
@@ -1572,6 +1527,293 @@ Remove if you do not want.
 <!-- Theme JS -->
 
 <script src="/js/theme.min.js"></script>
+
+<script>
+
+
+
+	function updateStars(avgRating) {
+	console.log(avgRating)
+    const starsContainer = document.querySelector(".total-stars"); 
+    const ratingNumber = document.querySelector(".rating-number");
+    
+    ratingNumber.textContent = avgRating;
+
+    let roundedRating = Math.round(avgRating * 2) / 2;
+    let fullStars = Math.floor(roundedRating); 
+    let halfStar = roundedRating % 1 === 0.5 ? "★" : ""; 
+    let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars);
+}
+
+
+
+
+const checkboxes = document.getElementsByName("rating");
+let productParent= document.querySelector(".product-parent")
+checkboxes.forEach( checkbox => {
+    checkbox.addEventListener("change", function () {
+		const minPrice = document.getElementById("minPrice").value.trim();
+		const maxPrice = document.getElementById("maxPrice").value.trim();
+		const checkedValues = Array.from(document.querySelectorAll("input[name='rating']:checked"))
+        .map(checkbox => checkbox.value);
+    
+	fetch(`/shop/filterProduct/<%=categoryFilterName.categoryName%>`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ selectedRating: checkedValues,minPrice,maxPrice }),
+   })
+  .then(response => response.json())
+  .then(data => {
+    productParent.innerHTML = ""; // Clear existing content
+
+    if (data.products) {
+        let productsHTML = ""; // Store all products as a single string before adding to DOM
+
+        for (let i = 0; i < data.products.length; i++) {
+            let product = data.products[i];
+
+            // Handle ratings calculation
+            let fullStars = Math.floor(product.avgRating);
+            let halfStar = product.avgRating % 1 >= 0.5 ? "★" : "";
+            let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            let starsHTML = "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars);
+
+            // Handle pricing logic
+            let priceHTML = "";
+            if (product.variety !== "items") {
+                let price = Object.values(product.productPrice).find(p => p !== null) || 0;
+                let variety = product.varietyDetails[0] || {};
+                let basePrice = variety.varietyMeasurement * price;
+                let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
+				console.log(discountPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                `;
+            } else {
+                let variety = product.varietyDetails[0] || {};
+                let originalPrice = variety.varietyPrice || 0;
+                let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
+				console.log(discountedPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                `;
+            }
+
+            // Build product card HTML
+            productsHTML += `
+                <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+                    <div class="flex-auto p-4">
+                        <div class="text-center relative flex justify-center">
+                            <div class="absolute top-0 left-0">
+                                <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+                            </div>
+                            <a href="/shop/productDetail/${product._id}">
+                                <img src="${product.productPic.productImage1}" alt="Product Image" class="w-full h-auto" />
+                            </a>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-base truncate">
+                                    <a href="/shop/productDetail/${product._id}">${product.productName}</a>
+                                </h3>
+                                <div class="flex items-center">
+                                    <div class="flex flex-row gap-3">
+                                        <small class="text-yellow-500 flex items-center">${starsHTML}</small>
+                                        <div class="flex flex-row gap-1">
+                                            <span class="text-gray-500 text-sm">${product.avgRating}</span>
+                                            <span class="text-gray-500 text-sm">(${product.totalRating})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>${priceHTML}</div>
+                                <div>
+                                    <button type="button"
+                                        class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+                                            viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 5l0 14" />
+                                            <path d="M5 12l14 0" />
+                                        </svg>
+                                        <span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // Append all product cards at once to improve performance
+        productParent.innerHTML = productsHTML;
+    }
+})
+  .catch(error => console.error("Error:", error));
+
+    });
+});
+
+</script>
+
+<script>
+	async function validatePrices() {
+		const minPrice = document.getElementById("minPrice").value.trim();
+		const maxPrice = document.getElementById("maxPrice").value.trim();
+		const errorMessage = document.getElementById("errorMessage");
+
+		errorMessage.style.display = "none";
+
+		const min = parseFloat(minPrice);
+		const max = parseFloat(maxPrice);
+
+		if (isNaN(min) || isNaN(max)) {
+			showError("Enter valid numbers.");
+			return;
+		}
+		if (min < 0 || max < 0) {
+			showError("Prices must be positive.");
+			return;
+		}
+		if (min > max) {
+			showError("Min cannot be greater than Max.");
+			return;
+		}
+
+	
+		try {
+			let checkedValues = Array.from(document.querySelectorAll("input[name='rating']:checked"))
+			console.log(checkedValues[0].value)
+
+			for(let i=0;i<checkedValues.length;i++){
+				checkedValues[i]=checkedValues[i].value
+			}
+			console.log(checkedValues)
+			fetch(`/shop/filterProduct/<%=categoryFilterName.categoryName%>`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ selectedRating: checkedValues, minPrice,maxPrice}),
+   })
+  .then(response => response.json())
+  .then(data => {
+    productParent.innerHTML = ""; // Clear existing content
+
+    if (data.products) {
+        let productsHTML = ""; // Store all products as a single string before adding to DOM
+
+        for (let i = 0; i < data.products.length; i++) {
+            let product = data.products[i];
+
+            // Handle ratings calculation
+            let fullStars = Math.floor(product.avgRating);
+            let halfStar = product.avgRating % 1 >= 0.5 ? "★" : "";
+            let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            let starsHTML = "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars);
+
+            // Handle pricing logic
+            let priceHTML = "";
+            if (product.variety !== "items") {
+                let price = Object.values(product.productPrice).find(p => p !== null) || 0;
+                let variety = product.varietyDetails[0] || {};
+                let basePrice = variety.varietyMeasurement * price;
+                let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
+				console.log(discountPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                `;
+            } else {
+                let variety = product.varietyDetails[0] || {};
+                let originalPrice = variety.varietyPrice || 0;
+                let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
+				console.log(discountedPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                `;
+            }
+
+            // Build product card HTML
+            productsHTML += `
+                <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+                    <div class="flex-auto p-4">
+                        <div class="text-center relative flex justify-center">
+                            <div class="absolute top-0 left-0">
+                                <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+                            </div>
+                            <a href="/shop/productDetail/${product._id}">
+                                <img src="${product.productPic.productImage1}" alt="Product Image" class="w-full h-auto" />
+                            </a>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-base truncate">
+                                    <a href="/shop/productDetail/${product._id}">${product.productName}</a>
+                                </h3>
+                                <div class="flex items-center">
+                                    <div class="flex flex-row gap-3">
+                                        <small class="text-yellow-500 flex items-center">${starsHTML}</small>
+                                        <div class="flex flex-row gap-1">
+                                            <span class="text-gray-500 text-sm">${product.avgRating}</span>
+                                            <span class="text-gray-500 text-sm">(${product.totalRating})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>${priceHTML}</div>
+                                <div>
+                                    <button type="button"
+                                        class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+                                            viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 5l0 14" />
+                                            <path d="M5 12l14 0" />
+                                        </svg>
+                                        <span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // Append all product cards at once to improve performance
+        productParent.innerHTML = productsHTML;
+    }
+})
+            } catch (error) {
+                showError("Error fetching products.");
+            }
+	}
+
+	function showError(msg) {
+		const errorMessage = document.getElementById("errorMessage");
+		errorMessage.textContent = msg;
+		errorMessage.style.display = "block";
+	}
+
+	document.querySelectorAll("input").forEach(input => {
+		input.addEventListener("input", () => {
+			document.getElementById("errorMessage").style.display = "none";
+		});
+	});
+</script>
 
 </body>
 

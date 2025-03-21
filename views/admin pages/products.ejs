@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
+    <link rel="stylesheet" href="/styles/emptyTable.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     
   </head>
-  <body style="overflow-x: hidden;">
+  <body style="overflow-x: hidden;" style="width: 100vw;">
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -163,8 +164,20 @@
             placeholder="Search Users..." id="user-search">
         <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
     </form>
+
+    <% if(products.length==0) { %>
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <i data-lucide="package"></i>
+        </div>
+        <h2>No Product Found</h2>
+    
+   
+      </div> 
+      <%}%>
       <div class="content-body">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <% if(products.length!=0) { %>
           <thead >
               <tr>
                   <th>Images</th>
@@ -173,6 +186,7 @@
                   <th>Availability</th>
               </tr>
           </thead>
+          <%}%>
           <tbody id="table-body">
            
             <% products.forEach(product => { %>
@@ -217,6 +231,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/js/adminScript/productValidation.js"></script>
   <script src="/js/adminScript/products.js"></script>
-
+  <script>
+    lucide.createIcons();
+  </script>
 
 </html>

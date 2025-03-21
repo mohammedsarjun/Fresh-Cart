@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const couponSchema = new mongoose.Schema({
   couponCode: {
@@ -33,15 +33,15 @@ const couponSchema = new mongoose.Schema({
   },
   currentStatus: {
     type: String,
-    enum: ["active", "expired", "upcoming"],
+    enum: ['active', 'expired', 'upcoming'],
     required: true,
-    default:"active"
+    default: 'active',
   },
-  isListed:{
+  isListed: {
     type: Boolean,
     required: true,
-    default:true
-  }
+    default: true,
+  },
 });
 
-module.exports = mongoose.model("Coupon", couponSchema);
+module.exports = mongoose.model('Coupon', couponSchema);

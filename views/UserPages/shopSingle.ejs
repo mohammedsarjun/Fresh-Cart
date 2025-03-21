@@ -20,6 +20,221 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
 <link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
 <link rel="stylesheet" href="/assets/libs/simplebar/dist/simplebar.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+	}
+	
+	.display-none{
+		display: none;
+	}
+	.container {
+		width: 100%;
+		max-width: 1200px;
+	}
+	
+	.reviews-container {
+		display: flex;
+		gap: 30px;
+	}
+	
+	/* Left side: User Reviews */
+	.user-reviews {
+		flex: 1;
+		background: white;
+		border-radius: 12px;
+		padding: 32px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	}
+	
+	.review-item {
+		border-bottom: 1px solid #eee;
+		padding: 20px 0;
+	}
+	
+	.review-item:first-of-type {
+		padding-top: 0;
+	}
+	
+	.user-info {
+		display: flex;
+		gap: 15px;
+		margin-bottom: 15px;
+	}
+	
+	.user-avatar {
+		width: 50px;
+		height: 50px;
+		border-radius: 25px;
+	}
+	
+	.user-details h3 {
+		font-size: 16px;
+		margin-bottom: 4px;
+	}
+	
+	.review-date {
+		font-size: 14px;
+		color: #666;
+	}
+	
+	.review-headline {
+		font-size: 18px;
+		margin-bottom: 10px;
+		color: #333;
+	}
+	
+	.review-text {
+		font-size: 15px;
+		line-height: 1.5;
+		color: #444;
+	}
+	
+	.more-reviews-btn {
+		background: #f0f0f0;
+		color: #333;
+		border: none;
+		padding: 12px 24px;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s;
+		width: 100%;
+		margin-top: 20px;
+	}
+	
+	.more-reviews-btn:hover {
+		background: #e0e0e0;
+	}
+	
+	/* Right side: Rating Summary */
+	.review-box {
+		background: white;
+		border-radius: 12px;
+		padding: 32px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		width: 400px;
+	}
+	
+	h2 {
+		color: #333;
+		margin-bottom: 24px;
+		font-size: 24px;
+	}
+	
+	.rating-summary {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		margin-bottom: 32px;
+	}
+	
+	.overall-rating {
+		text-align: center;
+	}
+	
+	.rating-number {
+		font-size: 48px;
+		font-weight: bold;
+		color: #333;
+		line-height: 1;
+	}
+	
+	.stars {
+		color: #ffd700;
+		font-size: 24px;
+		margin: 8px 0;
+	}
+	
+	.total-reviews {
+		color: #666;
+		font-size: 14px;
+	}
+	
+	.rating-bars {
+		flex-grow: 1;
+	}
+	
+	.rating-row {
+		display: flex;
+		align-items: center;
+		margin-bottom: 8px;
+		gap: 12px;
+	}
+	
+	.star-count {
+		min-width: 40px;
+		color: #666;
+		font-size: 14px;
+	}
+	
+	.bar-container {
+		flex-grow: 1;
+		height: 8px;
+		background: #eee;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+	
+	.bar {
+		height: 100%;
+		background: #ffd700;
+		border-radius: 4px;
+	}
+	
+	.count {
+		min-width: 40px;
+		color: #666;
+		font-size: 14px;
+	}
+	
+	.add-review-btn {
+		background: #2ecc71;
+		color: white;
+		border: none;
+		padding: 12px 24px;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s;
+		width: 100%;
+	}
+	
+	.add-review-btn:hover {
+		background: #27ae60;
+	}
+	
+	@media (max-width: 900px) {
+		.reviews-container {
+			flex-direction: column-reverse;
+		}
+	
+		.review-box {
+			width: 100%;
+		}
+	}
+	
+	@media (max-width: 600px) {
+		.rating-summary {
+			gap: 24px;
+		}
+		
+		.overall-rating {
+			min-width: auto;
+		}
+	
+		.user-info {
+			flex-direction: column;
+		}
+	}
+		</style>
 <style>
 
 	* {
@@ -78,6 +293,39 @@
     width: 100%; /* Make image responsive */
     height: auto; /* Maintain aspect ratio */
 }
+</style>
+
+<style>
+	.star {
+		font-size: 24px;
+		color: gray;
+		cursor: pointer;
+		transition: color 0.3s;
+	}
+
+	.star.selected, .star:hover {
+		color: gold;
+	}
+
+	.error {
+		color: red;
+		font-size: 14px;
+		margin-top: 5px;
+		display: none;
+	}
+
+	.form-control {
+		display: block;
+		width: 100%;
+		padding: 8px;
+		margin-top: 5px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	.mb-3 {
+		margin-bottom: 15px;
+	}
 </style>
 <!-- Theme CSS -->
 <link rel="stylesheet" href="/styles/theme.min.css">
@@ -139,6 +387,59 @@
 </header>
 <!-- Modal -->
  <main>
+
+	<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Add Product Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Product Details -->
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="<%=updatedProduct.productPic.productImage1%>" alt="Product Image" class="img-thumbnail" width="100">
+                        <div class="ms-3">
+                            <h5><%=updatedProduct.productName%></h5>
+                        </div>
+                    </div>
+                    
+                    <!-- Review Form -->
+			
+					<form id="reviewForm">
+						<div class="mb-3">
+							<label class="form-label">Overall Rating</label>
+							<div id="starRating">
+								<i class="fas fa-star star" data-value="1"></i>
+								<i class="fas fa-star star" data-value="2"></i>
+								<i class="fas fa-star star" data-value="3"></i>
+								<i class="fas fa-star star" data-value="4"></i>
+								<i class="fas fa-star star" data-value="5"></i>
+							</div>
+							<p class="error" id="ratingError">Please select a rating.</p>
+						</div>
+						
+						<div class="mb-3">
+							<label class="form-label">Add a Headline</label>
+							<input type="text" class="form-control" id="headline" placeholder="Summary of your review">
+							<p class="error" id="headlineError">Headline must be at least 5 characters.</p>
+						</div>
+				
+						<div class="mb-3">
+							<label class="form-label">Add a Written Review</label>
+							<textarea class="form-control" id="reviewText" rows="4" placeholder="Share your thoughts on the product"></textarea>
+							<p class="error" id="reviewError">Review must be at least 10 characters.</p>
+						</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </div>
+			</form>
+            </div>
+        </div>
+    </div>
+    
 		<div class="container">
 			<div class="flex flex-wrap mt-4">
 				<div class="w-full">
@@ -447,7 +748,9 @@
 								<!-- btn -->
 								<button class="inline-block py-3 font-semibold px-4 no-underline nav-link active"
 									id="product-tab" data-bs-toggle="tab" data-bs-target="#product-tab-pane"
-									type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true">
+									type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true"
+									onclick="loadProductDetail()"
+									>
 									Product Details
 								</button>
 							</li>
@@ -458,7 +761,7 @@
 								<button class="inline-block py-3 font-semibold px-4 no-underline nav-link"
 									id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane"
 									type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="false"
-									tabindex="-1">
+									tabindex="-1" onclick="loadReviews()">
 									Reviews
 								</button>
 							</li>
@@ -483,6 +786,83 @@
 							<!-- tab pane -->
 							
 					</div>
+					<div class="tab-content display-none reviewContent" id="myTabContent">
+						<!-- tab pane -->
+						<div class="tab-pane active opacity-100 block" id="product-tab-pane" role="tabpanel"
+							aria-labelledby="product-tab" tabindex="0">
+							<div class="my-8 flex flex-col gap-5">
+								<div class="flex flex-col gap-1">
+									<div class="container">
+										<div class="reviews-container">
+											<!-- Left side: User Reviews -->
+											<div class="user-reviews">
+												<h2>Customer Reviews</h2>
+												
+												
+												<button class="more-reviews-btn" onclick="loadReviews()">Load More Reviews</button>
+											</div>
+								
+											<!-- Right side: Rating Summary -->
+											<div class="review-box">
+												<h2>Rating Summary</h2>
+												
+												<div class="rating-summary">
+													<div class="overall-rating">
+														<span class="rating-number">0</span>
+														<div class="total-stars"></div>
+														<span class="total-reviews"></span>
+													</div>
+								
+													<div class="rating-bars">
+														<div class="rating-row">
+															<span class="star-count">5 ★</span>
+															<div class="bar-container">
+																<div class="bar" style="width: 75%"></div>
+															</div>
+															<span class="count">156</span>
+														</div>
+														<div class="rating-row">
+															<span class="star-count">4 ★</span>
+															<div class="bar-container">
+																<div class="bar" style="width: 45%"></div>
+															</div>
+															<span class="count">42</span>
+														</div>
+														<div class="rating-row">
+															<span class="star-count">3 ★</span>
+															<div class="bar-container">
+																<div class="bar" style="width: 20%"></div>
+															</div>
+															<span class="count">23</span>
+														</div>
+														<div class="rating-row">
+															<span class="star-count">2 ★</span>
+															<div class="bar-container">
+																<div class="bar" style="width: 8%"></div>
+															</div>
+															<span class="count">8</span>
+														</div>
+														<div class="rating-row">
+															<span class="star-count">1 ★</span>
+															<div class="bar-container">
+																<div class="bar" style="width: 5%"></div>
+															</div>
+															<span class="count">5</span>
+														</div>
+													</div>
+												</div>
+								
+												<button class="add-review-btn" data-bs-toggle="modal" data-bs-target="#reviewModal">Write a Review</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<!-- tab pane -->
+						
+				</div>
 					<section class="mt-8">
 						<div class="container">
 							<div class="flex flex-wrap">
@@ -759,6 +1139,234 @@ else if('<%=updatedProduct?.varietyDetails[2]?.varietyMeasurement%>'==grams||'<%
 });
 }
 
+let page = 1; // Start at page 1
+const limit = 2;
+const productId = '<%=updatedProduct._id%>'; // Replace dynamically based on the product
+
+async function loadReviews() {
+    const reviewContent = document.querySelector(".reviewContent");
+    reviewContent.classList.remove('display-none');
+
+    const response = await fetch(`/shop/productDetail/review/${productId}?page=${page}&limit=${limit}`);
+    const reviews = await response.json();
+    console.log(reviews);
+
+    if (reviews.length === 0) {
+        document.querySelector('.more-reviews-btn').style.display = 'none'; // Hide button if no more reviews
+        return;
+    }
+
+    const reviewContainer = document.querySelector('.user-reviews');
+
+    reviews.reviews.forEach(review => {
+        // Handling rating in JavaScript instead of EJS
+        let stars = "No rating";
+        if (review.rating == 5) stars = "★★★★★";
+        else if (review.rating == 4) stars = "★★★★☆";
+        else if (review.rating == 3) stars = "★★★☆☆";
+        else if (review.rating == 2) stars = "★★☆☆☆";
+        else if (review.rating == 1) stars = "★☆☆☆☆";
+
+        let div = `
+            <div class="review-item">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=${review.firstName}+${review.secondName}" alt="User" class="user-avatar">
+                    <div class="user-details">
+                        <h3>${review.firstName} ${review.lastName || ''}</h3>
+                        <div class="stars">${stars}</div>
+                        <span class="review-date">Reviewed on ${review.createdAt}</span>
+                    </div>
+                </div>
+                <h4 class="review-headline">${review.headline}</h4>
+                <p class="review-text">${review.reviewContent}</p>
+            </div>`;
+
+			if (reviewContainer.children.length >= 1) {
+    reviewContainer.children[0].insertAdjacentHTML("afterend", div);
+} else {
+    reviewContainer.insertAdjacentHTML("afterbegin", div);
+}
+    });
+
+    page++; // Increment page for next batch
+
+	let ratingNumber=document.querySelector('.rating-number')
+	let totalReviews=document.querySelector(".total-reviews")
+
+	totalReviews.textContent=`Based on ${reviews.reviewCount} reviews`
+	ratingNumber.textContent=reviews.avgRating
+	
+	updateStars(reviews.avgRating);
+	updateRatingBars(reviews.ratings);
+	
+function updateStars(avgRating) {
+	console.log(avgRating)
+    const starsContainer = document.querySelector(".total-stars"); 
+    const ratingNumber = document.querySelector(".rating-number");
+    
+    ratingNumber.textContent = avgRating;
+
+    let roundedRating = Math.round(avgRating * 2) / 2;
+    let fullStars = Math.floor(roundedRating); 
+    let halfStar = roundedRating % 1 === 0.5 ? "★" : ""; 
+    let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    starsContainer.textContent = "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars);
+}
+
+
+
+function updateRatingBars(ratingData) {
+    const totalReviews = Object.values(ratingData).reduce((sum, count) => sum + count, 0); // Sum of all ratings
+
+    document.querySelectorAll(".rating-row").forEach(row => {
+        const starCount = parseInt(row.querySelector(".star-count").textContent); // Get the star rating (5,4,3,2,1)
+        const count = ratingData[starCount] || 0; // Get review count for this star rating
+
+        const bar = row.querySelector(".bar");
+        const countSpan = row.querySelector(".count");
+
+        let percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0; // Avoid division by zero
+        bar.style.width = percentage.toFixed(1) + "%"; // Set bar width
+        countSpan.textContent = count; // Update count display
+    });
+}
+
+
+	
+}
+
+
+async function loadProductDetail() {
+	const reviewContent=document.querySelector(".reviewContent");
+	reviewContent.classList.add('display-none');
+}
+</script>
+
+<script>
+	const stars = document.querySelectorAll(".star");
+let selectedRating = 0;
+
+stars.forEach(star => {
+    star.addEventListener("mouseover", function () {
+        highlightStars(this.dataset.value);
+    });
+
+    star.addEventListener("click", function () {
+        selectedRating = this.dataset.value;
+        highlightStars(selectedRating);
+        document.getElementById("ratingError").style.display = "none"; // Hide error on selection
+    });
+
+    star.addEventListener("mouseout", function () {
+        highlightStars(selectedRating);
+    });
+});
+
+function highlightStars(rating) {
+    stars.forEach(star => {
+        star.classList.remove("selected");
+        if (star.dataset.value <= rating) {
+            star.classList.add("selected");
+        }
+    });
+}
+
+// Form validation
+document.getElementById("reviewForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    let isValid = true;
+
+    // Validate Star Rating
+    if (selectedRating === 0) {
+        document.getElementById("ratingError").style.display = "block";
+        isValid = false;
+    }
+
+    // Validate Headline
+    let headlineInput = document.getElementById("headline");
+    let headlineError = document.getElementById("headlineError");
+    if (headlineInput.value.trim().length < 5) {
+        headlineError.style.display = "block";
+        isValid = false;
+    } else {
+        headlineError.style.display = "none";
+    }
+
+    // Validate Written Review
+    let reviewInput = document.getElementById("reviewText");
+    let reviewError = document.getElementById("reviewError");
+    if (reviewInput.value.trim().length < 10) {
+        reviewError.style.display = "block";
+        isValid = false;
+    } else {
+        reviewError.style.display = "none";
+    }
+
+	if (isValid) {
+    let bodyContent = {
+		productId:'<%=updatedProduct._id%>',
+        headlineInput: headlineInput.value,
+        reviewInput: reviewInput.value,
+        selectedRating
+    };
+
+    fetch("/shop/productDetail/add-review", {  // Replace with your actual API endpoint
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyContent),
+    })
+    .then(response => response.json()) // Parse JSON response
+    .then(data => {
+
+		if(data.isNotLogged){
+		return	location.href=data.redirectTo
+		}
+        if (data.message) {
+            Swal.fire({
+                icon: "success",
+                title: "Review Submitted!",
+                text: data.message, // Success message
+                confirmButtonColor: "#3085d6",
+            }).then(() => {
+    location.reload(); // Reload the page after clicking "OK"
+});;
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Submission Failed!",
+                text: data.error || "Something went wrong.", // Error message
+                confirmButtonColor: "#d33",
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: "error",
+            title: "Network Error!",
+            text: "Failed to submit the review. Please try again later.",
+            confirmButtonColor: "#d33",
+        });
+        console.error("Error:", error);
+    });
+}
+
+});
+
+// **Remove error messages as user types**
+document.getElementById("headline").addEventListener("input", function () {
+    if (this.value.trim().length >= 5) {
+        document.getElementById("headlineError").style.display = "none";
+    }
+});
+
+document.getElementById("reviewText").addEventListener("input", function () {
+    if (this.value.trim().length >= 10) {
+        document.getElementById("reviewError").style.display = "none";
+    }
+});
 
 </script>
 
