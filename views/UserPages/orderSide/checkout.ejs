@@ -779,22 +779,7 @@
 															<!-- Default Address Indicator -->
 															<% if (address.isDefault) { %>
 																<span class="text-red-600 font-semibold">Default Address</span>
-															<% } %>
-											
-															<span class="text-green-600 font-semibold cursor-pointer" onclick="openEditAddressModal(
-																'<%=address._id%>',
-																'<%=address.addressType%>',
-																'<%=address.firstName%>',
-																'<%=address.lastName%>',
-																'<%=address.addressLine1%>',
-																'<%=address.addressLine2%>',
-																'<%=address.city%>',
-																'<%=address.state%>',
-																'<%=address.country%>',
-																'<%=address.zipCode%>',)">Edit</span>
-															<span class="text-red-600 font-semibold cursor-pointer" onclick="deleteAddress('<%= address._id%>')">Delete</span>
-															
-														</div>
+															<% } %>														</div>
 													</div>
 												<% }); %>
 											</div>
@@ -830,12 +815,28 @@
 									<div id="flush-collapseFour" class="accordion-collapse collapse"
 										data-bs-parent="#accordionFlushExample">
 										<div class="mt-6 flex flex-col gap-4">
+
+											<div class="card">
+												<div class="flex-auto p-4">
+													<div class="flex gap-3">
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="radio" value="Wallet" name="selectedPayement" id="wallet-radio"  />
+															<label class="form-check-label text-gray-800" for="Wallet"></label>
+														</div>
+														<div class="flex flex-col gap-1">
+															<h5 class="text-base">Pay With Wallet</h5>
+															<p class="text-sm">Wallet Balance : ₹<%=wallet.balance%></p>
+														</div>
+													</div>
+												</div>
+											</div>
+
 											<div class="card">
 												<div class="flex-auto p-4">
 													<div class="flex gap-3">
 														<div class="form-check mt-2">
 															<input class="form-check-input" type="radio" value="Razorpay" name="selectedPayement" id="razorpay-radio" />
-															<label class="form-check-label text-gray-800" for="paypal"></label>
+															<label class="form-check-label text-gray-800" for="RazorPay"></label>
 														</div>
 														<div class="flex flex-col gap-1">
 															<h5 class="text-base">Payment with Razorpay</h5>
@@ -870,12 +871,19 @@
 												</button>
 
 												<button onclick=""
-
 												id="placeOrderBtnWithOnline"
+													class="placeOrderW ml-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 collapsed">
+													Place Order
+												</button>
+
+												<button 
+												id="placeOrderBtnWithWallet"
+												onclick="placeOrderWithWallet('<%= cart.grandTotal%>')"
 													class="placeOrderW ml-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 collapsed">
 													Place Order 
 												</button>
-												<div id="paypal-button-container"></div>
+											
+											
 											</div>
 										</div>
 									</div>
@@ -1406,7 +1414,7 @@
 			const res = await fetch("/razorpay/create-order", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ amount: '<%= cart.subtotal + cart.shippingCost %>' ,selectedAddress:selectedAddress,selectedPayment:selectedPayment}) // Amount in INR
+				body: JSON.stringify({ amount: '<%= cart.grandTotal%>' ,selectedAddress:selectedAddress,selectedPayment:selectedPayment}) // Amount in INR
 			});
 
 			const order = await res.json();
@@ -1426,10 +1434,11 @@
 					});
 
 					const verifyData = await verifyRes.json();
-					Swal.fire(verifyData.message, verifyData.test, "success");
-					setTimeout(()=>{
-                window.location.href="/account/orders";
-                },1000)
+					
+					if (verifyData.redirectTo) {
+						console.log(verifyData.redirectTo)
+                window.location.href=verifyData.redirectTo
+            }
 				}
 			};
 

@@ -491,17 +491,31 @@
                                 
                             </div>
                             <div class="w-100 d-flex" style="justify-content: end;">
+                                <% 
+                                const shippingDate = new Date(orders[0].shippingDate); // Convert shippingDate to Date
+                                const returnDeadline = new Date(shippingDate.getTime() + 2 * 24 * 60 * 60 * 1000); // Add 2 days
+                                const currentTime = new Date(); // ⚠️ This won't update dynamically!
+                                %>
+                                
                                 <% if (orders[0].orderStatus !== "Cancelled" && orders[0].orderStatus !== "Delivered" && orders[0].orderStatus !== "Returning" && orders[0].orderStatus !== "Returned") { %>
                                     <button class="btn btn-danger mt-3" style="display: inline;" onclick="cancelOrder('<%= orders[0]._id %>')">Cancel Order</button>
-                                <% } else if (orders[0].orderStatus === "Delivered") { %>
-                                    <button class="btn btn-warning mt-3 text-white" style="display: inline;" onclick="returnOrder('<%= orders[0]._id %>')">Return Order</button>
-                                <% } else if(orders[0].orderStatus === "Returning"){ %>
+                                <% } %>
+                                
+                                <% if (orders[0].orderStatus === "Delivered") { %>
+                                    <% if (currentTime <= returnDeadline) { %>
+                                        <button class="btn btn-warning mt-3 text-white" style="display: inline;" onclick="returnOrder('<%= orders[0]._id %>')">Return Order</button>
+                                    <% } else { %>
+                                        <button class="btn btn-secondary mt-3" style="display: inline;" disabled>Return Window Expired</button>
+                                    <% } %>
+                                <% } else if (orders[0].orderStatus === "Returning") { %>
                                     <button class="btn btn-secondary mt-3" style="display: inline;" disabled>Return Request Sent</button>
-                                    <% } else if(orders[0].orderStatus === "Returned"){ %>
-                                        <button class="btn btn-secondary mt-3" style="display: inline;" disabled>Order Returned</button>
-                                <% } else{ %>
+                                <% } else if (orders[0].orderStatus === "Returned") { %>
+                                    <button class="btn btn-secondary mt-3" style="display: inline;" disabled>Order Returned</button>
+                                <% } else if (orders[0].orderStatus === "Cancelled") { %>
                                     <button class="btn btn-secondary mt-3" style="display: inline;" disabled>Order Cancelled</button>
-                                    <%}%>
+                                <% } %>
+                                
+                                
                         </div>
                         </div>
                     </div>

@@ -8,11 +8,15 @@
       .table th, .table td {
     min-width: 150px; /* Adjust width as needed */
     word-break: break-word; /* Prevents text overflow */
+
     
 }
+
+
     </style>
     <link rel="stylesheet" href="/styles/validationCommon.css">
-    
+    <link rel="stylesheet" href="/styles/emptyTable.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body style="overflow-x: hidden;">
 <!--Edit user Modal-->
@@ -115,22 +119,44 @@
             </button>
         </div>
       </div>
+
+
+     
       <form class="d-flex mb-3 mt-3" method="GET" action="" >
         <input class="form-control me-2 w-25" type="text" name="search" 
             placeholder="Search Users..." id="user-search">
         <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
     </form>
+
+    <% if(users.length==0) { %>
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <i data-lucide="users"></i>
+        </div>
+        <h2>No Users Found</h2>
+        <p>There are no users registered in the database yet.</p>
+   
+      </div> 
+      <%}%>
+ 
+
+
       <div class="content-body">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <% if(users.length!=0) { %>
           <thead >
+           
               <tr>
-                  <th>First Name</th>
-                  <th>Second Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Action</th>
-              </tr>
+                <th>First Name</th>
+                <th>Second Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+            </tr>
+
+             
           </thead>
+          <%}%>
           <tbody id="table-body">
             <% users.forEach(user => { %>
               <tr>
@@ -172,6 +198,9 @@
     </div>
     </div>
   </body>
+  <script>
+    lucide.createIcons();
+  </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/js/adminScript/adminCustomerValidator.js"></script>

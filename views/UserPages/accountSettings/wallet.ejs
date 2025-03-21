@@ -148,15 +148,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="walletForm">
-                        <div class="mb-3">
-                            <label for="amount" class="form-label">Enter Amount</label>
-                            <input type="number" class="form-control" id="amount" min="1" placeholder="Enter amount" required>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success" id="addMoney">Add Money</button>
-                        </div>
-                    </form>
+					<form id="walletForm">
+						<div class="mb-3">
+							<label for="amount" class="form-label">Enter Amount</label>
+							<input type="number" class="form-control" id="amount" min="1" max="10000" placeholder="Enter amount">
+							<small class="text-danger d-none" id="amountError"></small>
+						</div>
+						<div class="text-center">
+							<button type="button" class="btn btn-success" id="addMoney">Add Money</button>
+						</div>
+					</form>
                 </div>
             </div>
         </div>
@@ -293,7 +294,7 @@
                       
                             <!-- Wallet Section -->
                             <div class="wallet-container">
-                                <div class="wallet-balance">Wallet Balance: 32</div>
+                                <div class="wallet-balance">Wallet Balance: <%=wallet.balance%></div>
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMoneyModal">ADD MONEY TO WALLET</button>
                             
                                 <table class="transaction-table">
@@ -305,12 +306,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                            <tr>
-                                                <td>sda</td>
-                                                <td>sad</td>
-                                                <td>asd</td>
+										<%wallet.transactions.forEach((transaction)=>{%>
+											<tr>
+                                                <td><%=transaction.createdAt%></td>
+                                                <td><%=transaction.amount%></td>
+                                                <td><%=transaction.transactionDetail%></td>
                                             </tr>
+											<%})%>
+                                        
+                                            
                                      
                                     </tbody>
                                 </table>
@@ -469,21 +473,23 @@ Remove if you do not want.
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <!-- Theme JS -->
-<script>
-	document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    alert('Form submitted!');
-});
-</script>
-<script src="/assets/js/theme.min.js"></script>
-<script src="/js/userProfile.js"></script>
 
 <script>
-	document.getElementById("addMoney").addEventListener("click", async function (e) {
-		try {
-		e.preventDefault()
-const amount=document.getElementById("amount").value
-		
+	document.getElementById("addMoney").addEventListener("click",async function () {
+		let amountInput = document.getElementById("amount");
+		let amountError = document.getElementById("amountError");
+		let amount = parseFloat(amountInput.value.trim());
+		let minAmount = 1;
+		let maxAmount = 10000;
+	
+		if (isNaN(amount) || amount < minAmount || amount > maxAmount) {
+			amountError.textContent = `Amount must be between ${minAmount} and ${maxAmount}!`;
+			amountError.classList.remove("d-none");
+			amountInput.classList.add("is-invalid");
+		} else {
+			const amount=document.getElementById("amount").value
+        let modal = new bootstrap.Modal(document.getElementById("addMoneyModal"));
+        modal.hide();
 			const res = await fetch("/razorpay/create-order", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -508,7 +514,13 @@ const amount=document.getElementById("amount").value
 
 					const verifyData = await verifyRes.json();
 					if(verifyData.message){
-						Swal.fire(verifyData.message, "success");
+						
+						Swal.fire({
+    title: "Success!",  
+    text: verifyData.message,  
+    icon: "success",  // Adds a success icon
+    confirmButtonColor: "#28a745",  // Bootstrap success green
+});
 					setTimeout(()=>{
                 window.location.reload();
                 },1000)
@@ -518,12 +530,27 @@ const amount=document.getElementById("amount").value
 			};
 
 			const rzp = new Razorpay(options);
-			rzp.open();
-		} catch (error) {
-			console.error("Payment failed", error);
+			rzp.open()
 		}
 	});
+	
+	// Live validation to remove error on input change
+	document.getElementById("amount").addEventListener("input", function () {
+		document.getElementById("amountError").classList.add("d-none");
+		this.classList.remove("is-invalid");
+	});
+	</script>
+
+
+<script>
+	document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Form submitted!');
+});
 </script>
+<script src="/assets/js/theme.min.js"></script>
+<script src="/js/userProfile.js"></script>
+
 
 </body>
 

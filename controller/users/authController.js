@@ -1,19 +1,20 @@
-const userSchema = require("../../model/userSchema");
-const otpSchema = require("../../model/otpSchema");
-const bcrypt = require("bcrypt");
-const sendOtp = require("../../helper/sendOtp");
-const path = require("path");
-const cron = require("node-cron");
-const passport = require("passport");
-const user = require("../../model/userSchema");
-const crypto=require('crypto')
+const userSchema = require('../../model/userSchema');
+const otpSchema = require('../../model/otpSchema');
+const bcrypt = require('bcrypt');
+const sendOtp = require('../../helper/sendOtp');
+const path = require('path');
+const cron = require('node-cron');
+const passport = require('passport');
+const user = require('../../model/userSchema');
+const crypto = require('crypto');
+const AppError = require('../../middleware/errorHandling');
 // Save OTP
 
 //sign-up controller
 
-async function signUp(req, res) {
+async function signUp(req, res, next) {
   try {
-    const isVerifiedUser =  await getUserDetails(req.body.email)
+    const isVerifiedUser = await getUserDetails(req.body.email);
 
     if (isVerifiedUser?.isVerified == false) {
       req.session.otpEmail = req.body.email;
@@ -28,25 +29,24 @@ async function signUp(req, res) {
         createdAt: Date.now(),
       };
       Object.assign(isVerifiedUser, updatedFields);
-      await isVerifiedUser.save()
+      await isVerifiedUser.save();
       await sendOtpFunction(req, res);
       res.status(302).json({
-        redirectTo: "/auth/otp",
+        redirectTo: '/auth/otp',
       });
-    } 
-    else {
+    } else {
       const existEmail = await userSchema.findOne({ email: req.body.email });
       const existPhone = await userSchema.findOne({ phone: req.body.phone });
       if (existEmail) {
         res.status(409).json({
           redirectTo: `/auth/signup?message=${encodeURIComponent(
-            "Email Already exist"
+            'Email Already exist'
           )}`,
         });
       } else if (existPhone) {
         res.status(409).json({
           redirectTo: `/auth/signup?message=${encodeURIComponent(
-            "Phone Number Already exist"
+            'Phone Number Already exist'
           )}`,
         });
       } else {
@@ -61,118 +61,121 @@ async function signUp(req, res) {
           createdAt: Date.now(),
         });
         await user.save();
-      
+
         req.session.otpEmail = req.body.email;
         await sendOtpFunction(req, res);
         res.status(302).json({
-          redirectTo: "/auth/otp", // Send a redirect URL in the JSON respons`e
-          message: "OTP sent successfully",
+          redirectTo: '/auth/otp', // Send a redirect URL in the JSON respons`e
+          message: 'OTP sent successfully',
         });
       }
     }
   } catch (dbErr) {
-    console.log(dbErr);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
 }
 //Verify Otp
-async function verifyOtp(req, res) {
+async function verifyOtp(req, res, next) {
   try {
-    if(req.session.userChangePassword){
-      const user = await  userSchema.findOne({_id:req.session.userId});
-      const otpDetails=await otpSchema.findOne({email:user.email})
+    if (req.session.userChangePassword) {
+      const user = await userSchema.findOne({ _id: req.session.userId });
+      const otpDetails = await otpSchema.findOne({ email: user.email });
       if (user) {
-        console.log(req.body.enteredOtp)
-        let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, otpDetails.otp);
+        console.log(req.body.enteredOtp);
+        let isOtpMatch = await bcrypt.compare(
+          req.body.enteredOtp,
+          otpDetails.otp
+        );
         if (isOtpMatch) {
-          req.session.isForgotPassword=true
+          req.session.isForgotPassword = true;
           res.status(200).json({
-            redirectTo:"/auth/changePassword",
-            message:"OTP Verified",
-            statusCode: 200
-          })
-        } else {
-          res.status(400).json({
-            redirectTo: "/auth/otp?message=Entered OTP is wrong. Try Again!",
-            statusCode: 400,
-          });
-        }
-      }
-    }
-    else if(req.session.isUserEmailChanged){
-      const user = await  getOtpDetails(req.session.updatingEmail);
-      if (user) {
-        let userUpdateDetails=req.session.userUpdateDetails
-        console.log(req.body.enteredOtp)
-        let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, user.otp);
-        if (isOtpMatch) {
-          const userId=await getUserDetails(req.session.updatingEmail)
-         const updateUser = await userSchema.findById({_id:req.session.userUpdateDetails.userId})
-            console.log(updateUser)
-             updateUser.firstName=userUpdateDetails.firstName
-             updateUser.secondName=userUpdateDetails.secondName
-             updateUser.email=userUpdateDetails.email
-             updateUser.phone=userUpdateDetails.phone
-             await updateUser.save()
-             req.body.otpEmail=updateUser.email
-             delete req.session.isUserEmailChanged
-            delete req.session.updatingEmail
-          res.status(200).json({
-            redirectTo: "/account/settings",
-            message: "User Details Updated!",
+            redirectTo: '/auth/changePassword',
+            message: 'OTP Verified',
             statusCode: 200,
           });
         } else {
           res.status(400).json({
-            redirectTo: "/auth/otp?message=Entered OTP is wrong. Try Again!",
+            redirectTo: '/auth/otp?message=Entered OTP is wrong. Try Again!',
             statusCode: 400,
           });
         }
       }
-    }
-    else if (req.session.isForgotPassword) {
-      const user = await  getOtpDetails(req.session.otpEmail);
+    } else if (req.session.isUserEmailChanged) {
+      const user = await getOtpDetails(req.session.updatingEmail);
       if (user) {
+        let userUpdateDetails = req.session.userUpdateDetails;
+        console.log(req.body.enteredOtp);
         let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, user.otp);
         if (isOtpMatch) {
-          const userId=await getUserDetails(req.session.otpEmail)
-          req.session.userId=userId
+          const userId = await getUserDetails(req.session.updatingEmail);
+          const updateUser = await userSchema.findById({
+            _id: req.session.userUpdateDetails.userId,
+          });
+          console.log(updateUser);
+          updateUser.firstName = userUpdateDetails.firstName;
+          updateUser.secondName = userUpdateDetails.secondName;
+          updateUser.email = userUpdateDetails.email;
+          updateUser.phone = userUpdateDetails.phone;
+          await updateUser.save();
+          req.body.otpEmail = updateUser.email;
+          delete req.session.isUserEmailChanged;
+          delete req.session.updatingEmail;
           res.status(200).json({
-            redirectTo: "/auth/changePassword",
-            message: "OTP Verified!",
+            redirectTo: '/account/settings',
+            message: 'User Details Updated!',
             statusCode: 200,
           });
         } else {
           res.status(400).json({
-            redirectTo: "/auth/otp?message=Entered OTP is wrong. Try Again!",
+            redirectTo: '/auth/otp?message=Entered OTP is wrong. Try Again!',
+            statusCode: 400,
+          });
+        }
+      }
+    } else if (req.session.isForgotPassword) {
+      const user = await getOtpDetails(req.session.otpEmail);
+      if (user) {
+        let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, user.otp);
+        if (isOtpMatch) {
+          const userId = await getUserDetails(req.session.otpEmail);
+          req.session.userId = userId;
+          res.status(200).json({
+            redirectTo: '/auth/changePassword',
+            message: 'OTP Verified!',
+            statusCode: 200,
+          });
+        } else {
+          res.status(400).json({
+            redirectTo: '/auth/otp?message=Entered OTP is wrong. Try Again!',
             statusCode: 400,
           });
         }
       }
     } else {
-      const user = await  getOtpDetails(req.session.otpEmail);
+      const user = await getOtpDetails(req.session.otpEmail);
       if (user) {
         let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, user.otp);
         if (isOtpMatch) {
           const userDetails = await userSchema.findOne({
             email: req.session.otpEmail,
           });
-          const userId=userDetails._id
-          req.session.userId=userId
+          const userId = userDetails._id;
+          req.session.userId = userId;
           if (userDetails) {
             userDetails.isVerified = true;
             await userDetails.save();
             delete req.session.otpExpiry;
-           
+
             req.session.isLogged = true;
             res.status(200).json({
-              redirectTo: "/home",
-              message: "OTP Verified!",
+              redirectTo: '/home',
+              message: 'OTP Verified!',
               statusCode: 200,
             });
           }
         } else {
           res.status(400).json({
-            redirectTo: "/auth/otp?message=Entered OTP is wrong. Try Again!",
+            redirectTo: '/auth/otp?message=Entered OTP is wrong. Try Again!',
             statusCode: 400,
           });
         }
@@ -180,20 +183,21 @@ async function verifyOtp(req, res) {
     }
   } catch (err) {
     console.log(err);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
 }
 
 //login controller
-async function logIn(req, res) {
+async function logIn(req, res, next) {
   try {
     const user = await userSchema.findOne({
       email: req.body.email,
       google_id: null,
     });
-    
+
     if (!user) {
       res.status(401).json({
-        redirectTo: "/auth/signin?message=Email or Password is incorrect",
+        redirectTo: '/auth/signin?message=Email or Password is incorrect',
       });
     } else {
       const isPasswordMatch = await bcrypt.compare(
@@ -202,7 +206,7 @@ async function logIn(req, res) {
       );
       if (!isPasswordMatch) {
         res.status(401).json({
-          redirectTo: "/auth/signin?message=Email or Password is incorrect",
+          redirectTo: '/auth/signin?message=Email or Password is incorrect',
         });
       } else if (user.isVerified == false) {
         req.session.otpEmail = req.body.email;
@@ -213,186 +217,184 @@ async function logIn(req, res) {
           issue: "USER DIDN'T VERIFY",
         });
       } else {
-        req.session.otpEmail=req.body.email
+        req.session.otpEmail = req.body.email;
         req.session.isLogged = true;
-        req.session.userId=user._id
+        req.session.userId = user._id;
         res.status(302).json({
-          redirectTo: "/home",
+          redirectTo: '/home',
         });
       }
     }
   } catch (err) {
     console.log(err);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
 }
 //forgot password
 
-async function forgotPassword(req, res) {
-try{
-  console.log(req.body)
-  const existingUser=await userSchema.findOne({email:req.body.email})
-  if (!existingUser) {
-    res
-      .status(404)
-      .redirect(
-        "/auth/forgotPassword?message=The email entered does not exist!"
-      );
-  } else {
-    req.session.otpEmail = req.body.email;
-    req.session.isForgotPassword = true;
-    await sendOtpFunction(req, res);
-    res.status(302).redirect("/auth/otp"); // Send a redirect URL in the JSON response
+async function forgotPassword(req, res, next) {
+  try {
+    console.log(req.body);
+    const existingUser = await userSchema.findOne({ email: req.body.email });
+    if (!existingUser) {
+      res
+        .status(404)
+        .redirect(
+          '/auth/forgotPassword?message=The email entered does not exist!'
+        );
+    } else {
+      req.session.otpEmail = req.body.email;
+      req.session.isForgotPassword = true;
+      await sendOtpFunction(req, res);
+      res.status(302).redirect('/auth/otp'); // Send a redirect URL in the JSON response
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
 
-async function changePassword(req, res) {
-  try{
-  if(req.session.userChangePassword){
-    const user = await userSchema.findOne({ _id: req.session.userId });
-    const pass = await bcrypt.hash(req.body.newPassword, 10);
-    user.password = pass;
-    await user.save();
-    res.status(200).json({
-      redirectTo: "/",
-      message: "Password Changed",
-    });
+async function changePassword(req, res, next) {
+  try {
+    if (req.session.userChangePassword) {
+      const user = await userSchema.findOne({ _id: req.session.userId });
+      const pass = await bcrypt.hash(req.body.newPassword, 10);
+      user.password = pass;
+      await user.save();
+      res.status(200).json({
+        redirectTo: '/',
+        message: 'Password Changed',
+      });
+    } else {
+      const user = await userSchema.findOne({ email: req.session.otpEmail });
+      const pass = await bcrypt.hash(req.body.newPassword, 10);
+      user.password = pass;
+      await user.save();
+      res.status(200).json({
+        redirectTo: '/',
+        message: 'Password Changed',
+      });
+    }
+
+    delete req.session.isForgotPassword;
+    delete req.session.userChangePassword;
+  } catch (error) {
+    console.error('An error occurred:', error);
   }
-  else{
-    const user = await userSchema.findOne({ email: req.session.otpEmail });
-    const pass = await bcrypt.hash(req.body.newPassword, 10);
-    user.password = pass;
-    await user.save();
-    res.status(200).json({
-      redirectTo: "/",
-      message: "Password Changed",
-    });
-  }
-  
-  delete req.session.isForgotPassword 
-  delete req.session.userChangePassword
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
 //resendOtp
-async function resendOtp(req, res) {
-  try{
-  let otp = await generateOTP();
-  let encryptOtp = await bcrypt.hash(otp, 10);
-  let user
-  if(req.session.userChangePassword=true){
-    const userDetails=await userSchema.findOne({_id:req.session.userId})
-    await saveOtp(encryptOtp, userDetails.email);
-    await sendOtp(userDetails.email, otp);
-    user = await otpSchema.findOne({ email: userDetails.email });
-  }
- else if(req.session.isUserEmailChanged==true){
-    await saveOtp(encryptOtp, req.session.updatingEmail);
-    await sendOtp(req.session.updatingEmail, otp);
-    user = await otpSchema.findOne({ email: req.session.updatingEmail });
-  }
-  else{
-    await saveOtp(encryptOtp, req.session.otpEmail);
-    await sendOtp(req.body.email, otp);
-    user = await otpSchema.findOne({ email: req.session.otpEmail });
-  }
+async function resendOtp(req, res, next) {
+  try {
+    let otp = await generateOTP();
+    let encryptOtp = await bcrypt.hash(otp, 10);
+    let user;
+    if ((req.session.userChangePassword = true)) {
+      const userDetails = await userSchema.findOne({ _id: req.session.userId });
+      await saveOtp(encryptOtp, userDetails.email);
+      await sendOtp(userDetails.email, otp);
+      user = await otpSchema.findOne({ email: userDetails.email });
+    } else if (req.session.isUserEmailChanged == true) {
+      await saveOtp(encryptOtp, req.session.updatingEmail);
+      await sendOtp(req.session.updatingEmail, otp);
+      user = await otpSchema.findOne({ email: req.session.updatingEmail });
+    } else {
+      await saveOtp(encryptOtp, req.session.otpEmail);
+      await sendOtp(req.body.email, otp);
+      user = await otpSchema.findOne({ email: req.session.otpEmail });
+    }
 
-  if (user) {
-    req.session.otpExpiry = user.expireAt;
+    if (user) {
+      req.session.otpExpiry = user.expireAt;
+    }
+    res.status(302).json({
+      redirectTo: '/auth/otp', // Send a redirect URL in the JSON response
+      message: 'OTP resent successfully',
+    });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-  res.status(302).json({
-    redirectTo: "/auth/otp", // Send a redirect URL in the JSON response
-    message: "OTP resent successfully",
-  });
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
 //Send And Save OTP
-async function sendOtpFunction(req, res) {
-  try{
-  let otp = await generateOTP();
-  let encryptOtp = await bcrypt.hash(otp, 10);
-  let user
-  if(req.session.userChangePassword==true){
-    const userEmail=await userSchema.findOne({_id:req.session.userId})
-    console.log(userEmail)
-    await saveOtp(encryptOtp, userEmail.email );
-    await sendOtp(userEmail.email, otp);
-    
-    user = await otpSchema.findOne({ email: userEmail.email });
+async function sendOtpFunction(req, res, next) {
+  try {
+    let otp = await generateOTP();
+    let encryptOtp = await bcrypt.hash(otp, 10);
+    let user;
+    if (req.session.userChangePassword == true) {
+      const userEmail = await userSchema.findOne({ _id: req.session.userId });
+      console.log(userEmail);
+      await saveOtp(encryptOtp, userEmail.email);
+      await sendOtp(userEmail.email, otp);
+
+      user = await otpSchema.findOne({ email: userEmail.email });
+    } else if (req.session.isUserEmailChanged == true) {
+      await saveOtp(encryptOtp, req.session.updatingEmail);
+      await sendOtp(req.body.email, otp);
+      user = await otpSchema.findOne({ email: req.session.updatingEmail });
+    } else {
+      await saveOtp(encryptOtp, req.session.otpEmail);
+      await sendOtp(req.body.email, otp);
+      user = await otpSchema.findOne({ email: req.session.otpEmail });
+    }
+
+    if (user) {
+      req.session.otpExpiry = user.expireAt;
+    } else {
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
- else if(req.session.isUserEmailChanged==true){
-    await saveOtp(encryptOtp, req.session.updatingEmail);
-    await sendOtp(req.body.email, otp);
-    user = await otpSchema.findOne({ email: req.session.updatingEmail });
-  }
-  else{
-    await saveOtp(encryptOtp, req.session.otpEmail);
-    await sendOtp(req.body.email, otp);
-    user = await otpSchema.findOne({ email: req.session.otpEmail });
-  }
- 
-  
-  if (user) {
-    req.session.otpExpiry = user.expireAt;
-  } else {
-  }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
 
 //generate Otp
 async function generateOTP() {
-  try{
-  return crypto.randomInt(100000, 999999).toString();
-  }catch (error) {
-    console.error("An error occurred:", error);
-} 
+  try {
+    return crypto.randomInt(100000, 999999).toString();
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
 }
 
 //save otp on otp schema
 const saveOtp = async (otp, email) => {
-  try{
-  await otpSchema.updateOne(
-    { email: email },
-    {
-      $set: {
-        otp: otp,
-        updatedAt: Date.now(),
-        expireAt: Date.now() + 75 * 1000,
+  try {
+    await otpSchema.updateOne(
+      { email: email },
+      {
+        $set: {
+          otp: otp,
+          updatedAt: Date.now(),
+          expireAt: Date.now() + 75 * 1000,
+        },
       },
-    },
-    { upsert: true }
-  );}catch (error) {
-    console.error("An error occurred:", error);
-} 
+      { upsert: true }
+    );
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
 };
 
 //google sign-up authentication
 const authenticateGoogle = (req, res, next) => {
-  passport.authenticate("google", { scope: ["profile", "email"] })(
+  passport.authenticate('google', { scope: ['profile', 'email'] })(
     req,
     res,
     next
   );
 };
 const googleCallBack = async (req, res, next) => {
- 
   passport.authenticate(
-    "google",
-    { failureRedirect: "/" },
+    'google',
+    { failureRedirect: '/' },
     async (err, user) => {
       if (err) {
         return next(err); // Handle error
       }
 
       if (!user) {
-        return res.status(401).redirect("/"); // If user is not authenticated
+        return res.status(401).redirect('/'); // If user is not authenticated
       }
 
       try {
@@ -408,21 +410,23 @@ const googleCallBack = async (req, res, next) => {
             res
               .status(302)
               .redirect(
-                "/auth/signup?message=User already exists with this email"
+                '/auth/signup?message=User already exists with this email'
               ); // Redirect to home or wherever you need after login
           });
         } else if (existingUser) {
           // User already exists, log them in
-          req.logIn(existingUser, async(err) => {
+          req.logIn(existingUser, async (err) => {
             if (err) return next(err);
             req.session.isLogged = true;
-            req.session.otpEmail= user.emails[0].value
-            req.session.userId=await userSchema.findOne({email:req.session.otpEmail})
+            req.session.otpEmail = user.emails[0].value;
+            req.session.userId = await userSchema.findOne({
+              email: req.session.otpEmail,
+            });
             res.send(`
               <script>
                   window.location.replace('/');
               </script>
-          `);; // Redirect to home or wherever you need after login
+          `); // Redirect to home or wherever you need after login
           });
         } else {
           // New user, save to the database
@@ -440,110 +444,117 @@ const googleCallBack = async (req, res, next) => {
           // Log in the new user
           req.logIn(newUser, async (err) => {
             if (err) return next(err);
-            req.session.userId=newUser._id
+            req.session.userId = newUser._id;
             req.session.isLogged = true;
-            req.session.otpEmail= user.emails[0].value
+            req.session.otpEmail = user.emails[0].value;
             res.send(`
               <script>
                   window.location.replace('/');
               </script>
-          `);; // Redirect to home or wherever after sign-up
+          `); // Redirect to home or wherever after sign-up
           });
         }
       } catch (dbError) {
-        next(dbError); // Handle database error
+        console.log(dbError); // Handle database error
+        next(new AppError('Sorry...Something went wrong', 500));
       }
     }
   )(req, res, next);
 };
 //logout
-async function logout(req, res) {
-  try{
-  req.session.isLogged = false;
-  res.status(302).redirect("/");
-  }catch (error) {
-    console.error("An error occurred:", error);
-} 
+async function logout(req, res, next) {
+  try {
+    req.session.isLogged = false;
+    res.status(302).redirect('/');
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
 }
 
 //file rendering
-function renderOtpPage(req, res) {
-  try{
-  res.status(200).render(path.join("../", "views", "UserPages", "otpPage"), {
-    otpExpire: req.session.otpExpiry,
-    otpEmail: req.session.otpEmail,
-  });
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
-}
-function renderSignUpPage(req, res) {
-  try{
-  if (req.session.isLogged == true) {
-    res.status(302).redirect("/");
-  } else {
-    res.status(200).render(path.join("../", "views", "UserPages", "signup"));
+function renderOtpPage(req, res, next) {
+  try {
+    res.status(200).render(path.join('../', 'views', 'UserPages', 'otpPage'), {
+      otpExpire: req.session.otpExpiry,
+      otpEmail: req.session.otpEmail,
+    });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
-function renderSignInPage(req, res) {
-  try{
-  if (req.session.isLogged == true) {
-    res.status(302).redirect("/");
-  } else {
-    res.status(200).render(path.join("../", "views", "UserPages", "signin"));
+function renderSignUpPage(req, res, next) {
+  try {
+    if (req.session.isLogged == true) {
+      res.status(302).redirect('/');
+    } else {
+      res.status(200).render(path.join('../', 'views', 'UserPages', 'signup'));
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
-function renderForgotPasswordPage(req, res) {
-  try{
-  if (req.session.isLogged == true) {
-    res.status(302).redirect("/");
-  } else {
-    res
-      .status(200)
-      .render(path.join("../", "views", "UserPages", "forgotPassword"));
+function renderSignInPage(req, res, next) {
+  try {
+    if (req.session.isLogged == true) {
+      res.status(302).redirect('/');
+    } else {
+      res.status(200).render(path.join('../', 'views', 'UserPages', 'signin'));
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
 }
-function renderChangePasswordPage(req, res) {
-  try{
-  if (req.session.isForgotPassword == true) {
-    res
-      .status(200)
-      .render(path.join("../", "views", "UserPages", "changePassword"));
-  } else {
-    res.status(302).redirect("/");
+function renderForgotPasswordPage(req, res, next) {
+  try {
+    if (req.session.isLogged == true) {
+      res.status(302).redirect('/');
+    } else {
+      res
+        .status(200)
+        .render(path.join('../', 'views', 'UserPages', 'forgotPassword'));
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
   }
-}catch (error) {
-  console.error("An error occurred:", error);
-} 
+}
+function renderChangePasswordPage(req, res, next) {
+  try {
+    if (req.session.isForgotPassword == true) {
+      res
+        .status(200)
+        .render(path.join('../', 'views', 'UserPages', 'changePassword'));
+    } else {
+      res.status(302).redirect('/');
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
 }
 //Needed methods
-async function getUserDetails(userEmail){
-  try{
-return await userSchema.findOne({email:userEmail})
-  }catch (error) {
-    console.error("An error occurred:", error);
-} 
+async function getUserDetails(userEmail) {
+  try {
+    return await userSchema.findOne({ email: userEmail });
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
 }
 
-async function getOtpDetails(otpEmail){
-  try{
-  return await otpSchema.findOne({ email: otpEmail })
-  }catch (error) {
-    console.error("An error occurred:", error);
-} 
+async function getOtpDetails(otpEmail) {
+  try {
+    return await otpSchema.findOne({ email: otpEmail });
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
 }
 
 //delete unVerified users after 24 hours
-cron.schedule("0 0 * * *", async () => {
+cron.schedule('0 0 * * *', async () => {
   try {
     const expiryDate = new Date(Date.now() - 24 * 60 * 60 * 1000); // 24 hours ago
     const result = await userSchema.deleteMany({
@@ -552,18 +563,19 @@ cron.schedule("0 0 * * *", async () => {
     });
     console.log(`${result.deletedCount} unverified accounts deleted.`);
   } catch (error) {
-    console.error("Error deleting unverified accounts:", error);
+    console.error('Error deleting unverified accounts:', error);
   }
 });
 
 //user blocked
 
-async function userBlocked(req,res){
-  try{
-res.status(403).render("UserPages/userBlocked")
-  }catch (error) {
-    console.error("An error occurred:", error);
-} 
+async function userBlocked(req, res) {
+  try {
+    res.status(403).render('UserPages/userBlocked');
+  } catch (error) {
+    console.error('An error occurred:', error);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
 }
 module.exports = {
   signUp,
@@ -581,5 +593,5 @@ module.exports = {
   changePassword,
   logout,
   userBlocked,
-  sendOtpFunction
+  sendOtpFunction,
 };

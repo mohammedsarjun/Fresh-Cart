@@ -12,6 +12,8 @@
 }
     </style>
     <link rel="stylesheet" href="/styles/validationCommon.css">
+    <link rel="stylesheet" href="/styles/emptyTable.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     
   </head>
   <body style="overflow-x: hidden;">
@@ -41,7 +43,7 @@
             <form id="updateCouponForm" onsubmit="updateCoupon(event)">
               <input type="text" id="updateCouponId" hidden>
               <div class="mb-3">
-                <label for="updateCouponName" class="form-label">Coupon Name</label>
+                <label for="updateCouponName" class="form-label">Coupon Code</label>
                 <input type="text" class="form-control" id="updateCouponName">
                 <small class="text-danger d-none" id="updateCouponNameError"></small>
               </div>
@@ -107,7 +109,7 @@
           <div class="modal-body">
             <form id="couponForm" onsubmit="saveCoupon(event)">
               <div class="mb-3">
-                <label for="couponName" class="form-label">Coupon Name</label>
+                <label for="couponName" class="form-label">Coupon Code</label>
                 <input type="text" class="form-control" id="couponName">
                 <small class="text-danger d-none" id="couponNameError"></small>
               </div>
@@ -174,13 +176,24 @@
               placeholder="Search Coupon..." id="coupon-search">
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
+
+      <% if(coupon.length==0) { %>
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i data-lucide="ticket"></i>
+          </div>
+          <h2>No coupon Found</h2>
+     
+        </div> 
+        <%}%>
       <div class="table-responsive ">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
+          <% if(coupon.length!=0) { %>
           <thead >
               <tr>
                  
                   <th>S.No</th>
-                  <th>Coupon Name</th>
+                  <th>Coupon Code</th>
                   <th>Discount Percentage</th>
                   <th>Start Date</th>
                   <th>Expiry Date</th>
@@ -191,6 +204,7 @@
                   <th>Delete Coupon</th>
               </tr>
           </thead>
+          <%}%>
           <tbody id="table-body">
           <%coupon.forEach((coupon,i)=>{%>
             <tr>
@@ -288,7 +302,7 @@
       }
   
       // Validation Rules
-      validateInput("couponName", "couponNameError", val => val.length > 0, "Coupon name is required!");
+      validateInput("couponName", "couponNameError", val => val.length > 0 && /^[A-Z0-9]+$/.test(val), "Coupon name is required and must be uppercase without spaces!");
       validateInput("discountPercentage", "discountPercentageError", val => val >= 0 && val <= 100, "Enter a value between 0 and 100!");
       validateInput("startDate", "startDateError", val => val !== "", "Start date is required!");
       validateInput("expiryDate", "expiryDateError", val => val !== "" && new Date(val) > new Date(document.getElementById("startDate").value), "Expiry date must be after start date!");
@@ -350,7 +364,10 @@ document.querySelectorAll("#updateCouponForm input").forEach(input => {
 </script>
   <script src="/js/adminScript/coupon.js"></script>
   
-  
+  <script>
+    lucide.createIcons();
+  </script>
+
 
 
 </html>

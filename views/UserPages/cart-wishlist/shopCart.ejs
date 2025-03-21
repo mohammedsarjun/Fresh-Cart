@@ -21,6 +21,85 @@
 
 <!-- Theme CSS -->
 <link rel="stylesheet" href="/assets/css/theme.min.css">
+
+<style>
+
+.empty-state {
+background-color: white;
+border-radius: 0.75rem;
+padding: 2rem;
+text-align: center;
+box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
+min-height: 400px;
+justify-content: center;
+}
+
+.empty-state__icon {
+background-color: #f3f4f6;
+border-radius: 50%;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+color: #6b7280;
+}
+
+.empty-state__icon svg {
+display: block;
+}
+
+.empty-state__title {
+font-size: 1.25rem;
+font-weight: 600;
+color: #111827;
+margin-bottom: 0.5rem;
+}
+
+.empty-state__description {
+color: #6b7280;
+max-width: 20rem;
+margin-bottom: 1.5rem;
+}
+
+.empty-state__button {
+background-color: #4f46e5;
+color: white;
+padding: 0.75rem 1.5rem;
+border-radius: 0.375rem;
+font-weight: 500;
+border: none;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.empty-state__button:hover {
+background-color: #4338ca;
+}
+
+.empty-state__button:focus {
+outline: 2px solid #4f46e5;
+outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+
+.empty-state {
+	padding: 1.5rem;
+	min-height: 300px;
+}
+
+.empty-state__icon {
+	padding: 1rem;
+}
+
+.empty-state__icon svg {
+	width: 36px;
+	height: 36px;
+}
+}
+</style>
  <!-- Analytics Code -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
 <script>
@@ -507,8 +586,20 @@
 							<!-- alert -->
 							
 							<ul class="list-none">
+								<% if (cart.products.length==0) { %>
+									<div class="empty-state">
+										<div class="empty-state__icon">
+											<svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none" stroke-width="2">
+												<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+												<line x1="3" y1="6" x2="21" y2="6"></line>
+												<path d="M16 10a4 4 0 0 1-8 0"></path>
+											</svg>
+										</div>
+										<h3 class="empty-state__title">Your cart is empty</h3>
+										<p class="empty-state__description">Looks like you haven't added anything to your cart yet</p>
+									</div>
+									<%}%>
 								
-							
 								<!-- list group -->
 								<% cart.products.forEach((product) => { %>
 									<% if (product.isStock==false) { %>
@@ -652,7 +743,7 @@
 																	<!-- price -->
 																	<% if (product.productPrice != product.discountPrice) { %>
 																		<div class="w-1/5 md:w-1/5 text-right">
-																			<span class="font-bold text-red-600"><%= product.discountPrice %>₹</span>
+																			<span class="font-bold "><%= product.discountPrice %>₹</span>
 																			<div class="line-through text-gray-500"><%= product.productPrice %>₹</div>
 																		</div>
 																	<% } else{%>
@@ -676,12 +767,7 @@
 									class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
 									Continue Shopping
 								</a>
-								<button
 								
-									class="btn inline-flex me-3 items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300"
-									id="updateCart">
-									Update Cart
-							</button>
 							</div>
 						</div>
 					</div>
@@ -1022,10 +1108,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 		let varietyType=group.querySelector(".cartProductVariety");
 		let isItem=false
 		
-        minusBtn.addEventListener("click", function () {
+        minusBtn.addEventListener("click",async function () {
             let currentValue = parseInt(inputField.value) || 0;
             if (currentValue > 1) {
                 inputField.value = currentValue - 1;
+				await fetch("/cart/modifyQuantity", {
+    			method: "PUT",
+    			headers: {
+        		"Content-Type": "application/json"
+    			},
+    			body: JSON.stringify({ productId:productId.value, varietyType:varietyType.value,isItem:isItem.value,varietyMeasurement:varietyMeasurement.value,modify:"decrease" })
+				}).then((data)=>location.reload())
                 inputField.dispatchEvent(new Event('change')); // Trigger change event
             }
         });
@@ -1051,6 +1144,13 @@ document.addEventListener("DOMContentLoaded", async function () {
           if (currentValue < maxValue) {
                 inputField.value = currentValue + 1;
                 inputField.dispatchEvent(new Event('change')); // Trigger change event
+				await fetch("/cart/modifyQuantity", {
+    			method: "PUT",
+    			headers: {
+        		"Content-Type": "application/json"
+    			},
+    			body: JSON.stringify({ productId:productId.value, varietyType:varietyType.value,isItem:isItem.value,varietyMeasurement:varietyMeasurement.value,modify:"increase" })
+				}).then((data)=>location.reload());
             }else {
                 // Send request to check stock availability4
 					Swal.fire({
@@ -1085,6 +1185,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 			if (currentValue <= maxValue) {
                 inputField.value = currentValue;
                 inputField.dispatchEvent(new Event('change')); // Trigger change event
+				await fetch("/cart/modifyQuantity", {
+    			method: "PUT",
+    			headers: {
+        		"Content-Type": "application/json"
+    			},
+    			body: JSON.stringify({ productId:productId.value,currentValue,varietyType:varietyType.value,isItem:isItem.value,varietyMeasurement:varietyMeasurement.value,modify:"direct" })
+				}).then((data)=>{
+
+					setTimeout(()=>{
+						location.reload()
+					},2000)
+					
+			});
             }else {
                 // Send request to check stock availability4
 					Swal.fire({

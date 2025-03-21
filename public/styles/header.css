@@ -1,57 +1,51 @@
 :root {
-    --primary-color: rgb(10 173 10);
-    
-  }
-  
-
-
-.header{
-    height: 70px;
-    align-items: center;
-   
+  --primary-color: rgb(10 173 10);
 }
 
-.validationHeader{
+.header {
   height: 70px;
-    align-items: center;
-}
-.product-count{
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    position: absolute;
-    right: -2px;
-    text-align: center;
+  align-items: center;
 }
 
-.product-count p{
-    color: white;
-    font-size: 11px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-   
+.validationHeader {
+  height: 70px;
+  align-items: center;
 }
-.wishList,.cart{
-    position: relative;
+.product-count {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  position: absolute;
+  right: -2px;
+  text-align: center;
 }
 
-.headerMenu{
-    display: flex;
-    justify-content: end;
+.product-count p {
+  color: white;
+  font-size: 11px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wishList,
+.cart {
+  position: relative;
+}
 
+.headerMenu {
+  display: flex;
+  justify-content: end;
 }
 
 .headerSearch {
-       
-    order: 0; /* Keep the logo first */
-  }
+  order: 0; /* Keep the logo first */
+}
 
-  .hamburger{
-    order: 1; /* Keep the buttons second */
-  }
+.hamburger {
+  order: 1; /* Keep the buttons second */
+}
 
 /* Hamburger Icon */
 .hamburger {
@@ -76,9 +70,8 @@
   transition: transform 0.5s ease-in-out;
   z-index: 999;
   justify-content: center;
-  
 }
-.menu-margin-bottom{
+.menu-margin-bottom {
   margin-top: 72px;
 }
 .menu li {
@@ -107,31 +100,24 @@
 
 /*media query*/
 @media (max-width: 576px) {
-
-  
-    .headerSearch {
-       
-      order: 1; /* Keep the logo first */
-    }
-  
-    .hamburger{
-      order: 0; /* Keep the buttons second */
-    }
-    .header{
-      height: 138px;
-    }
+  .headerSearch {
+    order: 1; /* Keep the logo first */
   }
+
+  .hamburger {
+    order: 0; /* Keep the buttons second */
+  }
+  .header {
+    height: 138px;
+  }
+}
 
 @media (max-width: 768px) {
-    .headerMenu {
-      display: none;
-    }
-   
-    .header .hamburger{
-      display: block !important;
-
-    }
+  .headerMenu {
+    display: none;
   }
 
-
-
+  .header .hamburger {
+    display: block !important;
+  }
+}
