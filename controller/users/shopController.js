@@ -672,15 +672,18 @@ async function filterProduct(req, res, next) {
         let discountedPrice = variety.varietyDiscount
           ? originalPrice - (originalPrice * variety.varietyDiscount) / 100
           : originalPrice;
-        products[i].finalPrice = discountedPrice;
+        products[i].finalPrice = Number(discountedPrice);
       }
     }
-
-    products = products.filter(
-      (product) =>
-        product.finalPrice >= req.body.minPrice &&
-        product.finalPrice <= req.body.maxPrice
-    );
+    if(req.body.minPrice&&req.body.maxPrice){
+      products = products.filter((product) => {
+        return (
+          product.finalPrice >= (req.body.minPrice ?? -Infinity) &&
+          product.finalPrice <= (req.body.maxPrice ?? Infinity)
+        );
+      });
+    }
+   
     res.status(200).json({ products });
     console.log(products.length);
   } catch (err) {

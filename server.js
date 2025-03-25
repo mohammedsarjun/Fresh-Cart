@@ -92,9 +92,7 @@ app.use('/', homeRouter);
 app.use('/admin/auth', adminAuthRouter);
 app.use('/admin', adminHomeRouter);
 app.use('/razorpay', razorpayRouter);
-app.get('/test', (req, res) => {
-  res.status(200).render(path.join('../', 'views', 'emptyPage'));
-});
+
 
 app.use((req, res) => {
   res.status(404).render(path.join('../', 'views', '404'));

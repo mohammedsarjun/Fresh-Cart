@@ -15,11 +15,11 @@ const couponSchema = new mongoose.Schema({
   },
   couponStartDate: {
     type: Date,
-    required: true,
+    required: false,
   },
   couponExpiryDate: {
     type: Date,
-    required: true,
+    required: false,
   },
   minimumPurchase: {
     type: Number,
@@ -33,7 +33,7 @@ const couponSchema = new mongoose.Schema({
   },
   currentStatus: {
     type: String,
-    enum: ['active', 'expired', 'upcoming'],
+    enum: ['active', 'expired', 'upcoming', 'Special'],
     required: true,
     default: 'active',
   },
@@ -41,6 +41,15 @@ const couponSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
+  },
+  type: {
+    type: String,
+    enum: ['Special', 'Normal'],
+    default: 'Normal',
   },
 });
 

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
-    
+    <link rel="stylesheet" href="assets/css/theme.min.css">
   </head>
 
       
@@ -25,9 +25,520 @@
     <div class="row">
       <%-include('./partials/sidebar')%>
       <div class="content col-lg-10">
-      <h1>Dashboard</h1> 
+        <main class="main-content-wrapper pt-3">
+          <section class="container">
+            <!-- row -->
+            <div class="grid grid-cols-12 mb-8">
+              <div class="col-span-12">
+                <!-- card -->
+                <div class="card bg-gray-100 border-0 rounded-2xl"
+                  style="background-image: url(../assets/images/slider/slider-image-1.jpg); background-repeat: no-repeat; background-size: cover; background-position: right">
+                  <div class="card-body lg:p-12">
+                    <h1 class="mb-3">Welcome back! FreshCart</h1>
+                  
+                    <a href="/admin/dashboard/top10products"
+                      class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100 me-3">
+                     Top 10 Products
+                    </a>
+
+                    <a href="/admin/dashboard/top10category"
+                      class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
+                     Top 10 Categories
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- table -->
+  
+            <div class="grid grid-cols-12 gap-y-8 lg:gap-x-8 mb-8">
+              <div class="lg:col-span-4 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <div class="flex justify-between items-center mb-6">
+                      <div>
+                        <h4 class="mb-0 text-md">Earnings</h4>
+                      </div>
+                      <div
+                        class="h-10 w-10 bg-red-100 text-red-800 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                          <path d="M12 3v3m0 12v3" />
+                        </svg>
+                      </div>
+                    </div>
+                    <!-- project number -->
+                    <div class="leading-snug">
+                      <h1 class="mb-2 font-bold text-lg">₹<%=monthlyRevenue[0]?.monthlyRevenue||0%></h1>
+                      <span>Monthly revenue</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="lg:col-span-4 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <div class="flex justify-between items-center mb-6">
+                      <div>
+                        <h4 class="mb-0 text-md">Orders To Ship</h4>
+                      </div>
+                      <div
+                        class="h-10 w-10 bg-yellow-100 text-yellow-800 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                          <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                          <path d="M17 17h-11v-14h-2" />
+                          <path d="M6 5l14 1l-1 7h-13" />
+                        </svg>
+                      </div>
+                    </div>
+                    <!-- project number -->
+                    <div class="leading-snug">
+                      <h1 class="mb-2 font-bold text-lg"><%=ordersToShip||0%></h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="lg:col-span-4 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <div class="flex justify-between items-center mb-6">
+                      <div>
+                        <h4 class="mb-0 text-md">Customer</h4>
+                      </div>
+                      <div
+                        class="h-10 w-10 bg-cyan-100 text-cyan-800 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                          <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                          <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                        </svg>
+                      </div>
+                    </div>
+                    <!-- project number -->
+                    <div class="leading-snug">
+                      <h1 class="mb-2 font-bold text-lg"><%=totalUsers||0%></h1>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="lg:col-span-4 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <div class="flex justify-between items-center mb-6">
+                      <div>
+                        <h4 class="mb-0 text-md">Orders Delivered</h4>
+                      </div>
+                      <div
+                        class="h-10 w-10 bg-yellow-100 text-yellow-800 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                          <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                          <path d="M17 17h-11v-14h-2" />
+                          <path d="M6 5l14 1l-1 7h-13" />
+                        </svg>
+                      </div>
+                    </div>
+                    <!-- project number -->
+                    <div class="leading-snug">
+                      <h1 class="mb-2 font-bold text-lg"><%=ordersDelivered ||0%></h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- row -->
+            <div class="grid grid-cols-12 gap-y-8 lg:gap-x-8 mb-8">
+              <div class="xl:col-span-8 lg:col-span-6 md:col-span-12 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <div class="flex justify-between">
+                      <div>
+                        <h3 class="mb-1 text-md">Revenue</h3>
+                      </div>
+                      <div>
+                        <!-- select option -->
+                        <select
+                          class="salesFilter text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                          
+                          <option value="week" selected>Week</option>
+                          <option value="month">Month</option>
+                          <option value="year">Year</option>
+                         
+                        
+                        </select>
+                      </div>
+                     
+                    </div>
+                    <form id="date-wise-filter" class="d-flex gap-2 align-items-center flex-wrap">
+                      <div style="display: flex; justify-content: center; width: 99%;">
+                          <div style="width: 40%;">
+                              <label for="from">From</label>
+                              <input type="date" class="form-control" id="startDate" value="" name="from">
+                          </div>
+                          <div style="width: 40%; margin-left: 10px;">
+                              <label for="to">To</label>
+                              <input type="date" class="form-control" id="endDate" value="" name="to">
+                          </div>
+                          <div style="width: 40%; margin-left: 10px; 
+                          display: flex
+                      ;
+                          align-items: end;">
+                              <label for="to"></label>
+                              <button class="btn btn-success" style="height: 40px;">Apply</button>
+                          </div>
+                      </div>
+                  </form>
+                    <!-- chart -->
+                    <div id="chart" class="mt-6"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="xl:col-span-4 lg:col-span-6 col-span-12">
+                <!-- card -->
+                <div class="card h-full card-lg">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <!-- heading -->
+                    <h3 class="mb-0 text-md">Total Orders</h3>
+                    <select
+                    class="totalOrderStats mt-3 mb-3 text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                    
+                    <option value="week" selected>Week</option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option>
+                   
+                  
+                  </select>
+                    <div id="totalSale" class="mt-6 flex justify-center"></div>
+                    <div class="mt-4">
+                      <!-- list -->
+                      <ul class="mb-0">
+                        <li class="mb-2 flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                            viewBox="0 0 24 24" fill="currentColor"
+                            class="icon icon-tabler icons-tabler-filled icon-tabler-circle text-green-600">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M7 3.34a10 10 0 1 1 -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+                          </svg>
+                          <span class="">
+                            <span class="text-gray-800">Delivered</span>
+                          </span>
+                        </li>
+                        <li class="mb-2 flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                            viewBox="0 0 24 24" fill="currentColor"
+                            class="icon icon-tabler icons-tabler-filled icon-tabler-circle text-red-600">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M7 3.34a10 10 0 1 1 -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+                          </svg>
+                          <span class="">
+                            <span class="text-gray-800">Returned</span>
+                          </span>
+                        </li>
+                        <li class="mb-2 flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                            viewBox="0 0 24 24" fill="currentColor"
+                            class="icon icon-tabler icons-tabler-filled icon-tabler-circle text-blue-600">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M7 3.34a10 10 0 1 1 -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+                          </svg>
+                          <span class="">
+                            <span class="text-gray-800">Cancelled</span>
+                          </span>
+                        </li>
+                        <li class="mb-2 flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                            viewBox="0 0 24 24" fill="currentColor"
+                            class="icon icon-tabler icons-tabler-filled icon-tabler-circle text-yellow-600">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M7 3.34a10 10 0 1 1 -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+                          </svg>
+                          <span class="">
+                            <span class="text-gray-800">Pendings</span>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- row -->
+           
+            
+          </section>
+        </main>
         </div>
+
+
     
 </body>
-    
+<script src="assets/js/vendors/language.js"></script>
+<!-- Libs JS -->
+<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+
+<!-- Theme JS -->
+
+<script src="assets/js/theme.min.js"></script>
+
+
+<script>
+
+</script>
+
+
+
+<script>
+
+  let resultData='<%=result.data%>'
+  let resultCategory='<%=result.category%>'
+ resultData= resultData.split(',')
+ resultCategory=resultCategory.split(',')
+
+  console.log(resultCategory)
+  var chartOptions = {
+    chart: {
+      type: 'bar'
+    },
+    series: [{
+      name: 'revenue',
+      data:resultData
+    }],
+    xaxis: {
+      categories: resultCategory
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), chartOptions);
+  chart.render(); // Initial empty chart
+
+  document.querySelector(".salesFilter").addEventListener("change", function () {
+
+    const selectedValue = this.value;
+
+    fetch(`/admin/dashboard/changeFilter?changeFilter=${selectedValue}`)
+        .then(response => response.json())
+        .then(data => {
+          chart.updateOptions({
+            series: [{
+              name: 'revenue',
+              data: data.result.data
+            }],
+            xaxis: {
+              categories: data.result.category
+            }
+          });
+        })
+        .catch(error => console.error("Error fetching data:", error));
+  });
+
+  document.getElementById("date-wise-filter").addEventListener("submit", async function(event) {
+      event.preventDefault(); // Prevent form from reloading the page
+  
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+
+      console.log(startDate,endDate)
+      const requestData = { startDate, endDate };
+  
+      try {
+
+        fetch(`/admin/dashboard/changeFilter?changeFilter=timePeriod&startDate=${startDate}&endDate=${endDate}`)
+        .then(response => response.json())
+        .then(data => {
+          chart.updateOptions({
+            series: [{
+              name: 'revenue',
+              data: data.result.data
+            }],
+            xaxis: {
+              categories: data.result.category
+            }
+          });
+        })
+        .catch(error => console.error("Error fetching data:", error));
+      } catch (error) {
+          console.error("Error:", error);
+      }
+  });
+
+  // Clear Filter
+  async function clearFilter() {
+          try {
+              const response = await fetch("/admin/dash/clearfilter", {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ timePeriod }),
+              });
+
+              const result = await response.json();
+              const toastContainer = document.querySelector(".toast-container");
+              const toast = document.createElement("div");
+              toast.className = "toast";
+
+              if (result.success) {
+                  window.location.reload()
+              } else {
+                  toast.textContent = "Somthing Wrong!";
+                  toast.style.backgroundColor = "#dc3545"; // Red color for error
+                  toastContainer.appendChild(toast);
+                  setTimeout(() => {
+                      toast.style.display = "block";
+                  }, 100);
+
+                  setTimeout(() => {
+                      toast.style.animation = "slideOutToRight 0.8s ease-out forwards";
+                  }, 3000);
+
+                  setTimeout(() => {
+                      toast.style.display = "none";
+                      toast.remove(); // Remove toast from DOM
+                  }, 3800);   
+              }
+
+          } catch (error) {
+              console.log(error)
+          }
+      }
+
+</script>
+
+
+<script>
+  let totalSaleChart; // Store the chart instance
+
+ let orderResult= '<%=orderResult.series%>'
+ let orderLabel='<%=orderResult.labels%>'
+ orderResult= orderResult.split(',').map((result)=>Number(result))
+ orderLabel=orderLabel.split(',')
+ console.log(orderResult)
+ 
+function createDonutChart(elementId, series, labels, colors, title) {
+  if (!document.getElementById(elementId)) return;
+
+  const options = {
+    series: series,
+    labels: labels,
+    colors: colors,
+    chart: { type: 'donut', height: 280 },
+    legend: { show: false },
+    dataLabels: { enabled: false },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '85%',
+          labels: {
+            show: true,
+            name: { show: true, fontSize: '22px', fontWeight: 600, offsetY: -10 },
+            value: { show: true, fontSize: '24px', fontWeight: 800, offsetY: 8 },
+            total: {
+              show: true,
+              label: title,
+              fontSize: '16px',
+              formatter: function (w) {
+                return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+              },
+            },
+          },
+        },
+      },
+    },
+    stroke: { width: 0 },
+    responsive: [{ breakpoint: 1400, options: { chart: { width: 290, height: 330 } } }],
+  };
+
+  totalSaleChart = new ApexCharts(document.getElementById(elementId), options);
+  totalSaleChart.render();
+}
+
+// Function to update the chart
+function updateDonutChart(newSeries,newLable) {
+  if (totalSaleChart) {
+    totalSaleChart.updateSeries(newSeries);
+    totalSaleChart.updateLabels(newLabel)
+  }
+}
+
+// Initial Chart Load
+createDonutChart(
+  'totalSale',
+  orderResult, // Initial values
+  orderLabel,
+  ['#0aad0a', '#db3030', '#016bf8', '#ffc107'],
+  'Total Orders'
+);
+
+// Example: Updating the Chart Dynamically
+
+
+
+document.querySelector('.totalOrderStats').addEventListener('change', async function () {
+
+
+
+
+    const timePeriod = this.value; // Get selected value
+   
+    try {
+        const response = await fetch(`/admin/dashboard/changeOrderFilter?timePeriod=${timePeriod}`);
+        const data = await response.json();
+
+        if (data.orderResult) {
+         
+          updateDonutChart(data.orderResult.series,data.orderResult.labels); // Update the chart with new data
+        } else {
+            console.error('Failed to fetch data:', data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+});
+
+</script>
+
 </html>

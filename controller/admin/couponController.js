@@ -10,7 +10,7 @@ const AppError = require('../../middleware/errorHandling');
 
 async function renderCouponPage(req, res, next) {
   try {
-    let coupon = await Coupon.find();
+    let coupon = await Coupon.find({ type: { $ne: 'Special' } });
     for (let coupons of coupon) {
       if (new Date() < new Date(coupons.couponStartDate)) {
         coupons.currentStatus = 'upcoming'; // Set to "upcoming" if current date is before start date
@@ -30,7 +30,7 @@ async function renderCouponPage(req, res, next) {
     let regexPattern = new RegExp(searchQuery, 'i');
 
     // Use regex in the query
-    let filter = { couponCode: regexPattern };
+    let filter = { couponCode: regexPattern, type: { $ne: 'Special' } };
 
     coupon = await Coupon.find(filter).skip(skip).limit(limit);
     coupon = coupon.map((coupon) => {

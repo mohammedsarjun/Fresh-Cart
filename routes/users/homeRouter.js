@@ -48,6 +48,14 @@ router.get(
   walletController.walletPageRender
 );
 
+//referral rewards
+router.get(
+  '/account/referralReward',
+  authMiddleware,
+  accountController.referralRewardPageRender
+);
+
+
 //put
 router.put('/account/settings/editUserData', accountController.userUpdate);
 router.put('/account/changePassword', accountController.changeUserPassword);

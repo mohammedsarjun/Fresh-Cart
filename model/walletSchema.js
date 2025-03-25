@@ -35,6 +35,21 @@ const WalletSchema = new mongoose.Schema({
       transactionDetail: {
         type: String,
       },
+      transactionId: {
+        type: String,
+      },
+      transactionType: {
+        type: String,
+        enum: ['Credit', 'Debit'],
+      },
+      isOrderRedirect: {
+        type: Boolean,
+        default: false,
+      },
+      orderId: {
+        type: String,
+        default: null,
+      },
     },
   ],
   createdAt: {

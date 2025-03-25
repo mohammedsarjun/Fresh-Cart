@@ -9,7 +9,7 @@ const Wishlist = require('../../model/wishlistSchema');
 const orderSchema = require('../../model/orderSchema');
 const Wallet = require('../../model/walletSchema');
 const AppError = require('../../middleware/errorHandling');
-
+const { v4: uuidv4 } = require('uuid');
 async function renderOrderPage(req, res, next) {
   try {
     let page = parseInt(req.query.page) || 1;
@@ -54,8 +54,8 @@ async function renderOrderPage(req, res, next) {
         order.frontProductImg = productDetail?.productPic?.productImage1;
         order.frontProductName = productDetail?.productName;
         order.totalProduct = order.products?.length - 1;
-        order.userName = `${userDetails.firstName} ${
-          userDetails.secondName || ''
+        order.userName = `${userDetails?.firstName} ${
+          userDetails?.secondName || ''
         }`;
 
         return order;
@@ -155,6 +155,10 @@ async function returnProduct(req, res, next) {
       status: 'completed',
       transactionDetail: 'Order Returned. Payment returned to wallet',
       createdAt: Date.now(),
+      transactionId: uuidv4(),
+      transactionType: 'Credit',
+      isOrderRedirect: true,
+      orderId: order._id,
     });
 
     await wallet.save();

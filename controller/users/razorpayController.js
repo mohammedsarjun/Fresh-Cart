@@ -44,7 +44,7 @@ async function verifyPayment(req, res, next) {
       let isOnlinePayment = true;
 
       const paymentDetails = await razorpay.payments.fetch(razorpay_payment_id);
-      if (!paymentDetails || paymentDetails.status !== 'captured') {
+      if (!paymentDetails || paymentDetails?.status !== 'captured') {
         return res
           .status(400)
           .json({ success: false, message: 'Payment not captured' });

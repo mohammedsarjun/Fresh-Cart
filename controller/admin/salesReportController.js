@@ -30,15 +30,16 @@ async function salesReport(req, res, next) {
 
     totalDiscount =
       totalDiscount.length > 0 ? totalDiscount[0].totalDiscount : 0;
-
-    let startDate = null;
-    let endDate = null;
+    const now = new Date();
+    let startDate = new Date(now.setDate(now.getDate() - 7));
+    let endDate = new Date();
     let timePeriod = null;
 
     // Check if both startDate and endDate are provided
     if (req.query.startDate && req.query.endDate) {
       startDate = new Date(req.query.startDate);
       endDate = new Date(req.query.endDate);
+      console.log(req.query.startDate, req.query.endDate);
     }
 
     if (req.query.timePeriod) {
@@ -74,7 +75,6 @@ async function salesReport(req, res, next) {
       },
     }).lean();
 
-    console.log(orders);
     for (const order of orders) {
       const user = await User.findOne({ _id: order.userId }).lean();
       order.userName = `${user?.firstName || ''} ${
