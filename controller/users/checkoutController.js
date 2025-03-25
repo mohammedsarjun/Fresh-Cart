@@ -11,6 +11,7 @@ const Coupon = require('../../model/couponScehma');
 const Wallet = require('../../model/walletSchema');
 const orderController = require('./orderController');
 const AppError = require('../../middleware/errorHandling');
+const { v4: uuidv4 } = require('uuid');
 async function checkoutPageRender(req, res, next) {
   try {
     if (req.session.checkoutSession == false) {
@@ -124,19 +125,31 @@ async function verifyCoupon(req, res, next) {
       });
     }
 
-    if (coupon.couponStartDate > new Date()) {
-      return res.status(400).json({
-        error: 'Upcoming Coupon',
-        text: `This coupon will be valid from ${coupon.couponStartDate}.`,
-      });
+    if (coupon.type == 'Special') {
+      if (coupon.user == req.session.userId) {
+      } else {
+        return res.status(400).json({
+          error: 'Invalid Coupon',
+          text: 'This coupon code does not exist.',
+        });
+      }
+    }else{
+      if (coupon.couponStartDate > new Date()) {
+        return res.status(400).json({
+          error: 'Upcoming Coupon',
+          text: `This coupon will be valid from ${coupon.couponStartDate}.`,
+        });
+      }
+  
+      if (coupon.couponExpiryDate < new Date()) {
+        return res.status(400).json({
+          error: 'Expired Coupon',
+          text: 'This coupon has expired.',
+        });
+      }
     }
 
-    if (coupon.couponExpiryDate < new Date()) {
-      return res.status(400).json({
-        error: 'Expired Coupon',
-        text: 'This coupon has expired.',
-      });
-    }
+  
 
     if (!cart) {
       return res.status(400).json({
@@ -232,6 +245,8 @@ async function placeOrderWithWallet(req, res, next) {
       amount: req.body.amount,
       type: 'Razorpay',
       transactionDetail: 'Payment for purchased product',
+      transactionId: uuidv4(),
+      transactionType: 'Debit',
     };
 
     wallet.transactions.push(transactionDetails);

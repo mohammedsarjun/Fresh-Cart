@@ -292,7 +292,7 @@
                 const requestData = { startDate, endDate };
             
                 try {
-                    const response = await fetch(`/admin/salesReport?startDate=${startDate} endDate=${endDate}`, {
+                    const response = await fetch(`/admin/salesReport?startDate=${startDate}&endDate=${endDate}`, {
                         method: "get",
                         headers: {
                          'Accept': 'application/json' 
@@ -305,32 +305,30 @@
                     const toastContainer = document.querySelector(".toast-container");
                     const toast = document.createElement("div");
                     toast.className = "toast";
-    
+                    console.log(result.orders)
+                 
                     if (result.orders) {
-                        const table = document.querySelector(".table"); // Get the table
-                        const rows = table.querySelectorAll("td"); // Select all rows
+        const table = document.querySelector(".table tbody"); // Select tbody instead of the whole table
 
+        if (!table) {
+            console.error("Table body not found!");
+            return;
+        }
 
-                        rows.forEach(row => {
-                        row.remove(); // Remove all other rows
-                        });
+        table.innerHTML = ""; // Clear all previous rows
 
-                        '<%orders.forEach((order,i)=>{%>'
-
-                        table.innerHTML += `
-                       
-<tr>
-    <td><%=i+1%></td>
-    <td><%=order.userName%></td>
-    <td><%=order.shippingDate%></td>
-    <td><%=order.products.length%></td>
-    <td>₹<%=order.subTotal%></td>
-    <td><%=order.paymentDetails.method%></td>
-</tr>`;
-                          
-                          '<%})%>'
-
-                    } else {
+        result.orders.forEach((order, i) => {
+            table.innerHTML += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${order.userName}</td>
+                    <td>${order.shippingDate}</td>
+                    <td>${order.products.length}</td>
+                    <td>₹${order.subTotal}</td>
+                    <td>${order.paymentDetails.method}</td>
+                </tr>`;
+        });
+    } else {
                         toast.textContent = "Somthing Wrong!";
                         toast.style.backgroundColor = "#dc3545"; // Red color for error
                         toastContainer.appendChild(toast);
@@ -389,35 +387,33 @@
                     });
             
                     const result = await response.json();
-                    
+                    console.log(result)
                     const toastContainer = document.querySelector(".toast-container");
                     const toast = document.createElement("div");
                     toast.className = "toast";
     
                     if (result.orders) {
-                        const table = document.querySelector(".table"); // Get the table
-                        const rows = table.querySelectorAll("td"); // Select all rows
+  const table = document.querySelector(".table tbody"); // Get the table body
+  if (!table) {
+    console.error("Table body not found!");
+    return;
+  }
 
+  table.innerHTML = ""; // Clear all rows
 
-                        rows.forEach(row => {
-                        row.remove(); // Remove all other rows
-                        });
-
-                        '<%orders.forEach((order,i)=>{%>'
-
-                        table.innerHTML += `
-                       
-                        <tr>
-                            <td><%=i+1%></td>
-                            <td><%=order.userName%></td>
-                            <td><%=order.shippingDate%></td>
-                            <td><%=order.products.length%></td>
-                            <td>₹<%=order.subTotal%></td>
-                            <td><%=order.paymentDetails.method%></td>
-                        </tr>`;
-                          
-                          '<%})%>'
-                    } else {
+  result.orders.forEach((order, i) => {
+    table.innerHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${order.userName}</td>
+        <td>${order.shippingDate}</td>
+        <td>${order.products.length}</td>
+        <td>₹${order.subTotal}</td>
+        <td>${order.paymentDetails.method}</td>
+      </tr>`;
+  });
+}
+ else {
                         toast.textContent = "Somthing Wrong!";
                         toast.style.backgroundColor = "#dc3545"; // Red color for error
                         toastContainer.appendChild(toast);
@@ -449,8 +445,7 @@
   </body>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/js/adminScript/productValidation.js"></script>
-  <script src="/js/adminScript/products.js"></script>
+
 
 
 </html>

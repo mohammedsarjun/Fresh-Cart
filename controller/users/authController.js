@@ -8,6 +8,9 @@ const passport = require('passport');
 const user = require('../../model/userSchema');
 const crypto = require('crypto');
 const AppError = require('../../middleware/errorHandling');
+const referralSchema = require('../../model/referralSchema');
+const { error } = require('console');
+const Coupon = require('../../model/couponScehma');
 // Save OTP
 
 //sign-up controller
@@ -15,6 +18,15 @@ const AppError = require('../../middleware/errorHandling');
 async function signUp(req, res, next) {
   try {
     const isVerifiedUser = await getUserDetails(req.body.email);
+    let referral = null;
+    if (req.body.referralCode) {
+      referral = await referralSchema.findOne({ code: req.body.referralCode });
+      if (!referral) {
+        res.status(404).json({
+          error: 'Referral Code Not Exist',
+        });
+      }
+    }
 
     if (isVerifiedUser?.isVerified == false) {
       req.session.otpEmail = req.body.email;
@@ -27,6 +39,7 @@ async function signUp(req, res, next) {
         phone: req.body.phone,
         password: pass,
         createdAt: Date.now(),
+        referredBy: referral?.userId,
       };
       Object.assign(isVerifiedUser, updatedFields);
       await isVerifiedUser.save();
@@ -39,15 +52,11 @@ async function signUp(req, res, next) {
       const existPhone = await userSchema.findOne({ phone: req.body.phone });
       if (existEmail) {
         res.status(409).json({
-          redirectTo: `/auth/signup?message=${encodeURIComponent(
-            'Email Already exist'
-          )}`,
+          error: 'Email Already exist',
         });
       } else if (existPhone) {
         res.status(409).json({
-          redirectTo: `/auth/signup?message=${encodeURIComponent(
-            'Phone Number Already exist'
-          )}`,
+          error: 'Phone Number Already exist',
         });
       } else {
         const pass = await bcrypt.hash(req.body.password, 10);
@@ -59,6 +68,7 @@ async function signUp(req, res, next) {
           firstName: req.body.firstName,
           password: pass,
           createdAt: Date.now(),
+          referredBy: referral?.userId,
         });
         await user.save();
 
@@ -80,6 +90,7 @@ async function verifyOtp(req, res, next) {
     if (req.session.userChangePassword) {
       const user = await userSchema.findOne({ _id: req.session.userId });
       const otpDetails = await otpSchema.findOne({ email: user.email });
+
       if (user) {
         console.log(req.body.enteredOtp);
         let isOtpMatch = await bcrypt.compare(
@@ -152,7 +163,19 @@ async function verifyOtp(req, res, next) {
         }
       }
     } else {
+      function generateReferralCode(length = 6) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        for (let i = 0; i < length; i++) {
+          code += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+        }
+        return code;
+      }
+
       const user = await getOtpDetails(req.session.otpEmail);
+
       if (user) {
         let isOtpMatch = await bcrypt.compare(req.body.enteredOtp, user.otp);
         if (isOtpMatch) {
@@ -165,6 +188,32 @@ async function verifyOtp(req, res, next) {
             userDetails.isVerified = true;
             await userDetails.save();
             delete req.session.otpExpiry;
+
+            if (userDetails.referredBy) {
+              const couponCode =
+                'COUPON-' +
+                Math.random().toString(36).substring(2, 8).toUpperCase();
+              const newCoupon = new Coupon({
+                couponCode: couponCode,
+                discountPercentage: 10,
+                user: userDetails.referredBy,
+                couponStartDate: null,
+                couponExpiryDate: null,
+                minimumPurchase: 0,
+                maximumDiscount: 500,
+                type: 'Special',
+                currentStatus: 'Special',
+              });
+
+              await newCoupon.save();
+            }
+
+            const referral = new referralSchema({
+              code: generateReferralCode(),
+              userId: userDetails._id,
+            });
+
+            await referral.save();
 
             req.session.isLogged = true;
             res.status(200).json({
@@ -197,7 +246,7 @@ async function logIn(req, res, next) {
 
     if (!user) {
       res.status(401).json({
-        redirectTo: '/auth/signin?message=Email or Password is incorrect',
+        error: 'Email or Password is incorrect',
       });
     } else {
       const isPasswordMatch = await bcrypt.compare(
@@ -206,7 +255,7 @@ async function logIn(req, res, next) {
       );
       if (!isPasswordMatch) {
         res.status(401).json({
-          redirectTo: '/auth/signin?message=Email or Password is incorrect',
+          error: 'Email or Password is incorrect',
         });
       } else if (user.isVerified == false) {
         req.session.otpEmail = req.body.email;
@@ -440,6 +489,23 @@ const googleCallBack = async (req, res, next) => {
           });
 
           await newUser.save(); // Save the new user to DB
+
+          function generateReferralCode(length = 6) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < length; i++) {
+              code += characters.charAt(
+                Math.floor(Math.random() * characters.length)
+              );
+            }
+            return code;
+          }
+          const referral = new referralSchema({
+            code: generateReferralCode(),
+            userId: newUser._id,
+          });
+
+          await referral.save();
 
           // Log in the new user
           req.logIn(newUser, async (err) => {

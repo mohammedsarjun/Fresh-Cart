@@ -11,6 +11,14 @@ const userSchema = new mongoose.Schema({
   isBlocked: { type: Boolean, default: false },
   createdAt: { type: Date },
   usedCoupons: { type: Array },
+  referredBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
+  referredUsers: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+  ],
 });
 userSchema.pre('save', function (next) {
   this.updatedAt = Date.now();

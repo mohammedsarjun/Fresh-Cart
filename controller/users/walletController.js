@@ -1,6 +1,7 @@
 const walletSchema = require('../../model/walletSchema');
 const path = require('path');
 const AppError = require('../../middleware/errorHandling');
+const { v4: uuidv4 } = require('uuid');
 
 async function walletPageRender(req, res, next) {
   try {
@@ -66,6 +67,8 @@ async function addMoney(req, res, next) {
       amount: req.body.transactionDetails.amountPaid,
       type: 'Razorpay',
       transactionDetail: 'Money added to wallet',
+      transactionId: uuidv4(),
+      transactionType: 'Credit',
     };
     wallet.transactions.push(transactionDetails);
     await wallet.save();
@@ -79,7 +82,8 @@ async function addMoney(req, res, next) {
   }
 }
 
+
 module.exports = {
   addMoney,
-  walletPageRender,
+  walletPageRender
 };

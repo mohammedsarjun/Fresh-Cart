@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/csscommon.css">
     <link rel="stylesheet" href="/styles/validationCommon.css">
+
+
 </head>
 
 <body>
@@ -42,7 +44,7 @@
               <div class="col-md-6">
                 <label for="lastName" class="form-label">Last Name</label>
                 <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" required name="secondName">
-                <span class="error-style" id="secondNameError"></span>
+                <span class="error-style" id="lastNameError"></span>
               </div>
             </div>
             <!-- Email -->
@@ -69,7 +71,13 @@
                     </svg>
                 </span>
             </div>
-              <span class="error-style" id="passwordError"></span>
+
+            <div class="mb-3 mt-3">
+              <label for="referralCode" class="form-label">Do You Have Referral Code ?</label>
+              <div style="position: relative;">
+                <input type="text" class="form-control" id="referralCode" placeholder="Enter Your Referral Code" name="referralCode" maxlength="6">
+            </div>
+              <span class="error-style" id="referralCodeError"></span>
             </div>
             <!-- Sign-Up Button -->
             <button type="submit" class="btn btn-success submit-btn">Sign Up</button>
@@ -85,7 +93,10 @@
             <img src="/images/validation/google-brands-solid.png" alt="" class="google-icon me-3"> Sign Up with Google
           </button>
         </a>
-              
+
+       
+  
+   
     </div>
 </div>
 <!-- Sign up Page -->

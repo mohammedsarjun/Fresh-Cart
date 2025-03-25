@@ -10,13 +10,16 @@ const fs = require('fs');
 const { ObjectId } = require('mongoose').Types;
 const otpSchema = require('../../model/otpSchema');
 const AppError = require('../../middleware/errorHandling');
-
+const referralSchema = require('../../model/referralSchema.js');
 async function accountSettingsRender(req, res, next) {
   try {
     const userDetail = await User.findOne(
       { _id: req.session.userId },
       { password: 0 }
     );
+    let referralCode = await referralSchema.findOne({ userId: userDetail._id });
+
+    referralCode = referralCode.code;
     res
       .status(200)
       .render(
@@ -27,7 +30,7 @@ async function accountSettingsRender(req, res, next) {
           'accountSettings',
           'userProfile'
         ),
-        { userDetail }
+        { userDetail, referralCode }
       );
   } catch (error) {
     console.error('An error occurred:', error);
@@ -124,10 +127,20 @@ async function userChangePassword(req, res, next) {
 }
 
 //address
-
+async function referralRewardPageRender(req,res,next){
+  try{
+    res
+    .status(200)
+    .render(path.resolve('views', 'UserPages', 'accountSettings', 'referralReward'));
+  }catch(error){
+    console.log(error);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
+}
 module.exports = {
   accountSettingsRender,
   userUpdate,
   changeUserPassword,
   userChangePassword,
+  referralRewardPageRender
 };

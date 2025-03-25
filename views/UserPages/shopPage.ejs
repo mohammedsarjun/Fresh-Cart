@@ -23,48 +23,6 @@
 <link rel="stylesheet" href="/styles/theme.min.css">
  <!-- Analytics Code -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-M8S4MT3EYG");
-</script>
-<script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-        c[a] =
-            c[a] ||
-            function () {
-                (c[a].q = c[a].q || []).push(arguments);
-            };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "mzh5eyaatk");
-</script>
-<!-- Affiliate tracking script -->
-<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
-<script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
-<div class="fixed bottom-0 right-0 m-4">
-    <a href="https://codescandy.lemonsqueezy.com/buy/7b77d92f-acf6-4fdc-885b-00fa9a0786e4" target="_blank"
-        rel="noopener noreferrer"
-        class="btn gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-            <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-            <path d="M17 17h-11v-14h-2" />
-            <path d="M6 5l14 1l-1 7h-13" />
-        </svg>
-        Buy Theme
-    </a>
-</div>
 
 <style>
 	    .filter-box {
@@ -695,52 +653,21 @@ p {
 										</div>
 									</div>
 								</div>
-								<div class="relative">
-									<!-- Banner Design -->
-									<!-- Banner Content -->
-									<div class="absolute p-6 flex flex-col gap-4">
-										<div>
-											<h3 class="text-lg">Fresh Fruits</h3>
-											<p>
-												Get Upto
-
-												<span class="text-gray-800 font-semibold">25%</span>
-												Off
-											</p>
-										</div>
-										<a href="#!"
-											class="btn inline-flex items-center gap-x-2 bg-gray-800 text-white border-gray-800 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-900 hover:border-gray-900 active:bg-gray-900 active:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300"
-											tabindex="-1">
-											Shop Now
-											<svg xmlns="http://www.w3.org/2000/svg"
-												class="icon icon-tabler icon-tabler-arrow-right inline-block" width="14"
-												height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-												fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-												<path d="M5 12l14 0"></path>
-												<path d="M13 16l6 -6"></path>
-												<path d="M13 6l6 6"></path>
-											</svg>
-										</a>
-									</div>
-									<!-- Banner Content -->
-									<!-- Banner Image -->
-									<!-- img -->
-									<img src="assets/images/banner/assortment-citrus-fruits.png" alt=""
-										class="max-w-full h-auto rounded-xl" />
-									<!-- Banner Image -->
-								</div>
+								
 							</div>
 						</div>
 					</aside>
 					<section class="lg:w-3/4 w-full">
 						<!-- card -->
-						<div class="relative flex flex-col min-w-0 rounded-lg break-words bg-gray-100 p-8 mb-6">
-							<!-- card body -->
-							<div class="flex-auto">
-								<h1 class="text-xl"><%= categoryFilterName.categoryName%></h1>
+						<%if(categoryFilterName.categoryName){%>
+							<div class="relative flex flex-col min-w-0 rounded-lg break-words bg-gray-100 p-8 mb-6">
+								<!-- card body -->
+								<div class="flex-auto">
+									<h1 class="text-xl"><%= categoryFilterName.categoryName%></h1>
+								</div>
 							</div>
-						</div>
+							<%}%>
+						
 						<!-- list icon -->
 						<div class="flex flex-col md:flex-row justify-between lg:items-center mb-6 gap-3">
 							<div>
@@ -1571,6 +1498,7 @@ checkboxes.forEach( checkbox => {
     productParent.innerHTML = ""; // Clear existing content
 
     if (data.products) {
+		console.log(data.products)
         let productsHTML = ""; // Store all products as a single string before adding to DOM
 
         for (let i = 0; i < data.products.length; i++) {
