@@ -2,12 +2,12 @@
 <html lang="en">
 
 
-<!-- Mirrored from freshcart-tailwind.codescandy.com/account-settings.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:18 GMT -->
+<!-- Mirrored from freshcart-tailwind.codescandy.com/account-address.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:18 GMT -->
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon/favicon.ico" />
 
 <!-- Libs CSS -->
@@ -15,9 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" />
 <link rel="stylesheet" href="../cdn.jsdelivr.net/npm/%40tabler/icons-webfont%402.46.0/tabler-icons.min.css" />
-<link rel="stylesheet" href="/assets/libs/simplebar/dist/simplebar.min.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link rel="stylesheet" href="/styles/btnStyle.css">
+<link rel="stylesheet" href="assets/libs/simplebar/dist/simplebar.min.css" />
 <link rel="stylesheet" href="/styles/validationCommon.css">
 <!-- Theme CSS -->
 <link rel="stylesheet" href="/styles/theme.min.css">
@@ -46,19 +44,182 @@
         y.parentNode.insertBefore(t, y);
     })(window, document, "clarity", "script", "mzh5eyaatk");
 </script>
-<!-- Affiliate tracking script -->
-<script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
-<script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
 
-	<title>Settings - TailwindCSS eCommerce HTML Template - FreshCart</title>
+<style>
+
+    /* Reset and base styles */
+
+
+
+/* Header styles */
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+/* Table styles */
+.table-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.rewards-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.rewards-table th,
+.rewards-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+}
+
+.rewards-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.rewards-table tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.rewards-table tr:last-child {
+  border-bottom: none;
+}
+
+.rewards-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Status badges */
+.status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.active {
+  background-color: #c6f6d5;
+  color: #2f855a;
+}
+
+.status.expired {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+.status.pending {
+  background-color: #feebc8;
+  color: #c05621;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .rewards-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .rewards-table th,
+  .rewards-table td {
+    padding: 0.75rem 1rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+}
+</style>
+
+
+	<title>Address - TailwindCSS eCommerce HTML Template - FreshCart</title>
 </head>
 
 <body>
-	<div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); color: white; font-size: 24px; text-align: center; line-height: 100vh;">
-		OTP sending... Please wait.
-	  </div>
+	<div id="loading-screen" style="
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.8); 
+    color: white; 
+    font-size: 24px; 
+    text-align: center; 
+    display: none; 
+    align-items: center; 
+    justify-content: center;
+    z-index: 9999;">
+    Address Updating... Please wait.
+</div>
 	<%-include('../../partials/header')%>
- 
+	
+
+
+
+
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body p-6">
+				<div class="flex justify-between items-start">
+					<div>
+						<h5 class="mb-1" id="locationModalLabel">Choose your Delivery Location</h5>
+						<p class="text-sm">Enter your address and we will specify the offer you area.</p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700" width="24"
+							height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+							stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M18 6l-12 12" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+				<div class="my-5">
+					<label for="searhNavbarSecond" class="invisible hidden">Search</label>
+					<input
+						class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
+						type="search" placeholder="Search for products" id="searhNavbarSecond" />
+				</div>
+				<div class="flex justify-between items-center mb-2">
+					<h6>Select Location</h6>
+					<a href="#" class="btn btn-outline-gray-400 text-gray-500 btn-sm">Clear All</a>
+				</div>
+				<div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 	<main>
 		<!-- section -->
 		<section>
@@ -95,7 +256,7 @@
 							<ul class="nav flex-col nav-pills nav-pills-dark">
 								<!-- nav item -->
 								<li class="nav-item">
-									<a class="nav-link active gap-2" aria-current="page" href="/account/orders">
+									<a class="nav-link gap-2" href="/account/orders">
 										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 											viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 											stroke-linecap="round" stroke-linejoin="round"
@@ -110,7 +271,7 @@
 								</li>
 								<!-- nav item -->
 								<li class="nav-item">
-									<a class="nav-link gap-2" href="/account/settings">
+									<a class="nav-link gap-2" aria-current="page" href="/account/settings">
 										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 											viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 											stroke-linecap="round" stroke-linejoin="round"
@@ -125,7 +286,7 @@
 								</li>
 								<!-- nav item -->
 								<li class="nav-item">
-									<a class="nav-link gap-2" href="/account/address">
+									<a class="nav-link  gap-2" href="/account/address">
 										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 											viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 											stroke-linecap="round" stroke-linejoin="round"
@@ -140,7 +301,7 @@
 								</li>
 								<!-- nav item -->
 								<li class="nav-item">
-									<a class="nav-link gap-2" href="/account/referralReward">
+									<a class="nav-link active gap-2" href="/account/referralReward">
 										<svg fill="#000000" width="18px" height="18px" viewBox="0 0 24 24" id="gift" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><path id="primary" d="M19,19H5a1,1,0,0,1-1-1V10H20v8A1,1,0,0,1,19,19ZM21,9V7a1,1,0,0,0-1-1H4A1,1,0,0,0,3,7V9a1,1,0,0,0,1,1H20A1,1,0,0,0,21,9Z" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><line id="secondary" x1="12" y1="19" x2="12" y2="6" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></line><path id="secondary-2" data-name="secondary" d="M8,3a5.36,5.36,0,0,1,4,3" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="secondary-3" data-name="secondary" d="M16,3a5.36,5.36,0,0,0-4,3" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
 										Referral Reward
 									</a>
@@ -177,74 +338,159 @@
 					</div>
 					<div class="lg:col-span-10 md:col-span-8 col-span-12">
 						<div class="py-6 md:p-6 lg:p-10">
-							<!-- heading -->
-							<h2 class="mb-6 text-lg">Your Orders</h2>
+							
+						
+								
+					
+    <div class="container">
+      <header>
+        <h1>Referral Rewards</h1>
+        <p>Track your referral rewards and coupon status</p>
+      </header>
+      
+      <main>
+        <div class="table-container">
+          <table class="rewards-table">
+            <thead>
+              <tr>
+                <th>Referred User</th>
+                <th>Reward Coupon</th>
+                <th>Coupon Discount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sarah Johnson</td>
+                <td>FRIEND25</td>
+                <td>25% OFF</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Michael Smith</td>
+                <td>FRIEND30</td>
+                <td>30% OFF</td>
+                <td><span class="status expired">Expired</span></td>
+              </tr>
+              <tr>
+                <td>Emma Davis</td>
+                <td>FRIEND20</td>
+                <td>20% OFF</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>James Wilson</td>
+                <td>FRIEND15</td>
+                <td>15% OFF</td>
+                <td><span class="status pending">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Lisa Anderson</td>
+                <td>FRIEND40</td>
+                <td>40% OFF</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
 
-							<div class="block w-full overflow-auto scrolling-touch">
-								<!-- Table -->
-								<table class="w-full max-w-full bg-transparent whitespace-nowrap table-with-checkbox">
-									<!-- Table Head -->
-									<thead class="bg-gray-100">
-										<tr class="border-gray-300 border-b">
-											<th class="py-3 pl-6 text-left">&nbsp;</th>
-											<th class="py-3 pl-6 text-left">Product</th>
-											<th class="py-3 pl-6 text-left">Order</th>
-											<th class="py-3 pl-6 text-left">Date</th>
-											<th class="py-3 pl-6 text-left">Status</th>
-											<th class="py-3 pl-6 text-left">Total Amount</th>
-
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- Table body -->
-										<% updatedOrders.forEach((orders) => { %>
-											<tr class="border-gray-300 border-b">
-												<td class="align-middle px-6 py-3">
-													<a href="/order/orderDetail/<%= orders._id%>" class=""><img
-															src="<%= orders.frontProductImg%>" alt="Ecommerce"
-															class="w-16 h-16 max-w-screen-lg" /></a>
-												</td>
-												<td class="align-middle px-6 py-3">
-													<a href="/order/orderDetail/<%= orders._id%>" class="font-semibold text-inherit">
-														<h6 class="mb-0"><%= orders.frontProductName%></h6>
-													</a>
-													<%if(orders.totalProduct!=0){%>
-														<span><small class="text-gray-500">and <%= orders.totalProduct%> more products</small></span>
-													
-													<%}%>
-										
-												</td>
-												<td class="align-middle px-6 py-3">
-													<a href="#" class="text-inherit"><%= orders.orderId%></a>
-												</td>
-												<td class="align-middle px-6 py-3"><%= orders.renderOrderDateAndTime%></td>
-											
-												<td class="align-middle px-6 py-3">
-													<span
-														class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%= orders.orderStatus%></span></span>
-												</td>
-												<td class="align-middle px-6 py-3">₹<%= orders.subTotal%></td>
-												<td class="text-gray-500 align-middle px-6 py-3">
-													<a href="#" class="text-inherit" data-bs-toggle="tooltip"
-														data-bs-placement="top" data-bs-title="View"><i
-															class="feather-icon icon-eye"></i></a>
-												</td>
-											</tr>
-										
-											<%})%>
-									
-									</tbody>
-								</table>
-							</div>
-						</div>
+	</div>
+						
+							
+				
 					</div>
 				</div>
 			</div>
 		</section>
 	</main>
 
-	<!-- modal -->
+	
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<!-- modal content -->
+			<div class="modal-content">
+				<!-- modal header -->
+				<div class="flex items-center justify-between px-6 py-4 border-b border-gray-300">
+					<h5 class="modal-title" id="deleteModalLabel">Delete address</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x text-gray-700"
+							width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+							fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M18 6l-12 12"></path>
+							<path d="M6 6l12 12"></path>
+						</svg>
+					</button>
+				</div>
+				<!-- modal body -->
+				<div class="modal-body p-6">
+					<h6 class="mb-2">Are you sure you want to delete this address?</h6>
+					<p class="mb-6">
+						Jitu Chauhan
+						<br />
+
+						4450 North Avenue Oakland,
+						<br />
+
+						Nebraska, United States,
+						<br />
+
+						402-776-1106
+					</p>
+				</div>
+				<!-- modal footer -->
+				<div class="border-t border-gray-300 flex justify-end px-6 py-3 gap-2">
+					<!-- btn -->
+					<button type="button"
+						class="btn inline-flex items-center gap-x-2 bg-transparent text-gray-700 border-gray-300 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300"
+						data-bs-dismiss="modal">
+						Cancel
+					</button>
+					<button type="button"
+						class="btn inline-flex items-center gap-x-2 bg-red-600 text-white border-red-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-red-600 hover:border-red-600 active:bg-red-600 active:border-red-600 focus:outline-none focus:ring-4 focus:ring-red-100">
+						Delete
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<!-- modal content -->
+			<div class="modal-content">
+				<!-- modal body -->
+				<div class="modal-body p-6">
+					<div class="flex justify-between mb-5">
+						<div>
+							<!-- heading -->
+							<h5 class="mb-1" id="addAddressModalLabel">New Shipping Address</h5>
+							<p class="text-sm mb-0">Add new shipping address for your order delivery.</p>
+						</div>
+						<div>
+							<!-- button -->
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+								<svg xmlns="http://www.w3.org/2000/svg"
+									class="icon icon-tabler icon-tabler-x text-gray-700" width="24" height="24"
+									viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+									stroke-linecap="round" stroke-linejoin="round">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+									<path d="M18 6l-12 12"></path>
+									<path d="M6 6l12 12"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<!-- row -->
+				
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="offcanvas offcanvas-left" tabindex="-1" id="offcanvasAccount" aria-labelledby="offcanvasAccountLabel">
 		<!-- offcanvas header -->
@@ -279,7 +525,7 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link active gap-2" aria-current="page" href="account-settings.html">
+					<a class="nav-link gap-2" aria-current="page" href="account-settings.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
@@ -293,7 +539,7 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-address.html">
+					<a class="nav-link active gap-2" href="account-address.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
@@ -355,71 +601,49 @@
 	<%-include('./partials/footer')%>
 <!-- buy now template button
 Remove if you do not want.
+
 -->
 
 
-
-	<script src="assets/js/vendors/language.js"></script>
-	<!-- Libs JS -->
-<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
-
-<!-- Theme JS -->
-
-<script src="assets/js/theme.min.js"></script>
-<script src="/js/orders.js"></script>
-
-</body>
-	
-
-
-<!-- Shop Cart -->
-
-<!-- buy now template button
-Remove if you do not want.
--->
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script src="/assets/js/vendors/language.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- Libs JS -->
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+<script src="/js/userAddress.js"></script>
 
 <!-- Theme JS -->
-<script>
-	document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    alert('Form submitted!');
-});
-</script>
+
 <script src="/assets/js/theme.min.js"></script>
-<script src="/js/userProfile.js"></script>
 <script>
-	document.getElementById("togglePassword").addEventListener("click", function () {
-  let passwordInput = document.getElementById("changeNewPassword");
-  if (passwordInput.type === "password") {
-	  passwordInput.type = "text";
-  } else {
-	  passwordInput.type = "password";
+	function openAddAdressModal() {
+  console.log("hi")
+    var myModal = new bootstrap.Modal(document.getElementById('addAddressModal'));
+  
+    myModal.show();
   }
-  });
 
-  document.getElementById("toggleChangePassword").addEventListener("click", function () {
-  let passwordInput = document.getElementById("changeCurrentPassword");
-  if (passwordInput.type === "password") {
-	  passwordInput.type = "text";
-  } else {
-	  passwordInput.type = "password";
+  function openEditAddressModal(addressId,addressType,firstName,lastName,addressLine1,addressLine2,city,state,country,zipCode) {
+    var myModal = new bootstrap.Modal(document.getElementById('editAddressModal'));
+    myModal.show();
+	$("#addressId").val(addressId)
+	$("#editAdressFirstName").val(firstName)
+	$("#editAddressLastName").val(lastName)
+	$("#editAddressType").val(addressType)
+	$("#editAddressLine1").val(addressLine1)
+	$("#editAddressLine2").val(addressLine2)
+	$("#editCity").val(city)
+	$("#editState").val(state)
+	$("#editCountry").val(country)
+	$("#editZipCode").val(zipCode)
   }
-  });
+</script>
 
- 
-  </script>
 </body>
 
 
-<!-- Mirrored from freshcart-tailwind.codescandy.com/account-settings.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:18 GMT -->
+<!-- Mirrored from freshcart-tailwind.codescandy.com/account-address.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:18 GMT -->
 </html>

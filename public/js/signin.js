@@ -21,10 +21,19 @@ $(document).ready(() => {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.issue == "USER DIDN'T VERIFY") {
+          if (data.error) {
+            loadingScreen.style.display = 'none';
+            Swal.fire({
+              toast: true,
+              position: 'top-end', // Position at bottom-right
+              icon: 'error',
+              title: data.error,
+              showConfirmButton: false,
+              timer: 3000, // Auto close after 3 seconds
+            });
+          } else if (data.issue == "USER DIDN'T VERIFY") {
             signinVerifyModal(data.message);
-          }
-          if (data.redirectTo) {
+          } else if (data.redirectTo) {
             window.location.href = data.redirectTo;
           }
         });

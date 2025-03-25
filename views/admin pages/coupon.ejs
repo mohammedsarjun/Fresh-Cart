@@ -228,6 +228,9 @@
             <%if(coupon.currentStatus=="upcoming"){%>
               <button class="btn btn-warning text-white">Upcoming</button>
             <%}%>
+            <%if(coupon.currentStatus=="Special"){%>
+              <button class="btn btn-warning text-white">Special</button>
+            <%}%>
             </td>
             <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCouponModal" onclick="openUpdateCouponModal(
             '<%=coupon._id%>',

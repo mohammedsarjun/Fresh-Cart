@@ -1,11 +1,18 @@
-//email
-
 $(document).ready(() => {
   let emailPattern = /^\w+[@][a-z]{1,}[.][a-z|A-Z]*$/;
   const submitbtn = $('.submit-btn');
+
+  $('#email').on('input', function () {
+    $('#emailError').text('');
+  });
+
+  $('#password').on('input', function () {
+    $('#passwordError').text('');
+  });
+
   submitbtn.click((e) => {
-    //email
-    if ($('#email').val().length == 0) {
+    // Email validation
+    if ($('#email').val().length === 0) {
       e.preventDefault();
       $('#emailError').text('Enter Your Email !');
     } else if (!emailPattern.test($('#email').val())) {
@@ -16,8 +23,7 @@ $(document).ready(() => {
       $('#emailError').text('');
     }
 
-    //password
-
+    // Password validation
     if ($('#password').val().length < 8) {
       e.preventDefault();
       $('#passwordError').text('Password must be at least 8 characters long.');

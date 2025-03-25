@@ -11,6 +11,7 @@ const cartSchema = require('../../model/cartSchema');
 const Product = require('../../model/productModel');
 const Wallet = require('../../model/walletSchema');
 const AppError = require('../../middleware/errorHandling');
+const { v4: uuidv4 } = require('uuid');
 async function renderOrderPage(req, res, next) {
   try {
     const orderDetails = await orderSchema.find({ userId: req.session.userId });
@@ -172,15 +173,15 @@ placeOrder = async function (req, res, isOnlinePayment, isWalletPayment, next) {
         discount: null,
       },
       shippingAddress: {
-        firstName: address.firstName,
-        lastName: address.lastName,
-        addressType: address.addressType,
-        addressLine1: address.addressLine1,
-        addressLine2: address.addressLine2,
-        city: address.city,
-        state: address.state,
-        country: address.country,
-        zipCode: address.zipCode,
+        firstName: address?.firstName,
+        lastName: address?.lastName,
+        addressType: address?.addressType,
+        addressLine1: address?.addressLine1,
+        addressLine2: address?.addressLine2,
+        city: address?.city,
+        state: address?.state,
+        country: address?.country,
+        zipCode: address?.zipCode,
       },
     });
 
@@ -249,7 +250,7 @@ async function cancelOrder(req, res, next) {
   try {
     const order = await orderSchema.findOne({ _id: req.body.orderId });
 
-    if (order && order.paymentDetails.method === 'Razorpay') {
+    if (order && order.paymentDetails.method === 'Wallet') {
       let wallet = await Wallet.findOne({ userId: req.session.userId });
 
       // If wallet doesn't exist, create a new one
@@ -267,8 +268,12 @@ async function cancelOrder(req, res, next) {
         amount: order.subTotal,
         type: 'Razorpay',
         status: 'completed',
+        transactionId: uuidv4(),
         transactionDetail: 'Order Cancelled. Payment returned to wallet',
         createdAt: Date.now(),
+        transactionType: 'Credit',
+        isOrderRedirect: true,
+        orderId: order._id,
       });
 
       await wallet.save();

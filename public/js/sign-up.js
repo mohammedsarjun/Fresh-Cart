@@ -5,8 +5,10 @@ $(document).ready(() => {
   if (userExist) {
     $('#userExistError').text(userExist);
   }
+
   $('#sign-up-form').on('submit', async (e) => {
     e.preventDefault();
+    let referralCode = $('#referralCode').val();
     const loadingScreen = document.getElementById('loading-screen');
     loadingScreen.style.display = 'block';
     let userDetails = {
@@ -15,6 +17,7 @@ $(document).ready(() => {
       email: $('#email').val(),
       phone: $('#phone').val(),
       password: $('#password').val(),
+      referralCode: referralCode || null,
     };
     // Send the form data using fetch
     try {
@@ -27,8 +30,18 @@ $(document).ready(() => {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.redirectTo) {
-            window.location.href = data.redirectTo;
+          if (data.error) {
+            loadingScreen.style.display = 'none';
+            Swal.fire({
+              toast: true,
+              position: 'top-end', // Position at bottom-right
+              icon: 'error',
+              title: data.error,
+              showConfirmButton: false,
+              timer: 3000, // Auto close after 3 seconds
+            });
+          } else if (data.redirectTo) {
+            location.href = data.redirectTo;
           }
         });
     } catch (error) {

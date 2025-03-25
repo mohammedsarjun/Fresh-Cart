@@ -14,6 +14,35 @@ const salesReportController = require('../../controller/admin/salesReportControl
 
 //Dasboard
 router.get('/', adminAuthMiddleware, dashboardController.renderDashboardPage);
+
+//top 10 products
+
+router.get(
+  '/dashboard/top10products',
+  adminAuthMiddleware,
+  dashboardController.top10productsrender
+);
+router.get(
+  '/dashboard/top10category',
+  adminAuthMiddleware,
+  dashboardController.top10categoryrender
+);
+
+//filter sales report
+
+router.get(
+  '/dashboard/changeFilter',
+  adminAuthMiddleware,
+  dashboardController.changeFilter
+);
+
+//filter order report
+
+router.get(
+  '/dashboard/changeOrderFilter',
+  adminAuthMiddleware,
+  dashboardController.changeOrderFilter
+);
 //customers
 
 //GET
