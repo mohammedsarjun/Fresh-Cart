@@ -11,6 +11,7 @@ const AppError = require('../../middleware/errorHandling');
 const referralSchema = require('../../model/referralSchema');
 const { error } = require('console');
 const Coupon = require('../../model/couponScehma');
+
 // Save OTP
 
 //sign-up controller
@@ -190,6 +191,8 @@ async function verifyOtp(req, res, next) {
             delete req.session.otpExpiry;
 
             if (userDetails.referredBy) {
+
+              
               const couponCode =
                 'COUPON-' +
                 Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -206,11 +209,19 @@ async function verifyOtp(req, res, next) {
               });
 
               await newCoupon.save();
+
+              const referredUserDetail=await userSchema.findOne({_id:userDetails.referredBy})
+
+            referredUserDetail.referredUsers.push(userDetails._id)
+            referredUserDetail.markModified("referredUsers")
+            await referredUserDetail.save()
+
             }
 
             const referral = new referralSchema({
               code: generateReferralCode(),
               userId: userDetails._id,
+           
             });
 
             await referral.save();

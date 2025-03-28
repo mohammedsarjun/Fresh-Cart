@@ -68,6 +68,6 @@ WalletSchema.pre('save', function (next) {
   next();
 });
 
-const Wallet = mongoose.model('Wallet', WalletSchema);
+const Wallet = mongoose.model('wallets', WalletSchema);
 
 module.exports = Wallet;

@@ -76,15 +76,21 @@ app.use((req, res, next) => {
   next();
 });
 
-//Connecting to database
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then((data) => {
-    console.log('Server Connected to dataBase');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+
+
+
+
+
+
+
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 30000, // Wait for 30s before timeout
+}).then(() => {
+  console.log("Successfully connected to MongoDB with Mongoose!");
+
+}).catch(err => {
+  console.error("MongoDB Connection Error:", err);
+});
 
 //router middleware
 app.use('/auth', authRouter);

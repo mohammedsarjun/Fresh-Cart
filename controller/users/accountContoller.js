@@ -11,6 +11,7 @@ const { ObjectId } = require('mongoose').Types;
 const otpSchema = require('../../model/otpSchema');
 const AppError = require('../../middleware/errorHandling');
 const referralSchema = require('../../model/referralSchema.js');
+const couponScehma = require('../../model/couponScehma.js');
 async function accountSettingsRender(req, res, next) {
   try {
     const userDetail = await User.findOne(
@@ -128,10 +129,26 @@ async function userChangePassword(req, res, next) {
 
 //address
 async function referralRewardPageRender(req,res,next){
-  try{
-    res
-    .status(200)
-    .render(path.resolve('views', 'UserPages', 'accountSettings', 'referralReward'));
+  try {
+    // Fetch special coupons for the user
+    const couponDetails = await couponScehma.find({ type: "Special", user: req.session.userId }).sort({createdAt:-1});
+    
+    // Fetch user details
+    const userDetail = await User.findOne({ _id: req.session.userId });
+  
+    // Convert each coupon to a plain object and check if it's used
+    for (let i = 0; i < couponDetails.length; i++) {
+      couponDetails[i] = couponDetails[i].toObject(); // Convert Mongoose document to plain object
+  
+      // Check if the coupon is used
+      couponDetails[i].isUsed = userDetail.usedCoupons.includes(couponDetails[i].couponCode);
+    }
+  
+    console.log(couponDetails);
+  
+    // Render the referral reward page
+    res.status(200).render(path.resolve('views', 'UserPages', 'accountSettings', 'referralReward'), { couponDetails });
+  
   }catch(error){
     console.log(error);
     next(new AppError('Sorry...Something went wrong', 500));
