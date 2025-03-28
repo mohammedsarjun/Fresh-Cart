@@ -51,6 +51,6 @@ const couponSchema = new mongoose.Schema({
     enum: ['Special', 'Normal'],
     default: 'Normal',
   },
-});
+},{ timestamps: true });
 
-module.exports = mongoose.model('Coupon', couponSchema);
+module.exports = mongoose.model('coupons', couponSchema);

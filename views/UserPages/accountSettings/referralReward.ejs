@@ -353,43 +353,28 @@ header p {
           <table class="rewards-table">
             <thead>
               <tr>
-                <th>Referred User</th>
+                <th>Reward Details</th>
                 <th>Reward Coupon</th>
                 <th>Coupon Discount</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Sarah Johnson</td>
-                <td>FRIEND25</td>
-                <td>25% OFF</td>
-                <td><span class="status active">Active</span></td>
-              </tr>
-              <tr>
-                <td>Michael Smith</td>
-                <td>FRIEND30</td>
-                <td>30% OFF</td>
-                <td><span class="status expired">Expired</span></td>
-              </tr>
-              <tr>
-                <td>Emma Davis</td>
-                <td>FRIEND20</td>
-                <td>20% OFF</td>
-                <td><span class="status active">Active</span></td>
-              </tr>
-              <tr>
-                <td>James Wilson</td>
-                <td>FRIEND15</td>
-                <td>15% OFF</td>
-                <td><span class="status pending">Pending</span></td>
-              </tr>
-              <tr>
-                <td>Lisa Anderson</td>
-                <td>FRIEND40</td>
-                <td>40% OFF</td>
-                <td><span class="status active">Active</span></td>
-              </tr>
+				<% couponDetails.forEach((couponDetail) => { %>
+					<tr>
+					  <td>User Referred</td>
+					  <td><%= couponDetail?.couponCode %></td>
+					  <td><%= couponDetail?.discountPercentage %>% OFF</td>
+					  
+					  <% if (couponDetail?.isUsed === false) { %>
+						<td><span class="status active">Active</span></td>
+					  <% } else { %>
+						<td><span class="status expired">Used</span></td>
+					  <% } %>
+				  
+					</tr>
+				  <% }) %>
+				  
             </tbody>
           </table>
         </div>
