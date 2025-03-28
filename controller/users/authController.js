@@ -566,7 +566,7 @@ function renderSignUpPage(req, res, next) {
     if (req.session.isLogged == true) {
       res.status(302).redirect('/');
     } else {
-      res.status(200).render(path.join('../', 'views', 'UserPages', 'signup'));
+      res.status(200).render(path.join( 'UserPages', 'signup'));
     }
   } catch (error) {
     console.error('An error occurred:', error);
@@ -578,7 +578,7 @@ function renderSignInPage(req, res, next) {
     if (req.session.isLogged == true) {
       res.status(302).redirect('/');
     } else {
-      res.status(200).render(path.join('../', 'views', 'UserPages', 'signin'));
+      res.status(200).render(path.join('UserPages', 'signin'));
     }
   } catch (error) {
     console.error('An error occurred:', error);
