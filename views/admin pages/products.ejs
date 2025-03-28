@@ -176,35 +176,39 @@
       </div> 
       <%}%>
       <div class="content-body">
-        <table class="text-secondary table table-light table-bordered table-striped mt-3">
-          <% if(products.length!=0) { %>
-          <thead >
+        <div class="table-responsive mt-3">
+          <table class="text-secondary table table-light table-bordered table-striped">
+            <% if(products.length != 0) { %>
+            <thead>
               <tr>
-                  <th>Images</th>
-                  <th>Product Name</th>
-                  <th>Category</th>
-                  <th>Availability</th>
+                <th>Images</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Availability</th>
               </tr>
-          </thead>
-          <%}%>
-          <tbody id="table-body">
-           
-            <% products.forEach(product => { %>
+            </thead>
+            <% } %>
+            <tbody id="table-body">
+              <% products.forEach(product => { %>
               <tr>
-                  <td><a href="/admin/products/productDetail?productId=<%= product._id%>"><img src="<%= product.productPic.productImage1%>" width="100px" height="100px" alt=""></a></td>
-                  <td><%= product.productName %></td>
-                  <td><%=product.categoryName %></td>
-                  <% if (product.availability == "in stock") { %>
-                    <td><button class="btn btn-success">In Stock</button></td>
+                <td>
+                  <a href="/admin/products/productDetail?productId=<%= product._id %>">
+                    <img src="<%= product.productPic.productImage1 %>" width="100px" height="100px" alt="">
+                  </a>
+                </td>
+                <td><%= product.productName %></td>
+                <td><%= product.categoryName %></td>
+                <% if (product.availability == "in stock") { %>
+                <td><button class="btn btn-success">In Stock</button></td>
                 <% } else { %>
-                    <td><button class="btn btn-danger" >Out of Stock</button></td>
+                <td><button class="btn btn-danger">Out of Stock</button></td>
                 <% } %>
-               
-                
-          <% }) %>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
         
-          </tbody>
-        </table>
         <ul class="pagination mb-5">
           <% if (page > 1) { %>
             <li class="page-item">

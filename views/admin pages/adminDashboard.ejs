@@ -8,7 +8,17 @@
       .table th, .table td {
     min-width: 150px; /* Adjust width as needed */
     word-break: break-word; /* Prevents text overflow */
+
     
+    
+}
+
+
+@media (max-width: 424px) {
+  .categoryBtn {
+    margin-top: 10px;
+  }
+
 }
     </style>
     <link rel="stylesheet" href="/styles/validationCommon.css">
@@ -18,6 +28,7 @@
 
     <link rel="stylesheet" href="assets/css/theme.min.css">
   </head>
+
 
       
 <body>
@@ -42,7 +53,7 @@
                     </a>
 
                     <a href="/admin/dashboard/top10category"
-                      class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
+                      class="categoryBtn btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
                      Top 10 Categories
                     </a>
                   </div>

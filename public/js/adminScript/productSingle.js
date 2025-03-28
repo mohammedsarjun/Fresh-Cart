@@ -248,12 +248,15 @@ function addVariety(type, varietyMeasurement, varietyDiscount, varietyStock) {
                 
                 <div class="col-md-4">
                 <small>Enter ${type}</small>
-                    <input type="number" class="form-control varietyMeasurement varietyInputs" name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" id="" value="${varietyMeasurement}">
+<input type="number" class="form-control varietyMeasurement varietyInputs" 
+       name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" 
+       min="1" value="${varietyMeasurement}" oninput="validateVarietyMeasurement(this)">
+<p class="error-style w-100 text-center text-danger" id="${type}VarietyError"></p>
                 </div>
                 
                  <div class="col-md-4">
                  <small>Enter Stock</small>
-                    <input type="number" class="form-control varietyStock varietyInputs" name="${type}Stock" placeholder="Enter Stock"  id="" value="${varietyStock}">
+                    <input type="number" class="form-control varietyStock varietyInputs" min="0" name="${type}Stock" placeholder="Enter Stock"  id="" value="${varietyStock}">
                 </div>
                  
             `;
