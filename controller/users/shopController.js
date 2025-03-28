@@ -176,7 +176,7 @@ async function shopPageRender(req, res, next) {
 
     console.log(products); // Now all products have avgRating
 
-    res.status(200).render(path.join('../', 'views', 'userPages', 'shopPage'), {
+    res.status(200).render(path.join('UserPages', 'shopPage'), {
       products,
       category,
       currentPage: page,
@@ -441,7 +441,7 @@ async function shopSinglePageRender(req, res, next) {
     });
     res
       .status(200)
-      .render(path.join('../', 'views', 'userPages', 'shopSingle'), {
+      .render(path.join('UserPages', 'shopSingle'), {
         updatedProduct,
         originalUrl: req.originalUrl,
         varietyPrice,
