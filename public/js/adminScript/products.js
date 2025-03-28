@@ -29,7 +29,7 @@ function toggleVarietyInput(type) {
       div.classList.add('addVariety');
       div.innerHTML = `
         <label class="form-label">${type.toUpperCase()} Varieties:</label>
-        ${type !== 'items' ? `<input type="number" class="form-control" id="varietyPrice" required placeholder="Price per ${type.toUpperCase()}" step="0.01" min="0"> ` : ''}
+        ${type !== 'items' ? `<input type="number" class="form-control" id="varietyPrice" required placeholder="Price per ${type.toUpperCase()}" step="0.01" min="0.5"> ` : ''}
           <p class="error-style w-100 text-center" id="varietyPriceError"></p>
         <div id="${type}Fields"></div>
         <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addVariety('${type}')">+ Add Variety</button>
@@ -67,10 +67,12 @@ window.addVariety = function (type) {
            <span class="delete-icon d-flex align-items-center col-md-12 mt-3 mb-3"  onclick="removeVariety(event)"><i class="fa fa-trash"onclick="iRemoveVariety(event)"></i></span>
             
             <div class="col-md-4">
-                <input type="number" class="form-control varietyMeasurement varietyInputs" name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" id="">
+              <small>Enter ${type}</small>
+                <input type="number" class="form-control varietyMeasurement varietyInputs" name="${type}Variety" placeholder="Enter ${type} value (e.g., 500ml)" id="" min="1">
             </div>
              <div class="col-md-4">
-                <input type="number" class="form-control varietyStock varietyInputs" name="${type}Stock" placeholder="Enter Stock"  id="">
+              <small>Enter Stock</small>
+                <input type="number" class="form-control varietyStock varietyInputs" name="${type}Stock" placeholder="Enter Stock"  id="" min="0">
             </div>
 
             
@@ -102,10 +104,10 @@ window.addVariety = function (type) {
            <span class="delete-icon d-flex align-items-center col-md-12 mt-3 mb-3"  onclick="removeVariety(event)"><i class="fa fa-trash"onclick="iRemoveVariety(event)"></i></span>
             
             <div class="col-md-4">
-                <input type="text" class="form-control itemPrice varietyInputs" name="${type}Variety" placeholder="Enter ${type} Price">
+                <input type="text" class="form-control itemPrice varietyInputs" name="${type}Variety" placeholder="Enter ${type} Price" min="0.5">
             </div>
             <div class="col-md-4">
-                <input type="number" class="form-control itemStock varietyInputs" name="${type}Discount" placeholder="Enter Stock">
+                <input type="number" class="form-control itemStock varietyInputs" name="${type}Discount" placeholder="Enter Stock" min="0">
             </div>
         `;
 

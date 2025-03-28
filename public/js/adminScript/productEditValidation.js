@@ -58,4 +58,14 @@ $(document).ready(() => {
       $('#varietyPriceError').text('');
     }
   });
+
+
+  function validatePrice(input) {
+    const errorElement = document.getElementById("varietyPriceError");
+    if (input.value < 0) {
+        errorElement.textContent = "Price cannot be negative!";
+    } else {
+        errorElement.textContent = "";
+    }
+}
 });
