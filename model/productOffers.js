@@ -54,6 +54,6 @@ const productOfferSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ProductOffer = mongoose.model('ProductOffer', productOfferSchema);
+const ProductOffer = mongoose.model('productoffers', productOfferSchema);
 
 module.exports = ProductOffer;

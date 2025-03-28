@@ -13,6 +13,7 @@ async function homePageRender(req, res, next) {
     let categories = await Category.find(categoryFilter);
     let productFilter = { isListed: true };
     let products = await Product.find(productFilter).lean();
+    console.log(products)
     res.status(200).render(path.join('../', 'views', 'userPages', 'homePage'), {
       categories,
       products,
