@@ -14,7 +14,7 @@ async function homePageRender(req, res, next) {
     let productFilter = { isListed: true };
     let products = await Product.find(productFilter).lean();
     console.log(products)
-    res.status(200).render(path.join('../', 'views', 'userPages', 'homePage'), {
+    res.status(200).render(path.join('userPages', 'homePage'), {
       categories,
       products,
     });
