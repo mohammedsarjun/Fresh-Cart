@@ -32,8 +32,12 @@ async function renderOrderPage(req, res, next) {
       filter['orderStatus'] = statusQuery; // Exact match for status
     }
 
-    const orderDetails = await orderSchema.find(filter).skip(skip).limit(limit);
-
+    const orderDetails = await orderSchema
+  .find(filter)
+  .sort({ orderDateAndTime: -1 }) // Sorts in descending order
+  .skip(skip)
+  .limit(limit);
+  
     console.log(orderDetails.length);
     const updatedOrders = await Promise.all(
       orderDetails.map(async (orderDetail) => {
@@ -64,9 +68,7 @@ async function renderOrderPage(req, res, next) {
     console.log(updatedOrders);
     // Now it contains the additional fields
 
-    updatedOrders.sort(
-      (a, b) => new Date(b.orderDateAndTime) - new Date(a.orderDateAndTime)
-    );
+  
     const totalProducts = await orderSchema.countDocuments();
     const totalPages = Math.ceil(totalProducts / limit);
 
@@ -88,8 +90,8 @@ async function renderOrderDetailPage(req, res, next) {
     let userDetail = await User.findOne({ _id: order.userId });
 
     order = order.toObject();
-    order.userName = `${userDetail.firstName} ${userDetail.secondName || ''}`;
-    order.userEmail = userDetail.email;
+    order.userName = `${userDetail?.firstName} ${userDetail?.secondName || ''}`;
+    order.userEmail = userDetail?.email;
     order.renderOrderDateAndTime = order.orderDateAndTime.toLocaleString();
 
     for (let i = 0; i < order.products.length; i++) {

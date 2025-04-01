@@ -170,6 +170,14 @@
 	<%-include('../../partials/header')%>
 <!-- Modal -->
 
+<div class="loader-overlay">
+	<div class="loader-container">
+	  <div class="loader"></div>
+	  <div class="loading-text">Loading<span class="dots"></span></div>
+	</div>
+  </div>
+  
+
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content p-8">
@@ -667,7 +675,7 @@
 					</div>
 
 					<!-- table -->
-					<% if(wishlistObj.length==0){ %>
+					<% if(wishlistObj?.length==0){ %>
 						<div class="empty-state">
 							<div class="empty-state__icon">
 								<svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none" stroke-width="2">
@@ -683,7 +691,7 @@
 					
 					<div class="block w-full overflow-auto scrolling-touch">
 						
-							<% if(wishlistObj.length!=0) { %>
+							<% if(wishlistObj?.length!=0) { %>
 								<table class="w-full max-w-full bg-transparent whitespace-nowrap table-with-checkbox">
 									<thead class="bg-gray-100">
 										<tr class="border-gray-300 border-b">
@@ -705,7 +713,7 @@
 									</thead>
 								<%}%>
 							<tbody>
-								<% wishlistObj.forEach((item) => { %>
+								<% wishlistObj?.forEach((item) => { %>
 									<tr class="border-gray-300 border-b">
 									
 										<td class="align-middle px-6 py-3">

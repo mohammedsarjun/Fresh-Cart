@@ -48,10 +48,7 @@
     })(window, document, "clarity", "script", "mzh5eyaatk");
 </script>
 
-<style>
 
-
-</style>
 	<title>Homepage v1 - TailwindCSS eCommerce HTML Template - FreshCart</title>
 </head>
 
@@ -61,6 +58,16 @@
 	<%-include('../partials/header')%>
 </header>
 <!-- Shop Cart -->
+
+
+<div class="loader-overlay">
+	<div class="loader-container">
+	  <div class="loader"></div>
+	  <div class="loading-text">Loading<span class="dots"></span></div>
+	</div>
+  </div>
+  
+  
 
 <div class="offcanvas offcanvas-right" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 	<div class="offcanvas-header border-b">
@@ -174,7 +181,7 @@
 					data-breakpoints='{"480": {"slidesPerView": 2}, "768": {"slidesPerView": 3}, "1024": {"slidesPerView": 6}}'>
 					<div class="swiper-wrapper py-12">
 
-						<% categories.forEach(category => { %>
+						<% categories?.forEach(category => { %>
 							<div class="swiper-slide">
 								<a href="/shop?category=<%= category._id %>">
 									<div
@@ -215,59 +222,18 @@
 				
 				
 					<div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:gap-4 xl:grid-cols-5">
-						<% products.forEach(product => { %>
+						<% products?.forEach(product => { %>
 						<div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
 							<a href="/shop/productDetail/<%=product._id%>">
 							<div class="flex-auto p-4">
 								<div class="text-center relative flex justify-center">
 									<div class="absolute top-0 left-0">
-										<span
-											class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+
 									</div>
 									<img src="<%= product.productPic.productImage1%>"
 											alt="Grocery Ecommerce Template" class="w-full h-auto" />
 	
-									<div class="absolute w-full bottom-[15%] opacity-0 invisible card-product-action">
-										<a href="#!"
-											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-											data-bs-toggle="tooltip" data-bs-html="true" title="Quick View">
-											<span data-bs-toggle="modal" data-bs-target="#quickViewModal">
-												<svg xmlns="http://www.w3.org/2000/svg"
-													class="icon icon-tabler icon-tabler-eye" width="16" height="16"
-													viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-													stroke-linecap="round" stroke-linejoin="round">
-													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-													<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-													<path
-														d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-												</svg>
-											</span>
-										</a>
-										<a href="#!"
-											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-											data-bs-toggle="tooltip" data-bs-html="true" title="Wishlist">
-											<svg xmlns="http://www.w3.org/2000/svg"
-												class="icon icon-tabler icon-tabler-heart" width="16" height="16"
-												viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-												stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-												<path
-													d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-											</svg>
-										</a>
-										<a href="#!"
-											class="h-[34px] w-[34px] leading-[34px] bg-white shadow inline-flex items-center justify-center rounded-lg hover:bg-green-600 hover:text-white"
-											data-bs-toggle="tooltip" data-bs-html="true" title="Compare">
-											<svg xmlns="http://www.w3.org/2000/svg"
-												class="icon icon-tabler icon-tabler-arrows-exchange" width="16" height="16"
-												viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-												stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-												<path d="M7 10h14l-4 -4" />
-												<path d="M17 14h-14l4 4" />
-											</svg>
-										</a>
-									</div>
+								
 								</div>
 								<div class="flex flex-col gap-3">
 
@@ -336,7 +302,7 @@
 									</div>
 									<div class="flex justify-between items-center">
 										<div>
-											<% if (product.variety !== "items") { %>
+											<% if (product?.variety !== "items") { %>
 												<% 
 													let price = Object.values(product.productPrice).find(price => price !== null) || 0;
 													let variety = product.varietyDetails[0] || {};
@@ -344,10 +310,10 @@
 													let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 												%>
 											
-												<span class="text-gray-900 font-semibold">$<%= discountPrice%></span>
+												<span class="text-gray-900 font-semibold">₹<%= discountPrice%></span>
 											
 												<% if (discountPrice !== basePrice) { %>
-													<span class="line-through text-gray-500">$<%= basePrice%></span>
+													<span class="line-through text-gray-500">₹<%= basePrice%></span>
 												<% } %>
 											
 											
@@ -360,17 +326,17 @@
 														let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 													%>
 												
-													<span class="text-gray-900 font-semibold">$<%= discountedPrice %></span>
+													<span class="text-gray-900 font-semibold">₹<%= discountedPrice %></span>
 												
 													<% if (discountedPrice !== originalPrice) { %>
-														<span class="line-through text-gray-500">$<%= originalPrice %></span>
+														<span class="line-through text-gray-500">₹<%= originalPrice %></span>
 													<% } %>
 												<% } %>
 												
 											
 											
 										</div>
-										<div>
+										<!-- <div>
 											<button type="button"
 												class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
 												<svg xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +349,7 @@
 												</svg>
 												<span>Add</span>
 											</button>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</a>
@@ -1099,6 +1065,11 @@ Remove if you do not want.
 	</div>
 </div>
  <!-- Libs JS -->
+
+ <script>
+
+ </script>
+ 
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/simplebar/dist/simplebar.min.js"></script>
 

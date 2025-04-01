@@ -177,7 +177,7 @@
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
 
-      <% if(coupon.length==0) { %>
+      <% if(coupon?.length==0) { %>
         <div class="empty-state">
           <div class="empty-state-icon">
             <i data-lucide="ticket"></i>
@@ -189,7 +189,7 @@
       <div class="table-responsive ">
         <div class="table-responsive mt-3">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
-          <% if(coupon.length!=0) { %>
+          <% if(coupon?.length!=0) { %>
           <thead >
               <tr>
                  
@@ -207,43 +207,43 @@
           </thead>
           <%}%>
           <tbody id="table-body">
-          <%coupon.forEach((coupon,i)=>{%>
+          <%coupon?.forEach((coupon,i)=>{%>
             <tr>
 
               <td><%=(page*5)+i+1-5%></td>
-              <td><%=coupon.couponCode%></td>
-              <td><%=coupon.discountPercentage%></td>
+              <td><%=coupon?.couponCode%></td>
+              <td><%=coupon?.discountPercentage%></td>
           
-                <td><%=coupon.couponStartDate%></td>
+                <td><%=coupon?.couponStartDate%></td>
           
-                <td><%=coupon.couponExpiryDate%></td>
+                <td><%=coupon?.couponExpiryDate%></td>
           
-            <td><%=coupon.minimumPurchase%></td>
-            <td><%=coupon.maximumDiscount%></td>
-            <td><%if(coupon.currentStatus=="active"){%>
+            <td><%=coupon?.minimumPurchase%></td>
+            <td><%=coupon?.maximumDiscount%></td>
+            <td><%if(coupon?.currentStatus=="active"){%>
               <button class="btn btn-success">Active</button>
             <%}%>
-            <%if(coupon.currentStatus=="expired"){%>
+            <%if(coupon?.currentStatus=="expired"){%>
               <button class="btn btn-danger">Expired</button>
             <%}%>
-            <%if(coupon.currentStatus=="upcoming"){%>
+            <%if(coupon?.currentStatus=="upcoming"){%>
               <button class="btn btn-warning text-white">Upcoming</button>
             <%}%>
-            <%if(coupon.currentStatus=="Special"){%>
+            <%if(coupon?.currentStatus=="Special"){%>
               <button class="btn btn-warning text-white">Special</button>
             <%}%>
             </td>
             <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCouponModal" onclick="openUpdateCouponModal(
-            '<%=coupon._id%>',
-            '<%=coupon.couponCode%>',
-            '<%=coupon.discountPercentage%>',
-            '<%=coupon.couponStartDate%>',
-            '<%=coupon.couponExpiryDate%>',
-            '<%=coupon.minimumPurchase%>',
-            '<%=coupon.maximumDiscount%>',
-            '<%=coupon.isListed%>')">Edit</button></td>
+            '<%=coupon?._id%>',
+            '<%=coupon?.couponCode%>',
+            '<%=coupon?.discountPercentage%>',
+            '<%=coupon?.couponStartDate%>',
+            '<%=coupon?.couponExpiryDate%>',
+            '<%=coupon?.minimumPurchase%>',
+            '<%=coupon?.maximumDiscount%>',
+            '<%=coupon?.isListed%>')">Edit</button></td>
             <td>
-              <button class="btn btn-danger" onclick="deleteCoupon('<%=coupon._id%>')">Delete</button>
+              <button class="btn btn-danger" onclick="deleteCoupon('<%=coupon?._id%>')">Delete</button>
             </td>
 
             <%})%>

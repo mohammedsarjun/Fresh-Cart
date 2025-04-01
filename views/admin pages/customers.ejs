@@ -128,7 +128,7 @@
         <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
     </form>
 
-    <% if(users.length==0) { %>
+    <% if(users?.length==0) { %>
       <div class="empty-state">
         <div class="empty-state-icon">
           <i data-lucide="users"></i>
@@ -144,7 +144,7 @@
       <div class="content-body">
         <div class="table-responsive mt-3">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
-          <% if(users.length!=0) { %>
+          <% if(users?.length!=0) { %>
           <thead >
            
               <tr>
@@ -159,16 +159,16 @@
           </thead>
           <%}%>
           <tbody id="table-body">
-            <% users.forEach(user => { %>
+            <% users?.forEach(user => { %>
               <tr>
-                  <td><%= user.firstName %></td>
-                  <td><%= user.secondName %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.phone %></td>
-                  <% if (user.isBlocked == true) { %>
-                    <td><button class="btn btn-success" onclick="customerUnblockAction('<%= user._id %>')">UNBLOCK</button></td>
+                  <td><%= user?.firstName %></td>
+                  <td><%= user?.secondName %></td>
+                  <td><%= user?.email %></td>
+                  <td><%= user?.phone %></td>
+                  <% if (user?.isBlocked == true) { %>
+                    <td><button class="btn btn-success" onclick="customerUnblockAction('<%= user?._id %>')">UNBLOCK</button></td>
                 <% } else { %>
-                    <td><button class="btn btn-danger" onclick="customerBlockAction('<%= user._id %>')">BLOCK</button></td>
+                    <td><button class="btn btn-danger" onclick="customerBlockAction('<%= user?._id %>')">BLOCK</button></td>
                 <% } %>
               </tr>
           <% }) %>

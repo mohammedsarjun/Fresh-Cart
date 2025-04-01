@@ -1419,6 +1419,20 @@
 <script>
 	document.getElementById("placeOrderBtnWithOnline").addEventListener("click", async function () {
 		try {
+
+			if(document.querySelector(
+    'input[name="selectedAddress"]:checked'
+  )==null){
+  return  Swal.fire({
+      toast: true,
+      position: 'top-end', // Position at bottom-right
+      icon: 'error',
+      title: "Add Address to Place Order",
+      showConfirmButton: false,
+      timer: 3000, // Auto close after 3 seconds
+    });
+  }
+  
 			const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
       const selectedPayment= document.querySelector('input[name="selectedPayement"]:checked').value;
 			const res = await fetch("/razorpay/create-order", {
@@ -1459,6 +1473,7 @@
 		}
 	});
 </script>
+
 <script src="/js/checkout.js" defer></script>
 	<script src="/assets/js/vendors/language.js"></script>
 	<!-- Libs JS -->

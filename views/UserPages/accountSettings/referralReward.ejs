@@ -162,6 +162,16 @@ header p {
 </head>
 
 <body>
+
+
+	<div class="loader-overlay">
+		<div class="loader-container">
+		  <div class="loader"></div>
+		  <div class="loading-text">Loading<span class="dots"></span></div>
+		</div>
+	  </div>
+
+	  
 	<div id="loading-screen" style="
     display: none; 
     position: fixed; 
@@ -360,7 +370,7 @@ header p {
               </tr>
             </thead>
             <tbody>
-				<% couponDetails.forEach((couponDetail) => { %>
+				<% couponDetails?.forEach((couponDetail) => { %>
 					<tr>
 					  <td>User Referred</td>
 					  <td><%= couponDetail?.couponCode %></td>
@@ -496,7 +506,7 @@ header p {
 			<ul class="nav flex-col nav-pills nav-pills-dark">
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-orders.html">
+					<a class="nav-link gap-2" href="/account/orders">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag">
@@ -510,7 +520,7 @@ header p {
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" aria-current="page" href="account-settings.html">
+					<a class="nav-link gap-2" aria-current="page" href="/account/settings">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
@@ -524,7 +534,7 @@ header p {
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link active gap-2" href="account-address.html">
+					<a class="nav-link  gap-2" href="/account/address">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
@@ -538,24 +548,14 @@ header p {
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-payment-method.html">
-						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-							class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-pay">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
-							<path d="M3 10h18" />
-							<path d="M16 19h6" />
-							<path d="M19 16l3 3l-3 3" />
-							<path d="M7.005 15h.005" />
-							<path d="M11 15h2" />
-						</svg>
-						Payment Method
+					<a class="nav-link gap-2 active" href="/account/referralReward">
+						<svg fill="#000000" width="18px" height="18px" viewBox="0 0 24 24" id="wallet" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><path id="primary" d="M19,4H5A2,2,0,0,0,3,6H3A2,2,0,0,0,5,8H21" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-2" data-name="primary" d="M21,8V19a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V6A2,2,0,0,0,5,8Z" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="secondary" d="M16,12h5a0,0,0,0,1,0,0v4a0,0,0,0,1,0,0H16a1,1,0,0,1-1-1V13A1,1,0,0,1,16,12Z" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
+						Referral Reward
 					</a>
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-notification.html">
+					<a class="nav-link gap-2" href="/account/wallet">
 						<svg fill="#000000" width="18px" height="18px" viewBox="0 0 24 24" id="wallet" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><path id="primary" d="M19,4H5A2,2,0,0,0,3,6H3A2,2,0,0,0,5,8H21" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-2" data-name="primary" d="M21,8V19a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V6A2,2,0,0,0,5,8Z" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="secondary" d="M16,12h5a0,0,0,0,1,0,0v4a0,0,0,0,1,0,0H16a1,1,0,0,1-1-1V13A1,1,0,0,1,16,12Z" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
 						Wallet
 					</a>
@@ -566,7 +566,7 @@ header p {
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="index.html">
+					<a class="nav-link gap-2" href="/auth/logout">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-logout">

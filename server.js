@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const passport = require('./passport');
-
+const cart=require('./model/cartSchema')
+const Wishlist = require('./model/wishlistSchema');
 //requiring env
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ const PORT = process.env.DB_PORT;
 const app = express();
 
 const session = require('express-session');
+
 
 //session
 app.use(
@@ -55,6 +57,36 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// Showing Cart Globally
+app.use(async (req, res, next) => {
+  if (!req.session.userId) {
+    req.session.cartLength = 0; // No user session, set cart to 0
+    req.session.wishlistCountLength=0
+    return next();
+  }
+
+  try {
+    const cartLength = await cart.findOne({ userId: req.session.userId }); 
+    const wishlistLength = await Wishlist.findOne({ userId: req.session.userId }); 
+    req.session.cartLength = cartLength?.products?.length;
+    req.session.wishlistCountLength=wishlistLength?.products?.length
+  } catch (error) {
+    console.error("Cart fetch error:", error);
+    req.session.cart = 0;
+  }
+
+  next();
+});
+
+// Make cart count available globally in views
+app.use((req, res, next) => {
+  res.locals.cartCount = req.session.cartLength || 0; // Ensure it's a valid number
+  res.locals.wishlistCount = req.session.wishlistCountLength || 0; // Ensure it's a valid number
+  next();
+});
+
+
 //manual middleware
 app.use((req, res, next) => {
   if (req.method !== 'GET') {
@@ -86,7 +118,7 @@ app.use((req, res, next) => {
 
 mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 30000, // Wait for 30s before timeout
-}).then(() => {
+}).then(async () => {
   console.log("Successfully connected to MongoDB with Mongoose!");
 
 }).catch(err => {

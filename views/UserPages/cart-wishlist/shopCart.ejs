@@ -137,8 +137,17 @@ outline-offset: 2px;
 	  </div>
 	<%-include('../../partials/header')%>
 <!-- Modal -->
+
+<div class="loader-overlay">
+	<div class="loader-container">
+	  <div class="loader"></div>
+	  <div class="loading-text">Loading<span class="dots"></span></div>
+	</div>
+  </div>
+  
+  
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-dia?log modal-dialog-centered">
 		<div class="modal-content p-8">
 			<div class="flex justify-between items-center mb-4">
 				<h3 class="font-bold text-gray-800" id="userModalLabel">Sign Up</h3>
@@ -586,7 +595,7 @@ outline-offset: 2px;
 							<!-- alert -->
 							
 							<ul class="list-none">
-								<% if (cart.products.length==0) { %>
+								<% if (cart?.products?.length==0) { %>
 									<div class="empty-state">
 										<div class="empty-state__icon">
 											<svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none" stroke-width="2">
@@ -601,7 +610,7 @@ outline-offset: 2px;
 									<%}%>
 								
 								<!-- list group -->
-								<% cart.products.forEach((product) => { %>
+								<% cart?.products?.forEach((product) => { %>
 									<% if (product.isStock==false) { %>
 										<li class="py-3 border border-danger pe-3 py-3 border-red-500 border">
 											<div class="flex items-center justify-between">

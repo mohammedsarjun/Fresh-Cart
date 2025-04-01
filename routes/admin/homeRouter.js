@@ -127,7 +127,7 @@ router.put(
 );
 
 //delete
-router.delete('/products/delete', productController.deleteProduct);
+router.put('/products/delete', productController.deleteProduct);
 
 //orders
 router.get('/orders', adminAuthMiddleware, orderController.renderOrderPage);

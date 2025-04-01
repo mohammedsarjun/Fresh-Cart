@@ -39,8 +39,9 @@ async function cartPageRender(req, res, next) {
     await userCart.save();
     for (let product of userCart.products) {
       productDetail = await Product.findOne({ _id: product.productId });
+
       const offers = await productOffer.find({
-        selectProduct: productDetail._id,
+        selectProduct: productDetail?._id,
       }); // "offers" since find() returns an array
 
       if (offers.length > 0) {
@@ -89,10 +90,20 @@ async function cartPageRender(req, res, next) {
           }
         }
 
-        if (modified) {
-          productDetail.markModified('varietyDetails');
-          await productDetail.save();
-        }
+        
+              try {
+                if (modified) {
+                  productDetail.markModified('varietyDetails');
+                    await productDetail.save();
+                }
+            } catch (error) {
+                if (error.name === 'VersionError') {
+                    // Refetch latest data and retry
+                    const latestProduct = await Product.findById(productDetail._id);
+                    latestProduct.varietyDetails = productDetail.varietyDetails;
+                    await latestProduct.save();
+                }
+            }
       } else {
         productDetail.varietyDetails.forEach((varietyDetail) => {
           varietyDetail.varietyDiscount = 0;
@@ -238,6 +249,11 @@ async function cartPageRender(req, res, next) {
         productDetail.isListed == false ||
         categoryDetail.isPublished == false
       ) {
+        userCart.products.splice(i, 1);
+        await userCart.save();
+        i--;
+      }
+      if(productDetail.isDeleted==true){
         userCart.products.splice(i, 1);
         await userCart.save();
         i--;
@@ -779,6 +795,29 @@ async function wishlistPageRender(req, res, next) {
 
           wishlistObj.splice(i, 1);
         }
+      }
+    }
+
+
+    for (let i = 0; i < wishlist?.products?.length; i++) {
+      const productDetail = await Product.findOne({
+        _id: wishlist.products[i].productId,
+      });
+      const categoryDetail = await Category.findOne({
+        _id: productDetail.categoryId,
+      });
+      if (
+        productDetail.isListed == false ||
+        categoryDetail.isPublished == false
+      ) {
+        wishlist.products.splice(i, 1);
+        await wishlist.save();
+        wishlistObj.splice(i, 1);
+      }
+      if(productDetail.isDeleted==true){
+        wishlist.products.splice(i, 1);
+        await wishlist.save();
+        wishlistObj.splice(i, 1);
       }
     }
     let wishlistCount = wishlistObj.length;

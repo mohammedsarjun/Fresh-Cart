@@ -463,8 +463,8 @@
 <script>
   let totalSaleChart; // Store the chart instance
 
- let orderResult= '<%=orderResult.series%>'
- let orderLabel='<%=orderResult.labels%>'
+ let orderResult= '<%=orderResult?.series%>'
+ let orderLabel='<%=orderResult?.labels%>'
  orderResult= orderResult.split(',').map((result)=>Number(result))
  orderLabel=orderLabel.split(',')
  console.log(orderResult)

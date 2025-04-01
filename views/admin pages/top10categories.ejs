@@ -262,17 +262,17 @@ p {
                   </div>
                 </header>
                 <div class="products-grid">
-                <%topCategories.forEach((category,i)=>{%>
+                <%topCategories?.forEach((category,i)=>{%>
                     <div class="product-card">
                         <div class="product-image" >
                           <span class="rank"><%=i+1%></span>
                           <img src="<%=category.categoryPic%>" alt="" style="height: 100%; position: absolute; left: 50%; transform: translateX(-50%);">
                         </div>
                         <div class="product-content">
-                          <h2 class="mt-3 mb-3"><%=category.categoryName%></h2>
+                          <h2 class="mt-3 mb-3"><%=category?.categoryName%></h2>
                         
                           <div class="product-footer">
-                            <span class="price"><%=category.totalSales%> Sold</span>
+                            <span class="price"><%=category?.totalSales%> Sold</span>
 
                           </div>
                         </div>

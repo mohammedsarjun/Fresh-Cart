@@ -31,7 +31,7 @@
             />
             <span class="error-style" id="otpError"></span>
           </div>
-          <button class="btn btn-success w-100 submit-btn" type="submit">
+          <button class="btn btn-success w-100 submit-btn" type="submit" id="verifyBtn">
             Verify OTP
           </button>
         </form>
@@ -60,6 +60,7 @@
     
     <% } %> <% if (otpExpire) { %>
     <script>
+
 let remainingTime =new Date("<%= otpExpire %>") - Date.now()
 const resendBtn=document.getElementById("resendOtp")
 resendBtn.classList.add('disabled-link');
@@ -70,6 +71,10 @@ if (remainingTime > 0) {
     if (remainingTime <= 0) {
       clearInterval(timerInterval);
       document.getElementById("timer").innerText = "OTP expired!";
+      let verifyBtn = document.getElementById('verifyBtn');
+verifyBtn.classList.remove("btn-success");  // Remove the class
+verifyBtn.classList.add("btn-secondary");   // Add the new class
+verifyBtn.setAttribute("disabled", "true"); // Disable the button
       resendBtn.classList.remove('disabled-link');
       resendBtn.classList.add('enabled-link'); 
     } else {
@@ -77,7 +82,17 @@ if (remainingTime > 0) {
     }
   }, 1000);
 } else {
+
   document.getElementById("timer").innerText = "OTP expired!";
+  let verifyBtn = document.getElementById('verifyBtn');
+verifyBtn.classList.remove("btn-success");  // Remove the class
+verifyBtn.classList.add("btn-secondary");   // Add the new class
+verifyBtn.setAttribute("disabled", "true"); // Disable the button
+      resendBtn.classList.remove('disabled-link');
+      resendBtn.classList.add('enabled-link'); 
+       
+
+
    // Remove disabled class
 
 }
@@ -86,6 +101,7 @@ if (remainingTime > 0) {
     <% } else { %>
       <script>
      document.getElementById("timer").innerText = "OTP expiry data is missing!";
+
       </script>
     <% } %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

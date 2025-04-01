@@ -11,9 +11,17 @@ async function homePageRender(req, res, next) {
   try {
     let categoryFilter = { isPublished: true };
     let categories = await Category.find(categoryFilter);
-    let productFilter = { isListed: true };
+    let productFilter = { isListed: true,  isDeleted: false  };
     let products = await Product.find(productFilter).lean();
     console.log(products)
+
+    for(let i=0;i<products.length;i++){
+     let isListedCategory=await Category.findOne({_id:products[i].categoryId})
+     if(isListedCategory.isPublished==false){
+      products.splice(i,1)
+      i--
+     } 
+    }
     res.status(200).render(path.join('UserPages', 'homePage'), {
       categories,
       products,
