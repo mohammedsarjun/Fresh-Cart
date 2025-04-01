@@ -250,7 +250,7 @@ async function cancelOrder(req, res, next) {
   try {
     const order = await orderSchema.findOne({ _id: req.body.orderId });
 
-    if (order && order.paymentDetails.method === 'Wallet') {
+    if (order && (order.paymentDetails.method === 'Wallet'||order.paymentDetails.method === 'Razorpay') ) {
       let wallet = await Wallet.findOne({ userId: req.session.userId });
 
       // If wallet doesn't exist, create a new one

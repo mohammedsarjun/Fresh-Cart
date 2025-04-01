@@ -114,7 +114,7 @@
         
        
       </form>
-      <% if(categories.length==0) { %>
+      <% if(categories?.length==0) { %>
         <div class="empty-state">
           <div class="empty-state-icon">
             <i data-lucide="grid"></i>
@@ -125,7 +125,7 @@
         <%}%>
         <div class="table-responsive mt-3">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
-          <% if(categories.length!=0) { %>
+          <% if(categories?.length!=0) { %>
             <thead >
               <tr>
                  
@@ -134,25 +134,24 @@
                   <th>Description</th>
                   <th>Published</th>
                   <th>Edit</th>
-                  <th>Delete</th>
+             
               </tr>
           </thead>
             <%}%>
          
           <tbody id="table-body">
-            <% categories.forEach(category => { %>
+            <% categories?.forEach(category => { %>
               <tr>
-                  <td><img src="<%= category.imageUrl%>" width="100px" height="100px" alt=""></td>
-                  <td><%= category.categoryName %></td>
-                  <td><%=category.categoryDescription %></td>
-                  <% if (category.isPublished == true) { %>
-                    <td><button class="btn btn-danger" onclick="categoryUnpublishAction('<%= category._id %>')">UNPUBLISH</button></td>
+                  <td><img src="<%= category?.imageUrl%>" width="100px" height="100px" alt=""></td>
+                  <td><%= category?.categoryName %></td>
+                  <td><%=category?.categoryDescription %></td>
+                  <% if (category?.isPublished == true) { %>
+                    <td><button class="btn btn-danger" onclick="categoryUnpublishAction('<%= category?._id %>')">UNPUBLISH</button></td>
                 <% } else { %>
-                    <td><button class="btn btn-success" onclick="categoryPublishAction('<%= category._id %>')">PUBLISH</button></td>
+                    <td><button class="btn btn-success" onclick="categoryPublishAction('<%= category?._id %>')">PUBLISH</button></td>
                 <% } %>
-                <td><button class="btn btn-warning" onclick="openEditModal('<%= category._id %>', '<%= category.categoryName %>','<%= category.categoryDescription %>','<%= category.imageUrl%>')">EDIT</button></td>
-                <td><button class="btn btn-danger" onclick="categoryDeleteAction('<%= category._id %>')">DELETE</button></td>
-                
+                <td><button class="btn btn-warning" onclick="openEditModal('<%= category?._id %>', '<%= category?.categoryName %>','<%= category?.categoryDescription %>','<%= category?.imageUrl%>')">EDIT</button></td>
+
           <% }) %>
           </tbody>
             

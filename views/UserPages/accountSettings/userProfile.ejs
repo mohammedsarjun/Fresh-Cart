@@ -54,6 +54,14 @@
 </head>
 
 <body>
+
+	<div class="loader-overlay">
+		<div class="loader-container">
+		  <div class="loader"></div>
+		  <div class="loading-text">Loading<span class="dots"></span></div>
+		</div>
+	  </div>
+
 	<div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); color: white; font-size: 24px; text-align: center; line-height: 100vh;">
 		OTP sending... Please wait.
 	  </div>
@@ -243,32 +251,32 @@
 												<label class="inline-block text-gray-800 font-medium mb-2">First Name</label>
 												<input type="text" readonly
 													class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
-													placeholder="<%=userDetail.firstName %>" />
+													placeholder="<%=userDetail?.firstName %>" />
 											</div>
 											<!-- input -->
 											<div class="mb-3">
 												<label class="inline-block text-gray-800 font-medium mb-2">Last Name</label>
 												<input type="text" readonly
 													class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
-													placeholder="<%=userDetail.secondName %>" />
+													placeholder="<%=userDetail?.secondName %>" />
 											</div>
 											<div class="mb-3">
 												<label class="inline-block text-gray-800 font-medium mb-2">Email</label>
 												<input type="email" readonly 
 													class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
-													placeholder="<%=userDetail.email %>" />
+													placeholder="<%=userDetail?.email %>" />
 											</div>
 											<!-- input -->
 											<div class="mb-5">
 												<label class="inline-block text-gray-800 font-medium mb-2">Phone</label>
 												<input type="text" readonly
 													class="border border-gray-300 text-gray-900 rounded-lg focus:shadow-[0_0_0_.25rem_rgba(10,173,10,.25)] focus:ring-green-600 focus:ring-0 focus:border-green-600 block p-2 px-3 disabled:opacity-50 disabled:pointer-events-none w-full text-base"
-													placeholder="<%=userDetail.phone %>" />
+													placeholder="<%=userDetail?.phone %>" />
 											</div>
 											<!-- button -->
 											<div class="mb-3">
 												<button
-													class="btnGreen"  onclick="openEditUserModal('<%=userDetail._id%>','<%=userDetail.firstName%>','<%=userDetail.secondName%>','<%=userDetail.email%>','<%=userDetail.phone%>')"  >
+													class="btnGreen"  onclick="openEditUserModal('<%=userDetail?._id%>','<%=userDetail?.firstName%>','<%=userDetail?.secondName%>','<%=userDetail?.email%>','<%=userDetail?.phone%>')"  >
 													Edit Details
 												</button>
 											</div>
@@ -337,18 +345,7 @@
 								</form>
 							</div>
 							<hr class="my-10" />
-							<div>
-								<!-- heading -->
-								<h5 class="mb-4">Delete Account</h5>
-								<p class="mb-2">Would you like to delete your account?</p>
-								<p class="mb-5">This account contain 12 orders, Deleting your account will remove all
-									the order details associated with it.</p>
-								<!-- btn -->
-								<a href="#"
-									class="btn inline-flex items-center gap-x-2 bg-transparent text-red-600 border-red-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-red-600 hover:border-red-600 active:bg-red-600 active:border-red-600 focus:outline-none focus:ring-4 focus:ring-red-100">
-									I want to delete my account
-								</a>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -377,7 +374,7 @@
 			<ul class="nav flex-col nav-pills nav-pills-dark">
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-orders.html">
+					<a class="nav-link gap-2" href="/account/orders">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag">
@@ -391,7 +388,7 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link active gap-2" aria-current="page" href="account-settings.html">
+					<a class="nav-link active gap-2" aria-current="page" href="/account/settings">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
@@ -405,7 +402,7 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-address.html">
+					<a class="nav-link gap-2" href="/account/address">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
@@ -419,14 +416,14 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-payment-method.html">
+					<a class="nav-link gap-2" href="/account/referralReward">
 						<svg fill="#000000" width="18px" height="18px" viewBox="0 0 24 24" id="gift" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><path id="primary" d="M19,19H5a1,1,0,0,1-1-1V10H20v8A1,1,0,0,1,19,19ZM21,9V7a1,1,0,0,0-1-1H4A1,1,0,0,0,3,7V9a1,1,0,0,0,1,1H20A1,1,0,0,0,21,9Z" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><line id="secondary" x1="12" y1="19" x2="12" y2="6" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></line><path id="secondary-2" data-name="secondary" d="M8,3a5.36,5.36,0,0,1,4,3" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="secondary-3" data-name="secondary" d="M16,3a5.36,5.36,0,0,0-4,3" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
 						Referral Reward
 					</a>
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="account-notification.html">
+					<a class="nav-link gap-2" href="/account/wallet">
 						<svg fill="#000000" width="18px" height="18px" viewBox="0 0 24 24" id="wallet" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><path id="primary" d="M19,4H5A2,2,0,0,0,3,6H3A2,2,0,0,0,5,8H21" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-2" data-name="primary" d="M21,8V19a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V6A2,2,0,0,0,5,8Z" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="secondary" d="M16,12h5a0,0,0,0,1,0,0v4a0,0,0,0,1,0,0H16a1,1,0,0,1-1-1V13A1,1,0,0,1,16,12Z" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
 						Wallet
 					</a>
@@ -437,7 +434,7 @@
 				</li>
 				<!-- nav item -->
 				<li class="nav-item">
-					<a class="nav-link gap-2" href="index.html">
+					<a class="nav-link gap-2" href="/auth/logout">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 							class="icon icon-tabler icons-tabler-outline icon-tabler-logout">

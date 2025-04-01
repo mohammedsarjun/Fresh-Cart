@@ -172,7 +172,7 @@
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
 
-      <% if(offer.length==0) { %>
+      <% if(offer?.length==0) { %>
         <div class="empty-state">
           <div class="empty-state-icon">
             <i data-lucide="tag"></i>
@@ -186,7 +186,7 @@
         
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
           <thead >
-            <% if(offer.length!=0) { %>
+            <% if(offer?.length!=0) { %>
                 <tr>
                     <th>S.No</th>
                     <th>Product Name</th>
@@ -203,7 +203,7 @@
              
           </thead>
           <tbody id="table-body">
-          <%offer.forEach((offer,i)=>{%>
+          <%offer?.forEach((offer,i)=>{%>
             <tr>
                 <td><%=i+1%></td>
                 <td><%=offer.selectProduct%></td>

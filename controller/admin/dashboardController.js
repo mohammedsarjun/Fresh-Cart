@@ -72,10 +72,11 @@ async function renderDashboardPage(req, res, next) {
     totalUsers = totalUsers[0].count;
 
     // Render Sales Graph
-    today.setHours(23, 59, 59, 999); // End of today
+    const todays = new Date();
+    todays.setHours(23, 59, 59, 999); // End of today
 
     const startOfWeek = new Date();
-    startOfWeek.setDate(today.getDate() - 6);
+    startOfWeek.setDate(todays.getDate() - 6);
     startOfWeek.setUTCHours(0, 0, 0, 0);
 
     const endOfWeek = new Date();

@@ -50,13 +50,6 @@
             display: none;
         }
 
-		:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  background-color: #ffffff;
-  color: #213547;
-}
 
 
 
@@ -86,7 +79,279 @@ p {
   font-size: 1.1rem;
   margin: 0;
 }	
+
+
+    .no-bootstrap {
+        all: unset; /* Resets all styles, removing Bootstrap effects */
+    }
+
+    /* Form container (acts like Bootstrap's row) */
+    .custom-form-container {
+        display: flex;
+        flex-wrap: wrap; /* Allows responsive wrapping */
+        gap: 10px; /* Adds spacing between input and button */
+        align-items: center; /* Aligns items properly */
+    }
+
+    /* Input wrapper */
+    .custom-input-container {
+        flex: 1 1 60%; /* Takes 60% of width */
+        min-width: 200px;
+    }
+
+    /* Search button wrapper */
+    .custom-button-container {
+        flex: 1 1 20%; /* Takes 20% width */
+        min-width: 100px;
+    }
+
+    /* Input field styling */
+    .custom-search-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    /* Search button styling */
+    .custom-search-button {
+        width: 100%;
+        padding: 8px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    /* Error message styling */
+    .custom-error-message {
+        color: red;
+        display: none;
+        font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .custom-form-container {
+            flex-direction: column;
+        }
+
+        .custom-input-container,
+        .custom-button-container {
+            flex: 1 1 100%; /* Full width on small screens */
+        }
+    }
+
+	
     </style>
+
+	<style>
+
+
+
+/* Menu Button Styles */
+.menu-btn {
+  display: none;
+  position: static;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* Side Menu Styles */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.side-menu.active {
+  transform: translateX(300px);
+}
+
+.menu-content {
+  padding: 20px;
+}
+
+/* Filter Box Styles */
+.filter-box {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.filter-box input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.filter-box button {
+  width: 100%;
+  padding: 8px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Rating Styles */
+.rating-section {
+  margin-top: 20px;
+}
+
+.rating-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .menu-btn {
+    display: block;
+  }
+  
+  body {
+    padding-left: 0;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .side-menu {
+
+    color: white;
+  }
+  
+  .filter-box {
+    border-color: #333;
+  }
+  
+  .filter-box input {
+    background-color: #2a2a2a;
+    border-color: #333;
+    color: white;
+  }
+}
+
+.menu-btn {
+
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background 0.2s ease-in-out, transform 0.1s;
+	margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Bootstrap primary blue */
+    border-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-primary:active {
+    background-color: #004085;
+    border-color: #003566;
+    transform: scale(0.98);
+}
+
+.btn-reset {
+    background-color: #dc3545; /* Bootstrap's danger red */
+    border-color: #dc3545;
+    color: white;
+	margin-top: 10px;
+}
+
+.btn-reset:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-reset:active {
+    background-color: #a71d2a;
+    border-color: #911720;
+    transform: scale(0.98);
+}
+
+
+/* Pagination Container */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* Page Item */
+.page-item {
+  display: inline-block;
+}
+
+/* Page Link Styling */
+.page-link {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Hover and Active State */
+.page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Active Page */
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Disabled Page */
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+	</style>
 	
 
 	<title>Shop Grid 3 Column - TailwindCSS eCommerce HTML Template - FreshCart</title>
@@ -98,6 +363,16 @@ p {
 	<%-include('../partials/header')%>
 </header>
 <!-- Modal -->
+
+
+<div class="loader-overlay">
+	<div class="loader-container">
+	  <div class="loader"></div>
+	  <div class="loading-text">Loading<span class="dots"></span></div>
+	</div>
+  </div>
+  
+  
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content p-8">
@@ -261,6 +536,350 @@ p {
 	</div>
 </div>
 	<main>
+		<div id="app">
+		
+			<div id="sideMenu" class="side-menu">
+			  <div class="menu-content">
+				<div class="flex flex-col gap-3">
+					<!-- title -->
+					<h5>Categories</h5>
+					<!-- nav -->
+					
+					<ul class="flex flex-wrap nav-category" >
+						<% category?.forEach(category => { %>
+							<li class="border-b w-full">
+								<a href="/shop?category= <%= category._id %>"
+									class="flex justify-between py-2 collapsed items-center text-gray-800 hover:text-green-600"
+									aria-expanded="false" aria-controls="categoryFlushOne">
+									<%= category.categoryName %>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-chevron-right inline-block"
+										width="14" height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M9 6l6 6l-6 6" />
+									</svg>
+								</a>
+							</li>
+						  
+							<% }) %>
+
+					</ul>
+				</div>
+
+				
+				<div class="flex flex-col gap-3">
+					
+<div class="filter-box">
+<h3>Filter Price</h3>
+<input type="number" id="minPrice" placeholder="Min Price">
+<input type="number" id="maxPrice" placeholder="Max Price">
+<button onclick="validatePrices()">Search</button>
+<p class="error" id="errorMessage"></p>
+</div>
+
+
+					
+				</div>
+	  
+				<div class="flex flex-col gap-3">
+					<h5>Rating</h5>
+					<div class="flex flex-col gap-3">
+						<!-- form check -->
+						<div class="relative flex items-center gap-2">
+							<!-- input -->
+							<input
+								class=" w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+								type="radio" value="5" name="rating" id="ratingFive" />
+							<label class="text-gray-800" for="ratingFive">
+								<small class="text-yellow-500 flex items-center">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+								</small>
+							</label>
+						</div>
+						<!-- form check -->
+						<div class="relative flex items-center gap-2">
+							<!-- input -->
+							<input
+								class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+								type="radio" name="rating" value="4" id="ratingFour"  />
+							<label class="text-gray-800" for="ratingFour">
+								<small class="text-yellow-500 flex items-center">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+								</small>
+							</label>
+						</div>
+						<!-- form check -->
+						<div class="relative flex items-center gap-2">
+							<!-- input -->
+							<input
+								class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+								type="radio" name="rating" value="3" id="ratingThree" />
+							<label class="text-gray-800" for="ratingThree">
+								<small class="text-yellow-500 flex items-center">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+								</small>
+							</label>
+						</div>
+						<!-- form check -->
+						<div class="relative flex items-center gap-2">
+							<!-- input -->
+							<input
+								class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+								type="radio" name="rating" value="2" id="ratingTwo" />
+							<label class="text-gray-800" for="ratingTwo">
+								<small class="text-yellow-500 flex items-center">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+								</small>
+							</label>
+						</div>
+						<!-- form check -->
+						<div class="relative flex items-center gap-2">
+							<!-- input -->
+							<input
+								class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+								type="radio" name="rating" value="1" id="ratingOne" />
+							<label class="text-gray-800" for="ratingOne">
+								<small class="text-yellow-500 flex items-center">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star-filled" width="14"
+										height="14" viewBox="0 0 24 24" stroke-width="2"
+										stroke="currentColor" fill="none" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-star" width="14" height="14"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+										fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+									</svg>
+								</small>
+							</label>
+						</div>
+							<button id="mobileResetFilterBtn" class="btn-reset" >
+					Reset Filter
+				</button>
+					</div>
+				</div>
+
+			  </div>
+			</div>
+		  </div>
 		<div class="mt-4">
 			<div class="container">
 				<div class="flex flex-wrap">
@@ -269,7 +888,7 @@ p {
 						<nav aria-label="breadcrumb">
 							<ol class="flex flex-wrap">
 								<li class="inline-block text-green-600 mr-2">
-									<a href="#!">
+									<a href="/">
 										Home
 										<svg xmlns="http://www.w3.org/2000/svg"
 											class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
@@ -326,7 +945,7 @@ p {
 									<!-- nav -->
 									
 									<ul class="flex flex-wrap nav-category" >
-										<% category.forEach(category => { %>
+										<% category?.forEach(category => { %>
 											<li class="border-b w-full">
 												<a href="/shop?category= <%= category._id %>"
 													class="flex justify-between py-2 collapsed items-center text-gray-800 hover:text-green-600"
@@ -370,8 +989,8 @@ p {
 										<div class="relative flex items-center gap-2">
 											<!-- input -->
 											<input
-												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" value="5" name="rating" id="ratingFive" />
+												class=" w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
+												type="radio" value="5" name="rating" id="ratingFive" />
 											<label class="text-gray-800" for="ratingFive">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -432,7 +1051,7 @@ p {
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" name="rating" value="4" id="ratingFour" checked />
+												type="radio" name="rating" value="4" id="ratingFour"  />
 											<label class="text-gray-800" for="ratingFour">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -491,7 +1110,7 @@ p {
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" name="rating" value="3" id="ratingThree" />
+												type="radio" name="rating" value="3" id="ratingThree" />
 											<label class="text-gray-800" for="ratingThree">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -548,7 +1167,7 @@ p {
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" name="rating" value="2" id="ratingTwo" />
+												type="radio" name="rating" value="2" id="ratingTwo" />
 											<label class="text-gray-800" for="ratingTwo">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -603,7 +1222,7 @@ p {
 											<!-- input -->
 											<input
 												class="w-4 h-4 text-green-600 bg-white border-gray-300 rounded focus:ring-green-600 focus:outline-none focus:ring-2"
-												type="checkbox" name="rating" value="1" id="ratingOne" />
+												type="radio" name="rating" value="1" id="ratingOne" />
 											<label class="text-gray-800" for="ratingOne">
 												<small class="text-yellow-500 flex items-center">
 													<svg xmlns="http://www.w3.org/2000/svg"
@@ -651,6 +1270,10 @@ p {
 												</small>
 											</label>
 										</div>
+										
+				<button id="resetFilterBtn" class="btn-reset" >
+					Reset Filter
+				</button>
 									</div>
 								</div>
 								
@@ -659,20 +1282,34 @@ p {
 					</aside>
 					<section class="lg:w-3/4 w-full">
 						<!-- card -->
-						<%if(categoryFilterName.categoryName){%>
+						<%if(categoryFilterName?.categoryName){%>
 							<div class="relative flex flex-col min-w-0 rounded-lg break-words bg-gray-100 p-8 mb-6">
 								<!-- card body -->
 								<div class="flex-auto">
-									<h1 class="text-xl"><%= categoryFilterName.categoryName%></h1>
+									<h1 class="text-xl"><%= categoryFilterName?.categoryName%></h1>
 								</div>
 							</div>
 							<%}%>
-						
+							<button id="mobileMenuBtn" class="menu-btn btn btn-primary">
+								Add Filter
+							  </button>
+							  
+							<form id="customSearchForm" class="custom-form-container">
+								<div class="custom-input-container">
+									<input type="text" name="search" placeholder="Search in this category" id="custom-product-search" class="custom-search-input">
+									<small id="custom-error-message" class="custom-error-message">Please enter a search term.</small>
+								</div>
+								<div class="custom-button-container">
+									<button type="submit" class="custom-search-button">🔍</button>
+								</div>
+							</form>
+							
+							
 						<!-- list icon -->
 						<div class="flex flex-col md:flex-row justify-between lg:items-center mb-6 gap-3">
 							<div>
 								<p>
-									<span class="text-gray-900"><%= products.length%></span>
+									<span class="text-gray-900 productCount"><%= products.length%></span>
 									Products found
 								</p>
 							</div>
@@ -681,7 +1318,7 @@ p {
 						
 						</div>
 
-						<%if(products.length==0){%>
+						<%if(products?.length==0){%>
 							<div class="no-products">
 								<div class="noProducticon">📦</div>
 								<h1>No Products Found</h1>
@@ -690,15 +1327,15 @@ p {
 							<%}%>
 						
 						<div class="grid lg:grid-cols-3 md:grid-cols-3 gap-4 product-parent">
-							<% products.forEach(product => { %>
+							<% products?.forEach(product => { %>
 								
 								  <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
 
 									<div class="flex-auto p-4">
 										<div class="text-center relative flex justify-center">
 											<div class="absolute top-0 left-0">
-												<span
-													class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+											
+
 											</div>
 											<a href="/shop/productDetail/<%= product._id%>"><img src="<%= product.productPic.productImage1 %>"
 													alt="Grocery Ecommerce Template" class="w-full h-auto" /></a>
@@ -736,10 +1373,10 @@ p {
 															let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 														%>
 													
-														<span class="text-gray-900 font-semibold">$<%= discountPrice.toFixed(1)%></span>
+														<span class="text-gray-900 font-semibold">₹<%= discountPrice.toFixed(1)%></span>
 													
 														<% if (discountPrice !== basePrice) { %>
-															<span class="line-through text-gray-500">$<%= basePrice%></span>
+															<span class="line-through text-gray-500">₹<%= basePrice%></span>
 														<% } %>
 													
 													
@@ -752,15 +1389,15 @@ p {
 																let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 															%>
 														
-															<span class="text-gray-900 font-semibold">$<%= Number(discountedPrice)?.toFixed(1) %></span>
+															<span class="text-gray-900 font-semibold">₹<%= Number(discountedPrice)?.toFixed(1) %></span>
 														
 															<% if (discountedPrice !== originalPrice) { %>
-																<span class="line-through text-gray-500">$<%= originalPrice %></span>
+																<span class="line-through text-gray-500">₹<%= originalPrice %></span>
 															<% } %>
 														<% } %>
 													
 												</div>
-												<div>
+												<!-- <div>
 													<button type="button"
 														class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
 														<svg xmlns="http://www.w3.org/2000/svg"
@@ -773,7 +1410,7 @@ p {
 														</svg>
 														<span>Add</span>
 													</button>
-												</div>
+												</div> -->
 											</div>
 										</div>
 									</div>
@@ -785,7 +1422,30 @@ p {
 							
 						
 					</section>
+			
 				</div>
+				<% if (totalPages > 1) { %>
+					<nav class="mb-5">
+						<ul class="pagination">
+							<!-- Previous Button -->
+							<li class="page-item <%= page === 1 ? 'disabled' : '' %>">
+								<a class="page-link" href="?page=<%= page - 1 %>&search=<%= searchQuery %>">Previous</a>
+							</li>
+			
+							<!-- Page Numbers -->
+							<% for (let i = 1; i <= totalPages; i++) { %>
+								<li class="page-item <%= page === i ? 'active' : '' %>">
+									<a class="page-link" href="?page=<%= i %>&search=<%= searchQuery %>"><%= i %></a>
+								</li>
+							<% } %>
+			
+							<!-- Next Button -->
+							<li class="page-item <%= page === totalPages ? 'disabled' : '' %>">
+								<a class="page-link" href="?page=<%= page + 1 %>&search=<%= searchQuery %>">Next</a>
+							</li>
+						</ul>
+					</nav>
+				<% } %>
 			</div>
 		</div>
 	</main>
@@ -1448,7 +2108,7 @@ Remove if you do not want.
 	<script src="assets/js/vendors/language.js"></script>
 	<script src="assets/js/vendors/zoom.js"></script>
 	<!-- Libs JS -->
-<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
 
 <!-- Theme JS -->
@@ -1481,8 +2141,22 @@ const checkboxes = document.getElementsByName("rating");
 let productParent= document.querySelector(".product-parent")
 checkboxes.forEach( checkbox => {
     checkbox.addEventListener("change", function () {
-		const minPrice = document.getElementById("minPrice").value.trim();
-		const maxPrice = document.getElementById("maxPrice").value.trim();
+		let minPrice = [...document.querySelectorAll("#minPrice")];
+let maxPrice = [...document.querySelectorAll("#maxPrice")];
+
+console.log(minPrice, `${maxPrice} myr`); // Corrected logging
+
+minPrice = minPrice.filter(min => min.value !== "").map(min => min.value);
+maxPrice = maxPrice.filter(max => max.value !== "").map(max => max.value);
+
+console.log(minPrice, maxPrice); //
+		const errorMessage = document.getElementById("errorMessage");
+
+	
+		errorMessage.style.display = "none";
+
+		const min = parseFloat(minPrice);
+		const max = parseFloat(maxPrice);
 		const checkedValues = Array.from(document.querySelectorAll("input[name='rating']:checked"))
         .map(checkbox => checkbox.value);
     
@@ -1498,6 +2172,7 @@ checkboxes.forEach( checkbox => {
     productParent.innerHTML = ""; // Clear existing content
 
     if (data.products) {
+		document.querySelector(".productCount").textContent= data.products.length
 		console.log(data.products)
         let productsHTML = ""; // Store all products as a single string before adding to DOM
 
@@ -1595,24 +2270,36 @@ checkboxes.forEach( checkbox => {
 
 <script>
 	async function validatePrices() {
-		const minPrice = document.getElementById("minPrice").value.trim();
-		const maxPrice = document.getElementById("maxPrice").value.trim();
+		
+		let minPrice = [...document.querySelectorAll("#minPrice")];
+let maxPrice = [...document.querySelectorAll("#maxPrice")];
+
+console.log(minPrice, `${maxPrice} myr`); // Corrected logging
+
+minPrice = minPrice.filter(min => min.value !== "").map(min => min.value);
+maxPrice = maxPrice.filter(max => max.value !== "").map(max => max.value);
+
+console.log(minPrice, maxPrice); //
 		const errorMessage = document.getElementById("errorMessage");
 
+	
 		errorMessage.style.display = "none";
 
 		const min = parseFloat(minPrice);
 		const max = parseFloat(maxPrice);
 
 		if (isNaN(min) || isNaN(max)) {
+			console.log("hi1")
 			showError("Enter valid numbers.");
 			return;
 		}
 		if (min < 0 || max < 0) {
+			console.log("hi2")
 			showError("Prices must be positive.");
 			return;
 		}
 		if (min > max) {
+			console.log("hi3")
 			showError("Min cannot be greater than Max.");
 			return;
 		}
@@ -1620,24 +2307,26 @@ checkboxes.forEach( checkbox => {
 	
 		try {
 			let checkedValues = Array.from(document.querySelectorAll("input[name='rating']:checked"))
-			console.log(checkedValues[0].value)
+			console.log(checkedValues[0]?.value)
 
-			for(let i=0;i<checkedValues.length;i++){
-				checkedValues[i]=checkedValues[i].value
+			for(let i=0;i<checkedValues?.length;i++){
+				checkedValues[i]=checkedValues[i]?.value
 			}
 			console.log(checkedValues)
+			
 			fetch(`/shop/filterProduct/<%=categoryFilterName.categoryName%>`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({ selectedRating: checkedValues, minPrice,maxPrice}),
+    body: JSON.stringify({ selectedRating: checkedValues||"", minPrice,maxPrice}),
    })
   .then(response => response.json())
   .then(data => {
     productParent.innerHTML = ""; // Clear existing content
 
     if (data.products) {
+		document.querySelector(".productCount").textContent= data.products.length
         let productsHTML = ""; // Store all products as a single string before adding to DOM
 
         for (let i = 0; i < data.products.length; i++) {
@@ -1726,6 +2415,7 @@ checkboxes.forEach( checkbox => {
     }
 })
             } catch (error) {
+				console.log(error)
                 showError("Error fetching products.");
             }
 	}
@@ -1743,6 +2433,178 @@ checkboxes.forEach( checkbox => {
 	});
 </script>
 
+
+<script>
+
+
+    document.getElementById("customSearchForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent page reload
+
+        const searchInput = document.getElementById("custom-product-search");
+        const errorMessage = document.getElementById("custom-error-message");
+        const searchValue = searchInput.value.trim();
+
+        // ✅ Show error message if input is empty
+        if (!searchValue) {
+            errorMessage.style.display = "block";  // Show error
+            searchInput.classList.add("is-invalid"); // Add Bootstrap invalid class (optional)
+            searchInput.focus();
+            return;
+        }
+
+        // ✅ Remove error message when input is valid
+        errorMessage.style.display = "none";
+        searchInput.classList.remove("is-invalid");
+
+        try {
+			
+            await fetch(`/shop/filterProduct/<%=categoryFilterName.categoryName%>?searchQuery=${encodeURIComponent(searchValue)}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })  .then(response => response.json())
+  .then(data => {
+    productParent.innerHTML = ""; // Clear existing content
+
+    if (data.products) {
+        let productsHTML = ""; // Store all products as a single string before adding to DOM
+
+		document.querySelector(".productCount").textContent= data.products.length
+
+        for (let i = 0; i < data.products.length; i++) {
+            let product = data.products[i];
+
+            // Handle ratings calculation
+            let fullStars = Math.floor(product.avgRating);
+            let halfStar = product.avgRating % 1 >= 0.5 ? "★" : "";
+            let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            let starsHTML = "★".repeat(fullStars) + halfStar + "☆".repeat(emptyStars);
+
+            // Handle pricing logic
+            let priceHTML = "";
+            if (product.variety !== "items") {
+                let price = Object.values(product.productPrice).find(p => p !== null) || 0;
+                let variety = product.varietyDetails[0] || {};
+                let basePrice = variety.varietyMeasurement * price;
+                let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
+				console.log(discountPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                `;
+            } else {
+                let variety = product.varietyDetails[0] || {};
+                let originalPrice = variety.varietyPrice || 0;
+                let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
+				console.log(discountedPrice)
+                priceHTML = `
+                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                `;
+            }
+
+            // Build product card HTML
+            productsHTML += `
+                <div class="relative rounded-lg break-words border bg-white border-gray-300 card-product">
+                    <div class="flex-auto p-4">
+                        <div class="text-center relative flex justify-center">
+                            <div class="absolute top-0 left-0">
+                                <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white">Sale</span>
+                            </div>
+                            <a href="/shop/productDetail/${product._id}">
+                                <img src="${product.productPic.productImage1}" alt="Product Image" class="w-full h-auto" />
+                            </a>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-base truncate">
+                                    <a href="/shop/productDetail/${product._id}">${product.productName}</a>
+                                </h3>
+                                <div class="flex items-center">
+                                    <div class="flex flex-row gap-3">
+                                        <small class="text-yellow-500 flex items-center">${starsHTML}</small>
+                                        <div class="flex flex-row gap-1">
+                                            <span class="text-gray-500 text-sm">${product.avgRating}</span>
+                                            <span class="text-gray-500 text-sm">(${product.totalRating})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>${priceHTML}</div>
+                                <div>
+                                    <button type="button"
+                                        class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-plus" width="14" height="14"
+                                            viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 5l0 14" />
+                                            <path d="M5 12l14 0" />
+                                        </svg>
+                                        <span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // Append all product cards at once to improve performance
+        productParent.innerHTML = productsHTML;
+    }
+})
+
+      
+
+        
+        } catch (error) {
+            console.error("Fetch error:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    });
+
+    // ✅ Hide error message when user types something
+    document.getElementById("product-search-inCategory").addEventListener("input", function() {
+        const errorMessage = document.getElementById("error-message");
+        if (this.value.trim()) {
+            errorMessage.style.display = "none";
+            this.classList.remove("is-invalid");
+        }
+    });
+</script>
+
+<script>
+
+// Menu functionality
+const menuBtn = document.getElementById('mobileMenuBtn');
+const sideMenu = document.getElementById('sideMenu');
+
+menuBtn.addEventListener('click', () => {
+  sideMenu.classList.toggle('active');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+    sideMenu.classList.remove('active');
+  }
+});
+
+
+document.getElementById("resetFilterBtn").addEventListener("click", function() {
+    location.reload(); // Refreshes the page
+});
+
+
+document.getElementById("mobileResetFilterBtn").addEventListener("click", function() {
+    location.reload(); // Refreshes the page
+});
+
+</script>
 </body>
 
 

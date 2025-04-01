@@ -21,7 +21,9 @@ async function renderProductDetails(req, res, next) {
     let regexPattern = new RegExp(searchQuery, 'i');
 
     // Apply search filter (match product name)
-    let filter = searchQuery ? { productName: regexPattern } : {};
+    let filter = searchQuery 
+    ? { productName: regexPattern, isDeleted: { $ne: true } } 
+    : { isDeleted: { $ne: true } };
 
     // Fetch products with pagination and search
     const products = await Product.find(filter).skip(skip).limit(limit);
@@ -107,6 +109,8 @@ async function renderProductDetails(req, res, next) {
       })
     );
 
+    console.log(updatedProducts)
+
     // Render products page with updated details
     res.status(200).render('admin pages/products', {
       categories,
@@ -127,6 +131,7 @@ async function renderSingleProductDetails(req, res, next) {
 
     const productDetail = await Product.findOne({
       _id: new ObjectId(productId),
+      isDeleted: false 
     });
 
     if (!productDetail) {
@@ -423,12 +428,13 @@ async function deleteProduct(req, res, next) {
 
     // Check if the user exists
     const product = await Product.findById(productId);
-    console.log(product);
+
     if (!product) {
-      return res.status(404).json({ error: 'User not found.' });
+      return res.status(404).json({ error: 'Product not found.' });
     }
 
-    await Product.findByIdAndDelete(productId);
+ 
+    await Product.findByIdAndUpdate(productId, { isDeleted: true });
 
     res.json({
       message: 'Product deleted successfully!',
@@ -530,6 +536,7 @@ async function updateProduct(req, res, next) {
       } else {
         productImages.productImage3 = product.productPic.productImage3;
       }
+      console.log(req.body.productDescription)
       product.productPic = productImages;
       product.productName = req.body.productName;
       product.categoryId = req.body.productCategory;

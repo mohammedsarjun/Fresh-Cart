@@ -132,11 +132,17 @@ async function verifyOtp(req, res, next) {
           req.body.otpEmail = updateUser.email;
           delete req.session.isUserEmailChanged;
           delete req.session.updatingEmail;
-          res.status(200).json({
-            redirectTo: '/account/settings',
-            message: 'User Details Updated!',
-            statusCode: 200,
+
+          req.session.save((err) => {
+            if (err) console.error('Session save error:', err);
+            res.status(200).json({
+              redirectTo: '/account/settings',
+              message: 'User Details Updated!',
+              statusCode: 200,
+            });
           });
+          console.log("Everythioomng Is Ok")
+          
         } else {
           res.status(400).json({
             redirectTo: '/auth/otp?message=Entered OTP is wrong. Try Again!',
@@ -250,11 +256,14 @@ async function verifyOtp(req, res, next) {
 //login controller
 async function logIn(req, res, next) {
   try {
+    console.log("working pumbda 1")
+    console.log(req.body.email)
     const user = await userSchema.findOne({
       email: req.body.email,
       google_id: null,
     });
 
+    console.log(user)
     if (!user) {
       res.status(401).json({
         error: 'Email or Password is incorrect',
@@ -277,6 +286,7 @@ async function logIn(req, res, next) {
           issue: "USER DIDN'T VERIFY",
         });
       } else {
+        console.log("working pumbda")
         req.session.otpEmail = req.body.email;
         req.session.isLogged = true;
         req.session.userId = user._id;
@@ -305,7 +315,7 @@ async function forgotPassword(req, res, next) {
     } else {
       req.session.otpEmail = req.body.email;
       req.session.isForgotPassword = true;
-      await sendOtpFunction(req, res);
+      await sendOtpFunction(req, res,next);
       res.status(302).redirect('/auth/otp'); // Send a redirect URL in the JSON response
     }
   } catch (error) {
@@ -348,7 +358,7 @@ async function resendOtp(req, res, next) {
     let otp = await generateOTP();
     let encryptOtp = await bcrypt.hash(otp, 10);
     let user;
-    if ((req.session.userChangePassword = true)) {
+    if ((req.session.userChangePassword == true)) {
       const userDetails = await userSchema.findOne({ _id: req.session.userId });
       await saveOtp(encryptOtp, userDetails.email);
       await sendOtp(userDetails.email, otp);
@@ -358,8 +368,10 @@ async function resendOtp(req, res, next) {
       await sendOtp(req.session.updatingEmail, otp);
       user = await otpSchema.findOne({ email: req.session.updatingEmail });
     } else {
+      console.log("hida pumda")
+      console.log(req.session.otpEmail)
       await saveOtp(encryptOtp, req.session.otpEmail);
-      await sendOtp(req.body.email, otp);
+      await sendOtp(req.session.otpEmail, otp);
       user = await otpSchema.findOne({ email: req.session.otpEmail });
     }
 

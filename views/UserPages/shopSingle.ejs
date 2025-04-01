@@ -347,7 +347,13 @@
 </header>
 <!-- Modal -->
  <main>
-
+	<div class="loader-overlay">
+		<div class="loader-container">
+		  <div class="loader"></div>
+		  <div class="loading-text">Loading<span class="dots"></span></div>
+		</div>
+	  </div>
+	  
 	<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -360,7 +366,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <img src="<%=updatedProduct.productPic.productImage1%>" alt="Product Image" class="img-thumbnail" width="100">
                         <div class="ms-3">
-                            <h5><%=updatedProduct.productName%></h5>
+                            <h5><%=updatedProduct?.productName%></h5>
                         </div>
                     </div>
                     
@@ -419,8 +425,9 @@
 								</a>
 							</li>
 							<li class="inline-block text-green-600 mr-2">
-								<a href="#!">
-									<%=updatedProduct.categoryName %>
+								<a href="/shop?category=<%=updatedProduct?.categoryId%>">
+									
+									<%=updatedProduct?.categoryName %>
 
 									<svg xmlns="http://www.w3.org/2000/svg"
 										class="icon icon-tabler icon-tabler-chevron-right inline-block" width="14"
@@ -431,7 +438,7 @@
 									</svg>
 								</a>
 							</li>
-							<li class="inline-block text-gray-500 active" aria-current="page"><%=updatedProduct.productName %></li>
+							<li class="inline-block text-gray-500 active" aria-current="page"><%=updatedProduct?.productName %></li>
 						</ol>
 					</nav>
 				</div>
@@ -492,17 +499,17 @@
 						<div class="lg:pl-10 mt-6 md:mt-0">
 							<div class="flex flex-col gap-4">
 								<!-- content -->
-								<a href="#!" class="block text-green-600"><%= updatedProduct.categoryName %></a>
+								<a href="#!" class="block text-green-600"><%= updatedProduct?.categoryName %></a>
 								<!-- heading -->
 								<div class="flex flex-col">
-									<h1><%= updatedProduct.productName %></h1>
+									<h1><%= updatedProduct?.productName %></h1>
 									<div class="flex flex-col gap-4">
 										<div class="flex items-center gap-2">
 										
 										</div>
 										<div class="text-md">
 											<span class="text-gray-900 font-semibold">₹<%= varietyTotalPrice %></span> 
-											<% if(varietyTotalPrice!=varietyPrice) {%>
+											<% if(Number(varietyTotalPrice)!=Number(varietyPrice)) {%>
 												<span class="line-through text-gray-500">₹<%= varietyPrice %></span>
 												<% } %>
 									
@@ -517,8 +524,8 @@
 									<hr />
 									<div>
                                         <% if (updatedProduct.variety != "items") { %>
-											<% if (updatedProduct.varietyDetails[0].varietyMeasurement) { %>
-												<button type="button" onclick="varietySend('event','<%= updatedProduct.varietyDetails[0].varietyMeasurement %>','<%=updatedProduct.variety%>')"
+											<% if (updatedProduct?.varietyDetails[0]?.varietyMeasurement) { %>
+												<button type="button" onclick="varietySend('event','<%= updatedProduct?.varietyDetails[0]?.varietyMeasurement %>','<%=updatedProduct?.variety%>')"
 												id="varietyMeasurementBtn1"
 													class="btn inline-flex items-center gap-x-2 bg-white text-gray-800 border-gray-300 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
 													<%= updatedProduct?.varietyDetails[0]?.varietyMeasurement %>	<%=updatedProduct.variety%>

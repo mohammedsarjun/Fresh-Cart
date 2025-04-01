@@ -153,7 +153,7 @@
           <button class="btn btn-dark" type="submit" onclick="">🔍</button>
       </form>
 
-      <% if(offer.length==0) { %>
+      <% if(offer?.length==0) { %>
         <div class="empty-state">
           <div class="empty-state-icon">
             <i data-lucide="tag"></i>
@@ -165,7 +165,7 @@
         <%}%>
       <div class="table-responsive ">
         <table class="text-secondary table table-light table-bordered table-striped mt-3">
-            <% if(offer.length!=0) { %>
+            <% if(offer?.length!=0) { %>
                 <thead >
                     <tr>
                        
@@ -183,34 +183,34 @@
                 <%}%>
     
           <tbody id="table-body">
-          <%offer.forEach((offer,i)=>{%>
+          <%offer?.forEach((offer,i)=>{%>
             <tr>
                 <td><%=i+1%></td>
-                <td><%=offer.categoryName%></td>
-                <td><%=offer.offerPercentage%></td>
-                <td><%=offer.startDate%></td>
-                <td><%=offer.endDate%></td>
+                <td><%=offer?.categoryName%></td>
+                <td><%=offer?.offerPercentage%></td>
+                <td><%=offer?.startDate%></td>
+                <td><%=offer?.endDate%></td>
                 
-                <td><%if(offer.currentStatus=="active"){%>
+                <td><%if(offer?.currentStatus=="active"){%>
                     <button class="btn btn-success">Active</button>
                   <%}%>
-                  <%if(offer.currentStatus=="expired"){%>
+                  <%if(offer?.currentStatus=="expired"){%>
                     <button class="btn btn-danger">Expired</button>
                   <%}%>
-                  <%if(offer.currentStatus=="upcoming"){%>
+                  <%if(offer?.currentStatus=="upcoming"){%>
                     <button class="btn btn-warning text-white">Upcoming</button>
                   <%}%>
                   
               <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCategoryOfferModal" onclick="openUpdateCategoryOfferModal(
-                '<%=offer.category%>',
-                '<%=offer.categoryName%>',
-                '<%=offer.offerPercentage%>',
-                '<%=offer.startDate%>',
-                '<%=offer.endDate%>',
-                '<%=offer.isListed%>'
+                '<%=offer?.category%>',
+                '<%=offer?.categoryName%>',
+                '<%=offer?.offerPercentage%>',
+                '<%=offer?.startDate%>',
+                '<%=offer?.endDate%>',
+                '<%=offer?.isListed%>'
               )">Edit</button></td>
               <td>
-                <button class="btn btn-danger" onclick="deleteCategoryOffer('<%=offer.category%>')">Delete</button>
+                <button class="btn btn-danger" onclick="deleteCategoryOffer('<%=offer?.category%>')">Delete</button>
               </td>
           </tr>    
      

@@ -100,7 +100,7 @@ async function productDeleteAction(productId) {
       const bodyContent = { productId: productId };
       try {
         fetch('/admin/products/delete', {
-          method: 'delete',
+          method: 'put',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(bodyContent),
         })
@@ -150,7 +150,7 @@ async function productEditAction(
   document.getElementById('imagePreview1').src = productImg1;
   document.getElementById('imagePreview2').src = productImg2;
   document.getElementById('imagePreview3').src = productImg3;
-
+  console.log(variety+"pimndan dsa")
   if (variety != 'items') {
     document.getElementById(`${variety}EditCheckbox`).checked = true;
     toggleVarietyInput(variety);
@@ -438,11 +438,14 @@ document
     console.log('hi');
     let formData = new FormData();
     let varietyCheckInput = document.querySelectorAll('.variety-check-input');
-
+    console.log( $('#productEditDescription').val())
+ 
     // Get the first checked variety
     let variety = [...varietyCheckInput]
       .filter((v) => v.checked)
       .map((v) => v.value)[0];
+      
+
     formData.append('productId', $('#editProductId').val());
     formData.append('productName', $('#editProductName').val());
     formData.append('productCategory', $('#editSelectCategory').val());

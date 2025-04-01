@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+?<!DOCTYPE html>
 <html lang="en">
   <!-- Mirrored from freshcart-tailwind.codescandy.com/dashboard/order-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 13:19:40 GMT -->
   <head>
@@ -83,7 +83,7 @@
                                 <!-- select option -->
                                 <div class="flex flex-col md:flex-row gap-3 md:items-center">
                                     <div class="">
-                                        <% if (order.orderStatus === "Shipped") { %>
+                                        <% if (order?.orderStatus === "Shipped") { %>
                                             <select
                                             class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
                                             <option value="Pending">Pending</option>
@@ -91,28 +91,28 @@
                                             <option value="Delivered">Delivered</option>
                                             
                                         </select>
-                                        <% } else if (order.orderStatus === "Delivered") { %>
+                                        <% } else if (order?.orderStatus === "Delivered") { %>
                                             <button class="btn btn-success">Order Delivered</button>
-                                        <% } else if (order.orderStatus === "Pending"){ %>
+                                        <% } else if (order?.orderStatus === "Pending"){ %>
                                             <select
                                             class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
                                             <option value="Pending" selected>Pending</option>
                                             <option value="Shipped">Shipped</option>
                                             <option value="Delivered">Delivered</option>
                                         </select>
-                                        <% } else if (order.orderStatus === "Cancelled"){%>
+                                        <% } else if (order?.orderStatus === "Cancelled"){%>
                                            <button class="btn btn-secondary">Order Cancelled</button>
                                          
-                                         <% } else if (order.orderStatus === "Returning"){%>
+                                         <% } else if (order?.orderStatus === "Returning"){%>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">User Returned This Product Click Here To Verify!</button>
                                                  <%}%>
                                         
                                     </div>
                                     <!-- button -->
                                     <div class="flex gap-2 items-center">
-                                    <% if (order.orderStatus != "Cancelled" && order.orderStatus !="Delivered" && order.orderStatus != "Returning") { %>
+                                    <% if (order?.orderStatus != "Cancelled" && order?.orderStatus !="Delivered" && order?.orderStatus != "Returning") { %>
                                         <a href="#"
-                                        onclick="changeStatus('<%=order._id%>')"
+                                        onclick="changeStatus('<%=order?._id%>')"
                                             class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
                                             Save
                                         </a>
@@ -133,9 +133,9 @@
                                         <div class="mb-6">
                                             <h6>Customer Details : </h6>
                                             <p class="mb-2 leading-relaxed">
-                                                <%=order.userName%>
+                                                <%=order?.userName%>
                                                 <br />
-                                                <%=order.userEmail%>
+                                                <%=order?.userEmail%>
                                             </p>
                                             <!-- <a href="#" class="text-green-600">View Profile</a> -->
                                         </div>
@@ -145,13 +145,13 @@
                                         <div class="mb-6">
                                             <h6>Shipping Address :</h6>
                                             <p class="mb-1 leading-relaxed">
-                                                <%=order.shippingAddress.firstName%> <%=order.shippingAddress.lastName%>
+                                                <%=order?.shippingAddress.firstName%> <%=order?.shippingAddress.lastName%>
                                                 <br />
-                                                <%=order.shippingAddress.addressLine1%> ,  <%=order.shippingAddress.addressLine2%> , <%=order.shippingAddress.city%>  , <%=order.shippingAddress.zipCode%> 
+                                                <%=order?.shippingAddress.addressLine1%> ,  <%=order?.shippingAddress.addressLine2%> , <%=order.shippingAddress.city%>  , <%=order.shippingAddress.zipCode%> 
                                                 <br />
-                                                <%=order.shippingAddress.state%> 
+                                                <%=order?.shippingAddress.state%> 
                                                 <br />
-                                                <%=order.shippingAddress.country%>
+                                                <%=order?.shippingAddress.country%>
                                             </p>
                                         </div>
                                     </div>
@@ -161,13 +161,13 @@
                                             <h6>Order Details</h6>
                                             <p class="mb-1 leading-relaxed">
                                                 Order ID:
-                                                <span class="text-gray-800"><%=order.orderId%></span>
+                                                <span class="text-gray-800"><%=order?.orderId%></span>
                                                 <br />
                                                 Order Date:
-                                                <span class="text-gray-800"><%=order.renderOrderDateAndTime%></span>
+                                                <span class="text-gray-800"><%=order?.renderOrderDateAndTime%></span>
                                                 <br />
                                                 Order Total:
-                                                <span class="text-gray-800">₹<%=order.subTotal%></span>
+                                                <span class="text-gray-800">₹<%=order?.subTotal%></span>
                                             </p>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                     </thead>
                                     <!-- tbody -->
                                     <tbody>
-                                        <%order.products.forEach((order)=>{%>
+                                        <%order?.products?.forEach((order)=>{%>
                                             <tr class="border-b border-gray-300">
                                                 <td class="py-3 px-6 text-left">
                                                     <a href="#" class="text-inherit">
@@ -198,16 +198,16 @@
                                                                     alt="" class="h-12 w-12" />
                                                             </div>
                                                             <div class="">
-                                                                <h5 class="mb-0 text-base"><%=order.name%></h5>
+                                                                <h5 class="mb-0 text-base"><%=order?.name%></h5>
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </td>
                                                 
-                                                <td class="py-3 px-6 text-left"><%=order.quantity%></td>
-                                                <td class="py-3 px-6 text-left"><%=order.variety%></td>
-                                                <td class="py-3 px-6 text-left"><%=order.varietyMeasurement%></td>
-                                                <td class="py-3 px-6 text-left">₹<%=order.price%></td>
+                                                <td class="py-3 px-6 text-left"><%=order?.quantity%></td>
+                                                <td class="py-3 px-6 text-left"><%=order?.variety%></td>
+                                                <td class="py-3 px-6 text-left"><%=order?.varietyMeasurement%></td>
+                                                <td class="py-3 px-6 text-left">₹<%=order?.price%></td>
                                             </tr>
                                             <%})%>
                                       
@@ -220,7 +220,7 @@
                                                 </td>
                                                 <td class="font-medium text-gray-800 border-b border-gray-300">
                                                     <!-- text -->
-                                                    ₹<%=order.subTotal-order.shippingCost%>
+                                                    ₹<%=order?.subTotal-order?.shippingCost%>
                                                 </td>
                                             </tr>
                                         <tr class="">
@@ -232,7 +232,7 @@
                                             </td>
                                             <td class="font-medium text-gray-800 border-b border-gray-300">
                                                 <!-- text -->
-                                                ₹<%=order.shippingCost%>
+                                                ₹<%=order?.shippingCost%>
                                             </td>
                                         </tr>
 
@@ -245,7 +245,7 @@
                                             </td>
                                             <td class="font-semibold text-gray-800 py-3 border-b border-gray-300">
                                                 <!-- text -->
-                                                ₹<%=order.subTotal%>
+                                                ₹<%=order?.subTotal%>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -257,7 +257,7 @@
                             <div class="grid md:grid-cols-2 gap-4">
                                 <div class="">
                                     <h6 class="mb-2">Payment Info</h6>
-                                    <span><%=order.paymentDetails.method%></span>
+                                    <span><%=order?.paymentDetails?.method%></span>
                                 </div>
                         
                             </div>

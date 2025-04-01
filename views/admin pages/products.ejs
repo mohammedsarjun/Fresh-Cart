@@ -165,7 +165,7 @@
         <button class="btn btn-dark" type="submit" onclick="userSearch()">🔍</button>
     </form>
 
-    <% if(products.length==0) { %>
+    <% if(products?.length==0) { %>
       <div class="empty-state">
         <div class="empty-state-icon">
           <i data-lucide="package"></i>
@@ -178,18 +178,18 @@
       <div class="content-body">
         <div class="table-responsive mt-3">
           <table class="text-secondary table table-light table-bordered table-striped">
-            <% if(products.length != 0) { %>
+            <% if(products?.length != 0) { %>
             <thead>
               <tr>
                 <th>Images</th>
                 <th>Product Name</th>
                 <th>Category</th>
-                <th>Availability</th>
+       
               </tr>
             </thead>
             <% } %>
             <tbody id="table-body">
-              <% products.forEach(product => { %>
+              <% products?.forEach(product => { %>
               <tr>
                 <td>
                   <a href="/admin/products/productDetail?productId=<%= product._id %>">
@@ -198,11 +198,7 @@
                 </td>
                 <td><%= product.productName %></td>
                 <td><%= product.categoryName %></td>
-                <% if (product.availability == "in stock") { %>
-                <td><button class="btn btn-success">In Stock</button></td>
-                <% } else { %>
-                <td><button class="btn btn-danger">Out of Stock</button></td>
-                <% } %>
+             
               </tr>
               <% }) %>
             </tbody>

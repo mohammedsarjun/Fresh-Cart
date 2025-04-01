@@ -133,26 +133,26 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <%updatedOrders.forEach((order)=>{%>
+                        <%updatedOrders?.forEach((order)=>{%>
                       
                           <tr onclick="window.location.href='/admin/orders/orderDetail/<%=order._id%>';">
                          
                             <td class="py-3 px-6 text-left">
-                              <a href="#!"><img src="<%=order.frontProductImg%>"
+                              <a href="#!"><img src="<%=order?.frontProductImg%>"
                                   alt="" class="h-10 w-10" /></a>
                             </td>
                             <td class="py-3 px-6 text-left"><a href="#"
-                                class="text-inherit"><%=order.orderId%></a></td>
-                            <td class="py-3 px-6 text-left"><%=order.userName%></td>
+                                class="text-inherit"><%=order?.orderId%></a></td>
+                            <td class="py-3 px-6 text-left"><%=order?.userName%></td>
     
-                            <td class="py-3 px-6 text-left"><%=order.renderOrderDateAndTime%></td>
-                            <td class="py-3 px-6 text-left"><%=order.paymentDetails.method%></td>
+                            <td class="py-3 px-6 text-left"><%=order?.renderOrderDateAndTime%></td>
+                            <td class="py-3 px-6 text-left"><%=order?.paymentDetails?.method%></td>
     
                             <td class="py-3 px-6 text-left">
                               <span
                                 class="inline-block p-1 text-sm align-baseline leading-none rounded bg-green-100 text-green-800 border border-green-200 font-semibold"><%=order.orderStatus%></span>
                             </td>
-                            <td class="py-3 px-6 text-left">₹<%=order.subTotal%></td>
+                            <td class="py-3 px-6 text-left">₹<%=order?.subTotal%></td>
     
                          
                           </tr>

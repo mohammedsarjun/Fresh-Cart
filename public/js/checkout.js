@@ -77,12 +77,25 @@ function openEditAddressModal(
 }
 
 async function placeOrder() {
+  if(document.querySelector(
+    'input[name="selectedAddress"]:checked'
+  )==null){
+  return  Swal.fire({
+      toast: true,
+      position: 'top-end', // Position at bottom-right
+      icon: 'error',
+      title: "Add Address to Place Order",
+      showConfirmButton: false,
+      timer: 3000, // Auto close after 3 seconds
+    });
+  }
   const selectedAddress = document.querySelector(
     'input[name="selectedAddress"]:checked'
   ).value;
   const selectedPayment = document.querySelector(
     'input[name="selectedPayement"]:checked'
   ).value;
+
 
   let bodyContent = {
     selectedAddress: selectedAddress,
@@ -110,6 +123,21 @@ async function placeOrder() {
 }
 
 async function placeOrderWithWallet(amount) {
+
+  if(document.querySelector(
+    'input[name="selectedAddress"]:checked'
+  )==null){
+  return  Swal.fire({
+      toast: true,
+      position: 'top-end', // Position at bottom-right
+      icon: 'error',
+      title: "Add Address to Place Order",
+      showConfirmButton: false,
+      timer: 3000, // Auto close after 3 seconds
+    });
+  }
+
+  
   const selectedAddress = document.querySelector(
     'input[name="selectedAddress"]:checked'
   ).value;

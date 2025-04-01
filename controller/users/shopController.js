@@ -15,16 +15,21 @@ const AppError = require('../../middleware/errorHandling');
 
 async function shopPageRender(req, res, next) {
   try {
+   
+
+ 
     let page = parseInt(req.query.page) || 1;
     let limit = 5;
     let skip = (page - 1) * limit;
     let searchQuery = req.query.search ? req.query.search.trim() : '';
     let categoryFilter = '';
+    let randomCategory=await Category.findOne({isPublished:true})
+    console.log(randomCategory._id)
     if (!searchQuery) {
-      categoryFilter = req.query.category || '67a7a69ccd8dc70afb3447a6';
+      categoryFilter =req.query.category ||String(randomCategory._id);
     }
 
-    let filter = { isListed: true };
+    let filter = { isListed: true ,isDeleted: { $ne: true }};
 
     if (categoryFilter) {
       filter.categoryId = categoryFilter;
@@ -131,10 +136,19 @@ async function shopPageRender(req, res, next) {
         }
       }
 
-      if (modified) {
-        product.markModified('varietyDetails');
-        await product.save();
-      }
+      try {
+        if (modified) {
+            product.markModified('varietyDetails');
+            await product.save();
+        }
+    } catch (error) {
+        if (error.name === 'VersionError') {
+            // Refetch latest data and retry
+            const latestProduct = await Product.findById(product._id);
+            latestProduct.varietyDetails = product.varietyDetails;
+            await latestProduct.save();
+        }
+    }
     }
     const category = await Category.find({ isPublished: true });
 
@@ -174,12 +188,26 @@ async function shopPageRender(req, res, next) {
       })
     );
 
-    console.log(products); // Now all products have avgRating
+
+    let categoryListFilter = req?.query?.category?.trim() || randomCategory;
+    const categoryUnlist=await Category.findOne({_id:categoryListFilter})
+
+    if(categoryUnlist.isPublished==false){
+      return res.status(200).render(path.join('UserPages', 'shopPage'), {
+        products:[],
+        category,
+        page,
+        totalPages,
+        selectedCategory: categoryFilter,
+        categoryFilterName,
+        searchQuery,
+      });
+    }
 
     res.status(200).render(path.join('UserPages', 'shopPage'), {
       products,
       category,
-      currentPage: page,
+       page,
       totalPages,
       selectedCategory: categoryFilter,
       categoryFilterName,
@@ -204,7 +232,7 @@ async function shopSinglePageRender(req, res, next) {
       return next(new AppError('Product Not Found', 400));
     }
 
-    const product = await Product.findOne({ _id: productId });
+    const product = await Product.findOne({ _id: productId,isDeleted: { $ne: true } });
 
     if (!product) {
       return next(new AppError('Product Not Found', 400));
@@ -428,6 +456,7 @@ async function shopSinglePageRender(req, res, next) {
         (varietyPrice * varietyDiscount) / 100
       ).toFixed(1);
     }
+    console.log(varietyDiscount)
 
     const categories = await Category.findOne({
       _id: new ObjectId(product.categoryId),
@@ -435,10 +464,16 @@ async function shopSinglePageRender(req, res, next) {
     const updatedProduct = {
       ...product.toObject(),
       categoryName: categories ? categories.categoryName : 'Unknown',
+      categoryId:categories._id
     };
     const relatedProducts = await Product.find({
       categoryId: updatedProduct.categoryId,
     });
+
+    console.log(relatedProducts)
+    console.log(varietyTotalPrice)
+    console.log(varietyDiscount)
+    console.log(varietyPrice)
     res
       .status(200)
       .render(path.join('UserPages', 'shopSingle'), {
@@ -575,107 +610,256 @@ async function loadProductReview(req, res, next) {
 }
 
 async function filterProduct(req, res, next) {
-  console.log(req.body.selectedRating);
+
 
   try {
+    let products ={}
     const category = await Category.findOne({ categoryName: req.params.id });
     console.log(category);
 
     const ratingRanges = {
       1: { min: 0, max: 1.9 },
-      2: { min: 2, max: 3 },
-      3: { min: 3.1, max: 4 },
-      4: { min: 4.1, max: 4.9 },
-      5: { min: 4.1, max: 5 },
+      2: { min: 2, max: 2.9 },
+      3: { min: 3, max: 3.9 },
+      4: { min: 4, max: 4.9 },
+      5: { min: 5, max: 5 },
     };
+    let regexPattern = ""
+    let searchQuery = req.query.searchQuery|| ''; // Get search query from URL
+   if(req.query.searchQuery){
+     regexPattern = new RegExp(searchQuery, 'i');
 
-    // Get min and max values dynamically
 
-    const minRating =
-      Math.min(
-        ...req.body.selectedRating.map((star) => ratingRanges[star]?.min)
-      ) || 0;
-    const maxRating =
-      Math.max(
-        ...req.body.selectedRating.map((star) => ratingRanges[star]?.max)
-      ) || 0;
+     
+  products = await Product.aggregate([
+   
+    {
+      $match: {
+        productName:regexPattern,
+        categoryId: category._id.toString(),
 
-    console.log(minRating, maxRating);
-
-    let products = await Product.aggregate([
-      {
-        $lookup: {
-          from: 'reviews',
-          localField: '_id',
-          foreignField: 'productId',
-          as: 'ratings',
-        },
       },
-      {
-        $addFields: {
-          averageRating: { $avg: '$ratings.rating' },
+    },
+  ]);
+
+  await Promise.all(
+    products.map(async (product) => {
+      let avgRatingResult = await productReview.aggregate([
+        { $match: { productId: new mongoose.Types.ObjectId(product._id) } },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: '$rating' },
+          },
         },
-      },
+      ]);
+  
+      product.avgRating =
+        avgRatingResult.length > 0
+          ? avgRatingResult[0].avgRating.toFixed(1)
+          : 0;
+      let reviewCount = await productReview
+        .find({ productId: product._id })
+        .countDocuments();
+      product.totalRating = reviewCount;
+    })
+  );
+  
+  for (let i = 0; i < products.length; i++) {
+  // Handle ratings calculation
+
+  let fullStars = Math.floor(products[i].avgRating);
+  let halfStar = products[i].avgRating % 1 >= 0.5 ? '★' : '';
+  let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  console.log(fullStars,halfStar,emptyStars)
+  let starsHTML = '★'.repeat(fullStars) + halfStar + '☆'.repeat(emptyStars);
+
+  // Handle pricing logic
+  let priceHTML = '';
+  if (products[i].variety !== 'items') {
+    let price =
+      Object.values(products[i].productPrice).find((p) => p !== null) || 0;
+    let variety = products[i].varietyDetails[0] || {};
+    let basePrice = variety.varietyMeasurement * price;
+    let discountPrice = variety.varietyDiscount
+      ? basePrice - (basePrice * variety.varietyDiscount) / 100
+      : basePrice;
+    console.log(discountPrice);
+    products[i].finalPrice = discountPrice;
+  } else {
+    let variety = products[i].varietyDetails[0] || {};
+    let originalPrice = variety.varietyPrice || 0;
+    let discountedPrice = variety.varietyDiscount
+      ? originalPrice - (originalPrice * variety.varietyDiscount) / 100
+      : originalPrice;
+    products[i].finalPrice = Number(discountedPrice);
+  }
+  }
+
+return  res.status(200).json({ products });
+  
+   }
+
+
+
+   // Create a regex pattern (case-insensitive) to match product name
+
+
+if(req.body.selectedRating!=""){
+  console.log("hi")
+  const minRating =
+  Math.min(
+    ...req.body.selectedRating.map((star) => ratingRanges[star]?.min)
+  ) || 0;
+const maxRating =
+  Math.max(
+    ...req.body.selectedRating.map((star) => ratingRanges[star]?.max)
+  ) || 5;
+
+
+
+ products = await Product.aggregate([
+  {
+    $lookup: {
+      from: 'reviews',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'ratings',
+    },
+  },
+  {
+    $addFields: {
+      averageRating: { $avg: '$ratings.rating' },
+    },
+  },
+  {
+    $match: {
+      categoryId: category._id.toString(),
+      averageRating: { $gte: minRating, $lte: maxRating },
+    },
+  },
+]);
+
+await Promise.all(
+  products.map(async (product) => {
+    let avgRatingResult = await productReview.aggregate([
+      { $match: { productId: new mongoose.Types.ObjectId(product._id) } },
       {
-        $match: {
-          categoryId: category._id.toString(),
-          averageRating: { $gte: minRating, $lte: maxRating },
+        $group: {
+          _id: null,
+          avgRating: { $avg: '$rating' },
         },
       },
     ]);
 
-    await Promise.all(
-      products.map(async (product) => {
-        let avgRatingResult = await productReview.aggregate([
-          { $match: { productId: new mongoose.Types.ObjectId(product._id) } },
-          {
-            $group: {
-              _id: null,
-              avgRating: { $avg: '$rating' },
-            },
+    product.avgRating =
+      avgRatingResult.length > 0
+        ? avgRatingResult[0].avgRating.toFixed(1)
+        : 0;
+    let reviewCount = await productReview
+      .find({ productId: product._id })
+      .countDocuments();
+    product.totalRating = reviewCount;
+  })
+);
+
+for (let i = 0; i < products.length; i++) {
+  // Handle ratings calculation
+  let fullStars = Math.floor(products[i].avgRating);
+  let halfStar = products[i].avgRating % 1 >= 0.5 ? '★' : '';
+  let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  let starsHTML = '★'.repeat(fullStars) + halfStar + '☆'.repeat(emptyStars);
+
+  // Handle pricing logic
+  let priceHTML = '';
+  if (products[i].variety !== 'items') {
+    let price =
+      Object.values(products[i].productPrice).find((p) => p !== null) || 0;
+    let variety = products[i].varietyDetails[0] || {};
+    let basePrice = variety.varietyMeasurement * price;
+    let discountPrice = variety.varietyDiscount
+      ? basePrice - (basePrice * variety.varietyDiscount) / 100
+      : basePrice;
+    console.log(discountPrice);
+    products[i].finalPrice = discountPrice;
+  } else {
+    let variety = products[i].varietyDetails[0] || {};
+    let originalPrice = variety.varietyPrice || 0;
+    let discountedPrice = variety.varietyDiscount
+      ? originalPrice - (originalPrice * variety.varietyDiscount) / 100
+      : originalPrice;
+    products[i].finalPrice = Number(discountedPrice);
+  }
+}
+}else{
+
+
+  products = await Product.aggregate([
+   
+    {
+      $match: {
+        categoryId: category._id.toString(),
+      },
+    },
+  ]);
+
+  await Promise.all(
+    products.map(async (product) => {
+      let avgRatingResult = await productReview.aggregate([
+        { $match: { productId: new mongoose.Types.ObjectId(product._id) } },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: '$rating' },
           },
-        ]);
+        },
+      ]);
+  
+      product.avgRating =
+        avgRatingResult.length > 0
+          ? avgRatingResult[0].avgRating.toFixed(1)
+          : 0;
+      let reviewCount = await productReview
+        .find({ productId: product._id })
+        .countDocuments();
+      product.totalRating = reviewCount;
+    })
+  );
+  
+  for (let i = 0; i < products.length; i++) {
+  // Handle ratings calculation
 
-        product.avgRating =
-          avgRatingResult.length > 0
-            ? avgRatingResult[0].avgRating.toFixed(1)
-            : 0;
-        let reviewCount = await productReview
-          .find({ productId: product._id })
-          .countDocuments();
-        product.totalRating = reviewCount;
-      })
-    );
+  let fullStars = Math.floor(products[i].avgRating);
+  let halfStar = products[i].avgRating % 1 >= 0.5 ? '★' : '';
+  let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  console.log(fullStars,halfStar,emptyStars)
+  let starsHTML = '★'.repeat(fullStars) + halfStar + '☆'.repeat(emptyStars);
 
-    for (let i = 0; i < products.length; i++) {
-      // Handle ratings calculation
-      let fullStars = Math.floor(products[i].avgRating);
-      let halfStar = products[i].avgRating % 1 >= 0.5 ? '★' : '';
-      let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-      let starsHTML = '★'.repeat(fullStars) + halfStar + '☆'.repeat(emptyStars);
-
-      // Handle pricing logic
-      let priceHTML = '';
-      if (products[i].variety !== 'items') {
-        let price =
-          Object.values(products[i].productPrice).find((p) => p !== null) || 0;
-        let variety = products[i].varietyDetails[0] || {};
-        let basePrice = variety.varietyMeasurement * price;
-        let discountPrice = variety.varietyDiscount
-          ? basePrice - (basePrice * variety.varietyDiscount) / 100
-          : basePrice;
-        console.log(discountPrice);
-        products[i].finalPrice = discountPrice;
-      } else {
-        let variety = products[i].varietyDetails[0] || {};
-        let originalPrice = variety.varietyPrice || 0;
-        let discountedPrice = variety.varietyDiscount
-          ? originalPrice - (originalPrice * variety.varietyDiscount) / 100
-          : originalPrice;
-        products[i].finalPrice = Number(discountedPrice);
-      }
-    }
-    if(req.body.minPrice&&req.body.maxPrice){
+  // Handle pricing logic
+  let priceHTML = '';
+  if (products[i].variety !== 'items') {
+    let price =
+      Object.values(products[i].productPrice).find((p) => p !== null) || 0;
+    let variety = products[i].varietyDetails[0] || {};
+    let basePrice = variety.varietyMeasurement * price;
+    let discountPrice = variety.varietyDiscount
+      ? basePrice - (basePrice * variety.varietyDiscount) / 100
+      : basePrice;
+    console.log(discountPrice);
+    products[i].finalPrice = discountPrice;
+  } else {
+    let variety = products[i].varietyDetails[0] || {};
+    let originalPrice = variety.varietyPrice || 0;
+    let discountedPrice = variety.varietyDiscount
+      ? originalPrice - (originalPrice * variety.varietyDiscount) / 100
+      : originalPrice;
+    products[i].finalPrice = Number(discountedPrice);
+  }
+  }
+  
+}
+console.log(products,req.body.minPrice,req.body.maxPrice)
+    if(req.body.minPrice!=""&&req.body.maxPrice!=""){
       products = products.filter((product) => {
         return (
           product.finalPrice >= (req.body.minPrice ?? -Infinity) &&
