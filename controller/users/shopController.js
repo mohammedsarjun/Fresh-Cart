@@ -469,6 +469,7 @@ async function shopSinglePageRender(req, res, next) {
     };
     const relatedProducts = await Product.find({
       categoryId: updatedProduct.categoryId,
+      isDeleted:false
     });
 
     console.log(relatedProducts)
