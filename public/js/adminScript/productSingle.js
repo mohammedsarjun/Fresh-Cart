@@ -142,6 +142,7 @@ async function productEditAction(
   perRate,
   productDescription
 ) {
+  console.log("pumda")
   var myModal = new bootstrap.Modal(
     document.getElementById('editProductModal')
   );
@@ -538,7 +539,7 @@ document
           Swal.fire({
             title: result.error,
             text: '',
-            icon: 'success',
+            icon: 'error',
           });
         }
       }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Admin Single Product</title>
     <style>
  .zoom {
         transition: transform 0.2s ease;
@@ -447,17 +447,21 @@
                   </div>
                   
                   <div class="action-buttons">
-                      <button class="edit-btn" onclick="productEditAction(
+                    <button class="edit-btn" 
+                    onclick="productEditAction(
                         '<%= updatedProducts?._id %>',
                         '<%= updatedProducts?.productPic.productImage1 %>',
                         '<%= updatedProducts?.productPic.productImage2 %>',
                         '<%= updatedProducts?.productPic.productImage3 %>',
-                        '<%= updatedProducts?.productName%>',
-                        '<%= updatedProducts?.availability%>',
-                        '<%= updatedProducts?.variety%>',
-                        '<%= JSON.stringify(Object.values(updatedProducts?.productPrice)?.filter(product => product != null)) %>',
-                       ' <%= JSON.stringify(updatedProducts?.productDescription) %>'
-                              )">Edit Product</button>
+                        '<%= updatedProducts?.productName %>',
+                        '<%= updatedProducts?.availability %>',
+                        '<%= updatedProducts?.variety %>',
+                        JSON.parse('<%= JSON.stringify(Object.values(updatedProducts?.productPrice)?.filter(product => product != null)) %>'),
+                        JSON.parse('<%= JSON.stringify(updatedProducts?.productDescription) %>')
+                    )">
+                    Edit Product
+                </button>
+                
                       <button class="delete-btn"  onclick="productDeleteAction('<%= updatedProducts?._id %>')">Delete Product</button>
                       <% if (updatedProducts.isListed ==true) { %>
                         <button class="unlist-btn" onclick="productUnListAction('<%= updatedProducts?._id %>')">Unlist Product</button>

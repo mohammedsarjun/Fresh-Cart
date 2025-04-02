@@ -128,7 +128,7 @@ outline-offset: 2px;
 <!-- Affiliate tracking script -->
 <script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
 
-	<title>Shop Cart - TailwindCSS eCommerce HTML Template - FreshCart</title>
+	<title>Shop Cart</title>
 </head>
 
 <body>
@@ -620,7 +620,7 @@ outline-offset: 2px;
 															class="w-16 h-16" />
 														<div class="flex flex-col gap-2">
 															<div>
-																<a href="shop-single.html" class="text-inherit">
+																<a href="/shop/productDetail/<%= product.productId%>" class="text-inherit">
 																	<h6><%= product.productName%></h6>
 																</a>
 																<span class="text-gray-500 text-sm"><%= product.selectedVariety.value%><%= product.selectedVariety.type%></span>
@@ -698,7 +698,7 @@ outline-offset: 2px;
 																				class="w-16 h-16" />
 																			<div class="flex flex-col gap-2">
 																				<div>
-																					<a href="shop-single.html" class="text-inherit">
+																					<a href="/shop/productDetail/<%=product.productId%>" class="text-inherit">
 																						<h6><%= product.productName%></h6>
 																					</a>
 																					<span class="text-gray-500 text-sm"><%= product.selectedVariety.value%><%= product.selectedVariety.type%></span>

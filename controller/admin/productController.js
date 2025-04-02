@@ -302,6 +302,15 @@ async function renderSingleProductDetails(req, res, next) {
 async function addProduct(req, res, next) {
   try {
     const variety = JSON.parse(req.body.variety);
+console.log(req.body.productName )
+    const existingProduct = await Product.findOne({ productName: req.body.productName });
+    console.log(existingProduct)
+    if (existingProduct) {
+      console.log("hi da pumda")
+      return res.status(200).json({
+        error: 'Product already exists',
+      });
+    }
 
     if (variety[0] != 'items') {
       const images = req.files;
@@ -449,9 +458,22 @@ async function updateProduct(req, res, next) {
   try {
     const { productId } = req.body;
 
-    // Check if the user exists
+    // Check if the product exists
     const product = await Product.findById(productId);
-    console.log(req.body);
+    // Fixed $ne syntax and corrected producId typo
+    const existingProduct = await Product.findOne({ 
+      _id: { $ne: productId },  // $ne needs a field name (_id)
+      productName: req.body.productName 
+    });
+    console.log(existingProduct);
+    
+    if (existingProduct) {
+      console.log("hi da pumda");
+      return res.status(200).json({
+        error: 'Product already exists',
+      });
+    }
+
     const variety = JSON.parse(req.body.variety);
     const varietyDetails = JSON.parse(req.body.varietyDetails);
     product.categoryId = req.body.productCategory;

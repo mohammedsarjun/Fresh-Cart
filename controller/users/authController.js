@@ -11,6 +11,7 @@ const AppError = require('../../middleware/errorHandling');
 const referralSchema = require('../../model/referralSchema');
 const { error } = require('console');
 const Coupon = require('../../model/couponScehma');
+const walletSchema=require("../../model/walletSchema")
 
 // Save OTP
 
@@ -157,6 +158,17 @@ async function verifyOtp(req, res, next) {
         if (isOtpMatch) {
           const userId = await getUserDetails(req.session.otpEmail);
           req.session.userId = userId;
+              let wallet = await walletSchema.findOne({ userId: req.session.userId });
+          
+              if (!wallet) {
+                wallet = new walletSchema({
+                  userId: req.session.userId,
+                  balance: 0,
+                  transactions: [],
+                });
+          
+                await wallet.save(); 
+              }
           res.status(200).json({
             redirectTo: '/auth/changePassword',
             message: 'OTP Verified!',
@@ -170,6 +182,7 @@ async function verifyOtp(req, res, next) {
         }
       }
     } else {
+
       function generateReferralCode(length = 6) {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let code = '';
@@ -224,6 +237,19 @@ async function verifyOtp(req, res, next) {
 
             }
 
+            
+      let wallet = await walletSchema.findOne({ userId: req.session.userId });
+
+      if (!wallet) {
+        wallet = new walletSchema({
+          userId: req.session.userId,
+          balance: 0,
+          transactions: [],
+        });
+  
+        await wallet.save(); // Save the newly created wallet
+      }
+
             const referral = new referralSchema({
               code: generateReferralCode(),
               userId: userDetails._id,
@@ -256,8 +282,8 @@ async function verifyOtp(req, res, next) {
 //login controller
 async function logIn(req, res, next) {
   try {
-    console.log("working pumbda 1")
-    console.log(req.body.email)
+ 
+
     const user = await userSchema.findOne({
       email: req.body.email,
       google_id: null,
@@ -491,9 +517,10 @@ const googleCallBack = async (req, res, next) => {
             if (err) return next(err);
             req.session.isLogged = true;
             req.session.otpEmail = user.emails[0].value;
-            req.session.userId = await userSchema.findOne({
+           let userDetail = await userSchema.findOne({
               email: req.session.otpEmail,
             });
+            req.session.userId=userDetail._id
             res.send(`
               <script>
                   window.location.replace('/');
@@ -513,6 +540,15 @@ const googleCallBack = async (req, res, next) => {
 
           await newUser.save(); // Save the new user to DB
 
+          
+            wallet = new walletSchema({
+              userId: newUser._id,
+              balance: 0,
+              transactions: [],
+            });
+      
+            await wallet.save(); 
+          
           function generateReferralCode(length = 6) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
