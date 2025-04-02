@@ -44,9 +44,10 @@ async function userUpdate(req, res, next) {
   try {
     const userDetail = await User.findOne({ _id: req.body.userId });
     if (userDetail.phone != req.body.phone) {
-      const phoneExist = User.findOne({ email: req.body.email });
+      const phoneExist =await  User.findOne({ phone: req.body.phone });
+      console.log(phoneExist)
       if (phoneExist) {
-        res.status(400).json({
+       return res.status(400).json({
           error: 'Entered Phone Number is already Exist',
         });
       }
@@ -63,11 +64,12 @@ async function userUpdate(req, res, next) {
 
       req.session.userUpdateDetails = req.body;
       await sendOtpFunction(req, res);
-      res.status(302).json({
+      return res.status(302).json({
         redirectTo: '/auth/otp', // Send a redirect URL in the JSON respons`e
         message: 'OTP sent successfully',
       });
-    } else {
+    } 
+      console.log("pumda")
       const updateUser = await User.findOne({ _id: req.body.userId });
       console.log(updateUser);
       updateUser.firstName = req.body.firstName;
@@ -79,7 +81,7 @@ async function userUpdate(req, res, next) {
         message: 'User Details Updated!',
         statusCode: 200,
       });
-    }
+    
   } catch (error) {
     console.error('An error occurred:', error);
     next(new AppError('Sorry...Something went wrong', 500));
