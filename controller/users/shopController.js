@@ -23,9 +23,10 @@ async function shopPageRender(req, res, next) {
     let skip = (page - 1) * limit;
     let searchQuery = req.query.search ? req.query.search.trim() : '';
     let categoryFilter = '';
-    let randomCategory=await Category.findOne({isPublished:true})
-    console.log(randomCategory._id)
+    let randomCategory=await Category.findOne({categoryName:"Snacks and munchies"})
+
     if (!searchQuery) {
+
       categoryFilter =req.query.category ||String(randomCategory._id);
     }
 
