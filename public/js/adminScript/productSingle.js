@@ -436,7 +436,6 @@ document
   .getElementById('productUpdateForm')
   .addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent default form submission
-    console.log('hi');
     let formData = new FormData();
     let varietyCheckInput = document.querySelectorAll('.variety-check-input');
     console.log( $('#productEditDescription').val())
