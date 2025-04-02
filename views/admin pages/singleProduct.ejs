@@ -450,14 +450,14 @@
                     <button class="edit-btn" 
                     onclick="productEditAction(
                         '<%= updatedProducts?._id %>',
-                        '<%= updatedProducts?.productPic.productImage1 %>',
-                        '<%= updatedProducts?.productPic.productImage2 %>',
-                        '<%= updatedProducts?.productPic.productImage3 %>',
+                        '<%= updatedProducts?.productPic?.productImage1 %>',
+                        '<%= updatedProducts?.productPic?.productImage2 %>',
+                        '<%= updatedProducts?.productPic?.productImage3 %>',
                         '<%= updatedProducts?.productName %>',
                         '<%= updatedProducts?.availability %>',
                         '<%= updatedProducts?.variety %>',
-                        JSON.parse('<%= JSON.stringify(Object.values(updatedProducts?.productPrice)?.filter(product => product != null)) %>'),
-                        JSON.parse('<%= JSON.stringify(updatedProducts?.productDescription) %>')
+                        JSON.parse('<%= JSON.stringify(Object.values(updatedProducts?.productPrice || {}).filter(product => product != null)) %>'),
+                        JSON.parse('<%= JSON.stringify(updatedProducts?.productDescription || "") %>')
                     )">
                     Edit Product
                 </button>
