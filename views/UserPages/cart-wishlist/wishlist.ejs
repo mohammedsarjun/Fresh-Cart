@@ -162,7 +162,7 @@
 </script>
 
 
-	<title>Shop Wishlist - TailwindCSS eCommerce HTML Template - FreshCart</title>
+	<title>Shop Wishlist</title>
 </head>
 
 <body>
@@ -717,12 +717,12 @@
 									<tr class="border-gray-300 border-b">
 									
 										<td class="align-middle px-6 py-3">
-											<a href="#"><img src="<%= item.productPic %>"
+											<a href="/shop/productDetail/<%= item.productId%>"><img src="<%= item.productPic %>"
 													class="w-16 h-16 max-w-screen-lg" alt="" /></a>
 										</td>
 										<td class="align-middle px-6 py-3">
 											<div>
-												<div class="text-base font-semibold text-gray-900"><a href="#"
+												<div class="text-base font-semibold text-gray-900"><a href="/shop/productDetail/<%= item.productId%>"
 														class="text-inherit"><%=item.productName%></a></div>
 														<% if (item.productVariety != 'items') { %>
 															<span class="text-sm"><%= item.varietyMeasurement %> <%= item.productVariety %></span>

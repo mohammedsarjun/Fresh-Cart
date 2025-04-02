@@ -23,6 +23,8 @@ router.get(
   '/shop/productDetail/review/:productId',
   shopController.loadProductReview
 );
+
+
 //post
 router.post('/shop/product/checkStock', shopController.checkStockContoller);
 router.post('/shop/productDetail/add-review', shopController.addReview);
@@ -54,7 +56,6 @@ router.get(
   authMiddleware,
   accountController.referralRewardPageRender
 );
-
 
 //put
 router.put('/account/settings/editUserData', accountController.userUpdate);

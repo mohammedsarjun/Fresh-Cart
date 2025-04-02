@@ -24,6 +24,7 @@ const app = express();
 const session = require('express-session');
 
 
+
 //session
 app.use(
   session({
@@ -119,6 +120,10 @@ app.use((req, res, next) => {
 mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 30000, // Wait for 30s before timeout
 }).then(async () => {
+
+
+
+
   console.log("Successfully connected to MongoDB with Mongoose!");
 
 }).catch(err => {

@@ -3,181 +3,321 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      .table th, .table td {
-    min-width: 150px; /* Adjust width as needed */
-    word-break: break-word; /* Prevents text overflow */
-    
-}
-    </style>
-    <link rel="stylesheet" href="/styles/validationCommon.css">
+    <title>Sales Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
     <style>
-        * {
-            font-family: "Afacad Flux", sans-serif;
-            font-weight: 700;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
+      * {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f6f8fd 0%, #ffffff 100%);
+        color: #2d3748;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .row.mb-4 {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card.border-primary {
+        border-left: 4px solid #4299e1;
+      }
+
+      .card.border-success {
+        border-left: 4px solid #48bb78;
+      }
+
+      .card-title {
+        color: #718096;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+      }
+
+      .card-text.display-6 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #2d3748;
+      }
+
+      .filter-section {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .filter-section .date-filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .filter-section .date-input-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .filter-section .time-filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: flex-end;
+      }
+
+      .filter-section .time-select-group {
+        flex: 2;
+        min-width: 200px;
+      }
+
+      .filter-section .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .form-control, .form-select {
+        width: 100%;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus, .form-select:focus {
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        outline: none;
+      }
+
+      .btn {
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        min-width: 120px;
+        text-align: center;
+      }
+
+      .btn-success {
+        background: #48bb78;
+        border: none;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #38a169;
+        transform: translateY(-1px);
+      }
+
+      .btn-info {
+        background: #4299e1;
+        border: none;
+        color: white;
+      }
+
+      .btn-info:hover {
+        background: #3182ce;
+        transform: translateY(-1px);
+      }
+
+      .btn-outline-secondary {
+        background: #e53e3e;
+        border: none;
+        color: white;
+      }
+
+      .btn-outline-secondary:hover {
+        background: #c53030;
+      }
+
+      .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .table-responsive {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+        margin-top: 2rem;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+      }
+
+      .table th {
+        background: #2d3748;
+        color: white;
+        padding: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+
+      .table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        color: #4a5568;
+      }
+
+      .table tbody tr:hover {
+        background: #f7fafc;
+      }
+
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+      }
+
+      .toast {
+        background: white;
+        color: #2d3748;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        animation: slideIn 0.3s ease forwards;
+      }
+
+      label {
+        color: #4a5568;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .col-md-6 {
+        flex: 1;
+      }
+
+      @media (max-width: 1024px) {
+        .filter-section .button-group {
+          flex-direction: column;
         }
 
-        body {
-            background-color: #f8f9fa;
-            color: #212529;
+        .btn {
+          width: 100%;
         }
 
+        .filter-section .time-filter-container {
+          flex-direction: column;
+        }
+
+        .filter-section .time-select-group,
+        .filter-section .date-input-group {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .row.mb-4 {
+          flex-direction: column;
+        }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+          padding: 0.5rem;
         }
 
-        .header {
-            padding: 20px;
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-        }
-
-        .footer {
-            padding: 10px;
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .table {
-            margin-top: 20px;
-        }
-
-        .table th {
-            background-color: #343a40;
-            color: #fff;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .btn-group .btn {
-            flex: 1;
+        .card {
+          padding: 1.5rem;
         }
 
         .filter-section {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+          padding: 1rem;
         }
 
-        .filter-section .form-control,
-        .filter-section .form-select {
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            padding: 8px;
-            font-size: 14px;
+        .date-filter-container {
+          flex-direction: column;
         }
 
-        .filter-section .btn {
-            border-radius: 5px;
-            padding: 8px 12px;
-            font-weight: 600;
-            font-size: 14px;
+        .form-control, .form-select {
+          font-size: 16px;
         }
 
-        .filter-section .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            width: 100%;
-            margin-bottom: 20px;
+        .table-responsive {
+          margin: 1rem -0.5rem;
+          border-radius: 0;
         }
+      }
 
-        .filter-section .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
 
-        .filter-section .btn-outline-secondary {
-            width: 99%;
-            border-color: #6c757d;
-            color: #ffffff;
-            background-color: #862424;
-        }
-
-        .filter-section .btn-outline-secondary:hover {
-            background-color: #511010;
-            color: #fff;
-        }
-
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-
-        .toast {
-            display: none;
-            background-color: #ff6600;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateX(100%);
-            animation: slideInFromRight 0.8s ease-out forwards;
-        }
-
-        @keyframes slideInFromRight {
-            0% {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideOutToRight {
-            0% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-        }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
     </style>
-
   </head>
-  <body style="overflow-x: hidden;">
 
-      
+  
+<script>
+  // Define the ordersData array server-side and stringify it
+  <% const ordersData = [["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"]]; %>
+  <% orders.forEach((order, i) => { %>
+    <% ordersData.push([i + 1, order.userName, order.shippingDate, order.products.length, `₹${order.subTotal}`, order.paymentDetails.method]); %>
+  <% }); %>
+</script>
+  
 
+  <body>
     <%-include('./partials/header')%>
     <div class="row">
       <%-include('./partials/sidebar')%>
       <div class="content col-lg-10">
         <div class="container mt-4">
-            <!-- Summary Cards -->
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <div class="card text-center border-primary">
+                    <div class="card border-primary">
                         <div class="card-body">
                             <h5 class="card-title">Overall Order Amount</h5>
                             <p class="card-text display-6">₹<%=totalOrderRevenue%></p>
@@ -185,7 +325,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card text-center border-success">
+                    <div class="card border-success">
                         <div class="card-body">
                             <h5 class="card-title">Discount</h5>
                             <p class="card-text display-6">₹<%=totalDiscount%></p>
@@ -194,51 +334,49 @@
                 </div>
             </div>
             
-            
             <div class="toast-container"></div>
             
-            <!-- Filter Section -->
-            <div class="filter-section d-flex justify-content-center flex-wrap">
-                <div class="row g-2 align-items-center">
-                    <form id="date-wise-filter" class="d-flex gap-2 align-items-center flex-wrap">
-                        <div style="display: flex; justify-content: center; width: 99%;">
-                            <div style="width: 20%;">
-                                <label for="from">From</label>
-                                <input type="date" class="form-control" id="startDate" value="" name="from">
-                            </div>
-                            <div style="width: 20%; margin-left: 10px;">
-                                <label for="to">To</label>
-                                <input type="date" class="form-control" id="endDate" value="" name="to">
-                            </div>
-                            <div style="width: 20%; margin-left: 10px;">
-                                <label for="to"></label>
-                                <button class="btn btn-success">Apply Date</button>
-                            </div>
+            <div class="filter-section">
+                <form id="date-wise-filter">
+                    <div class="date-filter-container">
+                        <div class="date-input-group">
+                            <label for="from">From</label>
+                            <input type="date" class="form-control" id="startDate" name="from">
                         </div>
+                        <div class="date-input-group">
+                            <label for="to">To</label>
+                            <input type="date" class="form-control" id="endDate" name="to">
+                        </div>
+                        <div class="date-input-group" style="flex: 0.5;">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-success">Apply Date</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="time-filter-container">
+                    <form id="plan-view" class="time-select-group">
+                        <label for="timePeriod">Time Period</label>
+                        <select id="timePeriod" class="form-select" name="timePeriod">
+                            <option disabled value="">Select</option>
+                            <option value="week">Week</option>
+                            <option value="month">Month</option>
+                            <option value="year">Year</option>
+                        </select>
                     </form>
-                            <div style="display: flex; justify-content: center; width: 100%;">
-                                <form id="plan-view" class="d-flex gap-2 align-items-center flex-wrap">
-                                    <label for="timePeriod">Time Period</label>
-                                    <select id="timePeriod" class="form-select" name="timePeriod" style="padding: 0px 10px; height: 40px; margin: 0px 20px 0px 0px; width: 29%;">
-                                        <option disabled value="" >Select</option>
-                                        <option value="week" >Week</option>
-                                        <option value="month" >Month</option>
-                                        <option value="year" >Year</option>
-                                    </select>
-                                    <button id="filterBtn" type="submit" class="btn btn-success" disabled style="width: 20%;">Filter</button>
-                                </form>
-                                    <button class="btn btn-outline-secondary" style="width: 20%; height: 40px; margin: 0px 20px;" onclick="clearFilter()">Clear Filters</button>
-                                    <button class="btn btn-info" style="width: 20%; height: 40px;" onclick="window.location.href='/admin/salesreport-pdf'">Download (PDF)</button>
-                                    <button class="btn btn-info" style="width: 20%; height: 40px; margin: 0px 5px;" onclick="window.location.href='/admin/salesreport-xlsx'">Download (xlsx)</button>
-                            </div>
-                        
+                    <div class="button-group">
+                   
+   
+                        <button id="filterBtn" type="submit" class="btn btn-success" disabled>Filter</button>
+                        <button class="btn btn-outline-secondary" onclick="clearFilter()">Clear Filters</button>
+                        <button class="btn btn-info" id="download-pdf" onclick='downloadPdf(<%= JSON.stringify(ordersData) %>)'>Download (PDF)</button>
+                    </div>
                 </div>
             </div>
     
-            <!-- Sales Table -->
             <div class="table-responsive">
-                <table class="table table-bordered text-center">
-                    <thead class="table-dark">
+                <table class="table">
+                    <thead>
                         <tr>
                             <th>S.No</th>
                             <th>Name</th>
@@ -258,194 +396,257 @@
                                 <td>₹<%=order.subTotal%></td>
                                 <td><%=order.paymentDetails.method%></td>
                             </tr>
-                            <%})%>
-                       
-                      
+                        <%})%>
                     </tbody>
                 </table>
             </div>
         </div>
-
-    
-        <script>
-            let startDate = document.getElementById("startDate");
-            let endDate = document.getElementById("endDate");
-    
-            startDate.addEventListener("change", function () {
-                let startDateValue = startDate.value;
-                endDate.setAttribute("min", startDateValue);
-            });
-    
-            endDate.addEventListener("change", function () {
-                let endDateValue = endDate.value;
-                startDate.setAttribute("max", endDateValue);
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            document.getElementById("date-wise-filter").addEventListener("submit", async function(event) {
-                event.preventDefault(); // Prevent form from reloading the page
-            
-                const startDate = document.getElementById("startDate").value;
-                const endDate = document.getElementById("endDate").value;
-            
-                const requestData = { startDate, endDate };
-            
-                try {
-                    const response = await fetch(`/admin/salesReport?startDate=${startDate}&endDate=${endDate}`, {
-                        method: "get",
-                        headers: {
-                         'Accept': 'application/json' 
-                        }
-
-                    });
-    
-                    const result = await response.json();
-                    
-                    const toastContainer = document.querySelector(".toast-container");
-                    const toast = document.createElement("div");
-                    toast.className = "toast";
-                    console.log(result.orders)
-                 
-                    if (result.orders) {
-        const table = document.querySelector(".table tbody"); // Select tbody instead of the whole table
-
-        if (!table) {
-            console.error("Table body not found!");
-            return;
-        }
-
-        table.innerHTML = ""; // Clear all previous rows
-
-        result.orders.forEach((order, i) => {
-            table.innerHTML += `
-                <tr>
-                    <td>${i + 1}</td>
-                    <td>${order.userName}</td>
-                    <td>${order.shippingDate}</td>
-                    <td>${order.products.length}</td>
-                    <td>₹${order.subTotal}</td>
-                    <td>${order.paymentDetails.method}</td>
-                </tr>`;
-        });
-    } else {
-                        toast.textContent = "Somthing Wrong!";
-                        toast.style.backgroundColor = "#dc3545"; // Red color for error
-                        toastContainer.appendChild(toast);
-                        setTimeout(() => {
-                            toast.style.display = "block";
-                        }, 100);
-    
-                        setTimeout(() => {
-                            toast.style.animation = "slideOutToRight 0.8s ease-out forwards";
-                        }, 3000);
-    
-                        setTimeout(() => {
-                            toast.style.display = "none";
-                            toast.remove(); // Remove toast from DOM
-                        }, 3800);   
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                }
-            });
-        </script>
-    
-        <script>
-            document.getElementById("timePeriod").addEventListener("change", function() {
-                const filterBtn = document.getElementById("filterBtn");
-                
-                if (this.value === "") {
-                    filterBtn.disabled = true;
-                    filterBtn.style.cursor = "not-allowed";
-                } else {
-                    filterBtn.disabled = false;
-                    filterBtn.style.cursor = "pointer";
-                }
-            });
-            
-            document.getElementById("plan-view").addEventListener("submit", async function(event) {
-                event.preventDefault(); // Prevent page reload
-                const timePeriod = document.getElementById("timePeriod").value;
-                const filterBtn = document.getElementById("filterBtn");
-            
-                // if (!timePeriod) {
-                //     alert("Please select a time period!");
-                //     return;
-                // }
-            
-                // Disable button while sending the request
-                filterBtn.disabled = true;
-                filterBtn.style.cursor = "not-allowed";
-            
-                try {
-                    const response = await fetch(`/admin/salesReport?timePeriod=${timePeriod}`, {
-                        method: "GET",
-                        headers: {
-                         'Accept': 'application/json' 
-                        }
-                    });
-            
-                    const result = await response.json();
-                    console.log(result)
-                    const toastContainer = document.querySelector(".toast-container");
-                    const toast = document.createElement("div");
-                    toast.className = "toast";
-    
-                    if (result.orders) {
-  const table = document.querySelector(".table tbody"); // Get the table body
-  if (!table) {
-    console.error("Table body not found!");
-    return;
-  }
-
-  table.innerHTML = ""; // Clear all rows
-
-  result.orders.forEach((order, i) => {
-    table.innerHTML += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${order.userName}</td>
-        <td>${order.shippingDate}</td>
-        <td>${order.products.length}</td>
-        <td>₹${order.subTotal}</td>
-        <td>${order.paymentDetails.method}</td>
-      </tr>`;
-  });
-}
- else {
-                        toast.textContent = "Somthing Wrong!";
-                        toast.style.backgroundColor = "#dc3545"; // Red color for error
-                        toastContainer.appendChild(toast);
-                        setTimeout(() => {
-                            toast.style.display = "block";
-                        }, 100);
-    
-                        setTimeout(() => {
-                            toast.style.animation = "slideOutToRight 0.8s ease-out forwards";
-                        }, 3000);
-    
-                        setTimeout(() => {
-                            toast.style.display = "none";
-                            toast.remove(); // Remove toast from DOM
-                        }, 3800);   
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                }
-            });
-        </script>
-        <script>
-            // Clear Filter
-            async function clearFilter() {
-                location.reload()
-            }
-        </script>
     </div>
   </body>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  
 
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let startDate = document.getElementById("startDate");
+    let endDate = document.getElementById("endDate");
+
+    startDate.addEventListener("change", function () {
+        let startDateValue = startDate.value;
+        endDate.setAttribute("min", startDateValue);
+    });
+
+    endDate.addEventListener("change", function () {
+        let endDateValue = endDate.value;
+        startDate.setAttribute("max", endDateValue);
+    });
+
+    document.getElementById("date-wise-filter").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        
+        try {
+            const response = await fetch(`/admin/salesReport?startDate=${startDate}&endDate=${endDate}`, {
+                method: "get",
+                headers: {
+                    'Accept': 'application/json' 
+                }
+            });
+
+            const result = await response.json();
+            
+            const toastContainer = document.querySelector(".toast-container");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            
+            if (result.orders) {
+                const table = document.querySelector(".table tbody");
+                
+                if (!table) {
+                    console.error("Table body not found!");
+                    return;
+                }
+
+                table.innerHTML = "";
+
+         // Build the table (unchanged)
+result.orders.forEach((order, i) => {
+    table.innerHTML += `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${order.userName}</td>
+            <td>${order.shippingDate}</td>
+            <td>${order.products.length}</td>
+            <td>₹${order.subTotal}</td>
+            <td>${order.paymentDetails.method}</td>
+        </tr>`;
+});
+
+// Select the download button
+const downloadButton = document.getElementById("download-pdf");
+
+// Prepare the data for downloadPdf
+const headers = ["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"];
+const orderData = result.orders.map((order, i) => [
+    i + 1,
+    order.userName,
+    order.shippingDate,
+    order.products.length,
+    `₹${order.subTotal}`,
+    order.paymentDetails.method
+]);
+
+// Combine headers and order data into a single 2D array
+const pdfData = [headers, ...orderData];
+
+// Assign the onclick handler (pass the raw array, not a string)
+downloadButton.onclick = function() {
+    downloadPdf(pdfData); // Pass pdfData directly, no JSON.stringify
+};
+
+// Example downloadPdf function using jsPDF and autoTable
+
+            } else {
+                toast.textContent = "Something Wrong!";
+                toast.style.backgroundColor = "#dc3545";
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.display = "block";
+                }, 100);
+
+                setTimeout(() => {
+                    toast.style.animation = "slideOutToRight 0.8s ease-out forwards";
+                }, 3000);
+
+                setTimeout(() => {
+                    toast.style.display = "none";
+                    toast.remove();
+                }, 3800);   
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    document.getElementById("timePeriod").addEventListener("change", function() {
+        const filterBtn = document.getElementById("filterBtn");
+        
+        if (this.value === "") {
+            filterBtn.disabled = true;
+            filterBtn.style.cursor = "not-allowed";
+        } else {
+            filterBtn.disabled = false;
+            filterBtn.style.cursor = "pointer";
+        }
+    });
+    
+    document.getElementById("filterBtn").addEventListener("click", async function(event) {
+        event.preventDefault();
+        const timePeriod = document.getElementById("timePeriod").value;
+        this.disabled = true;
+        this.style.cursor = "not-allowed";
+        
+        try {
+            const response = await fetch(`/admin/salesReport?timePeriod=${timePeriod}`, {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json' 
+                }
+            });
+            
+            const result = await response.json();
+            const toastContainer = document.querySelector(".toast-container");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+
+            if (result.orders) {
+                const table = document.querySelector(".table tbody");
+                if (!table) {
+                    console.error("Table body not found!");
+                    return;
+                }
+
+                table.innerHTML = "";
+
+                result.orders.forEach((order, i) => {
+                    table.innerHTML += `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${order.userName}</td>
+                            <td>${order.shippingDate}</td>
+                            <td>${order.products.length}</td>
+                            <td>₹${order.subTotal}</td>
+                            <td>${order.paymentDetails.method}</td>
+                        </tr>`;
+                });
+
+                const downloadButton = document.getElementById("download-pdf");
+
+// Prepare the data for downloadPdf
+const headers = ["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"];
+const orderData = result.orders.map((order, i) => [
+    i + 1,
+    order.userName,
+    order.shippingDate,
+    order.products.length,
+    `₹${order.subTotal}`,
+    order.paymentDetails.method
+]);
+
+// Combine headers and order data into a single 2D array
+const pdfData = [headers, ...orderData];
+
+// Assign the onclick handler (pass the raw array, not a string)
+downloadButton.onclick = function() {
+    downloadPdf(pdfData); // Pass pdfData directly, no JSON.stringify
+};
+
+            } else {
+                toast.textContent = "Something Wrong!";
+                toast.style.backgroundColor = "#dc3545";
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.display = "block";
+                }, 100);
+
+                setTimeout(() => {
+                    toast.style.animation = "slideOutToRight 0.8s ease-out forwards";
+                }, 3000);
+
+                setTimeout(() => {
+                    toast.style.display = "none";
+                    toast.remove();
+                }, 3800);   
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    function clearFilter() {
+        location.reload();
+    }
+  </script>
+
+
+<script>
+  
+ async function downloadPdf(report) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+  
+      // Add Title with Styling
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      doc.text("Sales Report", 80, 15);
+  
+      // Sales Data from Server (Passed from EJS)
+      console.log(report)
+      const salesData =report 
+
+  
+  
+      // Add Table Using AutoTable
+      doc.autoTable({
+          startY: 25, // Start below the title
+          head: [salesData[0]], // Table header
+          body: salesData.slice(1), // Table rows
+          theme: "grid", // Add grid styling
+          headStyles: { fillColor: [0, 150, 136], textColor: 255, fontSize: 12 }, // Header styles
+          bodyStyles: { fontSize: 10, cellPadding: 4 }, // Table body styles
+          margin: { top: 20 }
+      });
+  
+      // Save PDF
+      doc.save("sales_report.pdf");
+  };
+  </script>
 
 
 </html>

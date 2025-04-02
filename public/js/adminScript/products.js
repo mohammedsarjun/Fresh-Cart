@@ -343,6 +343,7 @@ document
       let result = await response.json();
 
       if (response.ok) {
+        console.log("resposne is ok")
         if (result.message) {
           Swal.fire({
             title: result.message,
@@ -356,7 +357,7 @@ document
           Swal.fire({
             title: result.error,
             text: '',
-            icon: 'success',
+            icon: 'error',
           });
         }
       }

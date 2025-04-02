@@ -20,7 +20,7 @@ async function accountSettingsRender(req, res, next) {
     );
     let referralCode = await referralSchema.findOne({ userId: userDetail._id });
 
-    referralCode = referralCode.code;
+    referralCode = referralCode?.code;
     res
       .status(200)
       .render(
@@ -34,6 +34,7 @@ async function accountSettingsRender(req, res, next) {
         { userDetail, referralCode }
       );
   } catch (error) {
+    console.log("hi")
     console.error('An error occurred:', error);
     next(new AppError('Sorry...Something went wrong', 500));
   }
