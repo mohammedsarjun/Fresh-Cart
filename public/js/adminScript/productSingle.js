@@ -142,7 +142,7 @@ async function productEditAction(
   perRate,
   productDescription
 ) {
-  console.log("pumda")
+  console.log(productName.productName)
   var myModal = new bootstrap.Modal(
     document.getElementById('editProductModal')
   );

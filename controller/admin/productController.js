@@ -289,7 +289,7 @@ async function renderSingleProductDetails(req, res, next) {
     };
 
     const categories = await Category.find();
-
+console.log(updatedProducts)
     res
       .status(200)
       .render('admin pages/singleProduct', { updatedProducts, categories });
