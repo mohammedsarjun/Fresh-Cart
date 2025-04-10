@@ -16,6 +16,44 @@ async function renderOrderPage(req, res, next) {
   try {
     const orderDetails = await orderSchema.find({ userId: req.session.userId });
 
+orderDetails.forEach(async(order)=>{
+
+
+   
+    let cancelledProducts = order.products.filter(
+      product => product.orderStatus === "Cancelled"
+    );
+
+    let returnedProducts=order.products.filter(
+      product => product.orderStatus === "Returned"
+    );
+
+    let shippedProducts=order.products.filter(
+      product => product.orderStatus === "Shipped"
+    );
+    let deliveredProducts=order.products.filter(
+      product => product.orderStatus === "Delivered"
+    );
+    let isWholeCancelled = cancelledProducts.length === order.products.length;
+    let isWholeReturned= returnedProducts.length===order.products.length;
+    let isWholeShipped= shippedProducts.length===order.products.length;
+    let isWholeDelivered=deliveredProducts.length===order.products.length;
+    if (isWholeCancelled) {
+      order.orderStatus = "Cancelled";
+    }
+    if (isWholeReturned) {
+      order.orderStatus = "Returned";
+    }
+    if (isWholeShipped) {
+      order.orderStatus = "Shipped";
+    }
+
+    if(isWholeDelivered){
+      order.orderStatus = "Delivered";
+    }
+    
+    await order.save()
+  })
     const updatedOrders = await Promise.all(
       orderDetails.map(async (orderDetail) => {
         // Convert to plain object
@@ -59,7 +97,7 @@ async function renderOrderPage(req, res, next) {
 }
 placeOrder = async function (req, res, isOnlinePayment, isWalletPayment, next) {
   try {
-    console.log('place order function functiojn working');
+
     const { selectedAddress, selectedPayment, transactionDetails } = req.body;
 
     const cart = await cartSchema.findOne({ userId: req.session.userId });
@@ -220,7 +258,11 @@ placeOrder = async function (req, res, isOnlinePayment, isWalletPayment, next) {
 
 async function renderOrderSinglePage(req, res, next) {
   try {
-    let orders = await orderSchema.find({ _id: req.params.id });
+    let orders = await orderSchema.find({ _id: req.params.id,userId:req.session.userId });
+    console.log(orders)
+    if(orders==""){
+      return res.status(403).send("403 FORBIDDEN")
+    }
     for (let i = 0; i < orders.length; i++) {
       orders[i] = orders[i].toObject();
       for (let j = 0; j < orders[i].products.length; j++) {
@@ -234,8 +276,40 @@ async function renderOrderSinglePage(req, res, next) {
         orders[i].products[j].variety = productDetail.variety;
       }
     }
+    let order = await orderSchema.findOne({ _id: req.params.id });
+    let cancelledProducts = order.products.filter(
+      product => product.orderStatus === "Cancelled"
+    );
 
-    console.log(orders);
+    let returnedProducts=order.products.filter(
+      product => product.orderStatus === "Returned"
+    );
+
+    let shippedProducts=order.products.filter(
+      product => product.orderStatus === "Shipped"
+    );
+    let deliveredProducts=order.products.filter(
+      product => product.orderStatus === "Delivered"
+    );
+    let isWholeCancelled = cancelledProducts.length === order.products.length;
+    let isWholeReturned= returnedProducts.length===order.products.length;
+    let isWholeShipped= shippedProducts.length===order.products.length;
+    let isWholeDelivered=deliveredProducts.length===order.products.length;
+    if (isWholeCancelled) {
+      order.orderStatus = "Cancelled";
+    }
+    if (isWholeReturned) {
+      order.orderStatus = "Returned";
+    }
+    if (isWholeShipped) {
+      order.orderStatus = "Shipped";
+    }
+
+    if(isWholeDelivered){
+      order.orderStatus = "Delivered";
+    }
+    
+    await order.save()
     res
       .status(200)
       .render(path.join('../', 'views', 'UserPages', 'singleOrderPage'), {
@@ -321,9 +395,14 @@ async function returnOrder(req, res, next) {
   try {
     console.log(req.body);
     const order = await orderSchema.findOne({ _id: req.body.orderId });
-    order.orderStatus = 'Returning';
-    order.returnDetails.reason = req.body.returnReason;
-    order.returnDetails.additionalDetails = req.body.additionalDetails;
+
+    let product= order.products.find((product)=>(product.productId==req.body.productId&&product.varietyMeasurement==req.body.varietyMeasurement))
+
+    
+    product.orderStatus = 'Returning';
+    product.returnDetails.reason = req.body.returnReason;
+    product.returnDetails.additionalDetails = req.body.additionalDetails;
+    order.markModified("products")
     await order.save();
     res.status(200).json({
       status: 200,
@@ -362,6 +441,246 @@ async function renderOrderSuccessPage(req, res, next) {
     next(new AppError('Sorry...Something went wrong', 500));
   }
 }
+
+async function cancelSingleOrder(req,res,next){
+  try {
+    console.log(req.body);
+    console.log("It's cancel single order");
+  
+    let order = await orderSchema.findOne({ _id: req.body.orderId });
+
+    if (order && (order.paymentDetails.method === 'Wallet'||order.paymentDetails.method === 'Razorpay') ) {
+      let wallet = await Wallet.findOne({ userId: req.session.userId });
+
+      // If wallet doesn't exist, create a new one
+      if (!wallet) {
+        wallet = new Wallet({
+          userId: req.session.userId,
+          balance: 0,
+          transactions: [],
+        });
+      }
+
+      // Update wallet balance and add transaction
+      wallet.balance += order.subTotal;
+      wallet.transactions.push({
+        amount: order.subTotal,
+        type: 'Razorpay',
+        status: 'completed',
+        transactionId: uuidv4(),
+        transactionDetail: 'Order Cancelled. Payment returned to wallet',
+        createdAt: Date.now(),
+        transactionType: 'Credit',
+        isOrderRedirect: true,
+        orderId: order._id,
+      });
+
+      await wallet.save();
+    }
+
+  let product=  order.products.find(product =>
+      product.productId==req.body.productId &&
+      product.varietyMeasurement == req.body.varietyMeasurement
+    );
+    
+    order.subTotal=order.subTotal-(product.price*product.quantity)
+    let changeOrderStatus = order.products.find(product =>
+      product.productId==req.body.productId &&
+      product.varietyMeasurement == req.body.varietyMeasurement
+    );
+  console.log(changeOrderStatus)
+    if (changeOrderStatus) {
+      changeOrderStatus.orderStatus = "Cancelled";
+      order.markModified("products");
+  
+      let cancelledProducts = order.products.filter(
+        product => product.orderStatus === "Cancelled"
+      );
+  
+      let isWholeCancelled = cancelledProducts.length === order.products.length;
+  
+      if (isWholeCancelled) {
+        order.orderStatus = "Cancelled";
+      }
+  
+      await order.save();
+      res.status(200).json({
+        status: 200,
+        message: 'Order Was Cancelled Successfully',
+      });
+    } else {
+      return res.status(404).json({ message: "Product not found in order" });
+    }
+  }catch (err) {
+    console.log(err)
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
+}
+
+
+async function failOrderPayment(req,res){
+  const { selectedAddress, selectedPayment, transactionDetails } = req.body;
+
+  const cart = await cartSchema.findOne({ userId: req.session.userId });
+
+  let address = null;
+
+
+    address = await Address.findOne({ _id: req.body.selectedAddress });
+  
+  console.log(address);
+  let paymentMethod = selectedPayment;
+ 
+ 
+
+  const products = [];
+  let overallDiscountAmount = 0;
+  for (let i = 0; i < cart.products.length; i++) {
+    let product = await Product.findOne({ _id: cart.products[i].productId });
+    if (product.variety != 'items') {
+      let selectedVariety = product.varietyDetails.find(
+        (varietyDetail) =>
+          varietyDetail.varietyMeasurement ==
+          cart.products[i].selectedVariety.value
+      );
+
+      let pricePerUnit = Object.entries(product.productPrice).filter(
+        ([key, value]) => value !== null
+      )[0][1];
+
+      let discountAmount =
+        (selectedVariety.varietyDiscount / 100) *
+        (selectedVariety.varietyMeasurement * pricePerUnit);
+      overallDiscountAmount = overallDiscountAmount + discountAmount;
+      productPrice =
+        selectedVariety.varietyMeasurement * pricePerUnit - discountAmount;
+      let productsObj = {
+        productId: cart.products[i].productId,
+        name: product.productName,
+        variety: product.variety,
+        quantity: cart.products[i].quantity,
+        productPrice: selectedVariety.varietyMeasurement * pricePerUnit,
+        price: productPrice,
+        varietyMeasurement: cart.products[i].selectedVariety.value || null,
+      };
+      products.push(productsObj);
+      const varietyDetail = product.varietyDetails.find(
+        (varietyDetail) =>
+          varietyDetail.varietyMeasurement ==
+          cart.products[i].selectedVariety.value
+      );
+
+      if (varietyDetail) {
+        varietyDetail.varietyStock -= cart.products[i].quantity; // Update the stock
+        product.markModified('varietyDetails'); // Tell Mongoose that varietyDetails has changed
+        await product.save(); // Save the updated product
+      } else {
+        console.log('Variety not found');
+      }
+    } else {
+      let productPrice = product.varietyDetails[0].varietyPrice; // Original price
+      let discountAmount =
+        productPrice * (product.varietyDetails[0].varietyDiscount / 100); // Discount amount
+      overallDiscountAmount = overallDiscountAmount + discountAmount;
+      let finalPrice = productPrice - discountAmount; // Price after discount
+      let productsObj = {
+        productId: cart.products[i].productId,
+        name: product.productName,
+        variety: product.variety,
+        quantity: cart.products[i].quantity,
+        productPrice,
+        price: finalPrice,
+        varietyMeasurement: cart.products[i].selectedVariety.value || null,
+      };
+      products.push(productsObj);
+      const varietyDetail = product.varietyDetails[0];
+
+      if (varietyDetail) {
+        varietyDetail.itemStock -= cart.products[i].quantity; // Update the stock
+        product.markModified('varietyDetails'); // Tell Mongoose that varietyDetails has changed
+        await product.save(); // Save the updated product
+      } else {
+        console.log('Variety not found');
+      }
+    }
+  }
+
+  const newOrder = new orderSchema({
+    userId: req.session.userId,
+    orderId: `ORD${Math.floor(100000 + Math.random() * 900000)}`, // 6-digit order ID
+    paymentDetails: {
+      method: paymentMethod,
+      transactionId: transactionDetails?.paymentId || null,
+      status: 'Failed',
+    },
+    subTotal: cart.grandTotal,
+    overallDiscountAmount,
+    shippingCost: cart.shippingCost,
+    orderStatus: 'Pending',
+    shippingDate: null,
+    products: products,
+    coupon: {
+      code: null,
+      discount: null,
+    },
+    shippingAddress: {
+      firstName: address?.firstName,
+      lastName: address?.lastName,
+      addressType: address?.addressType,
+      addressLine1: address?.addressLine1,
+      addressLine2: address?.addressLine2,
+      city: address?.city,
+      state: address?.state,
+      country: address?.country,
+      zipCode: address?.zipCode,
+    },
+  });
+
+  cart.products = [];
+  await cart.save();
+  const user = await User.findOne({ _id: req.session.userId });
+  if (cart?.coupon?.name) {
+    newOrder.coupon.code = cart.coupon.name;
+    newOrder.coupon.discount = cart.coupon.discount;
+    newOrder.overallDiscountAmount =
+      overallDiscountAmount +
+      (cart.coupon.discount * newOrder.subTotal) / 100;
+    user.usedCoupons.push(cart?.coupon?.name);
+    cart.coupon.discount = 0;
+    cart.coupon.name = null;
+    cart.coupon.isMax = false;
+    cart.coupon.maxPurchase = 0;
+    await cart.save();
+    await user.save();
+  }
+  await newOrder.save();
+  console.log(newOrder)
+
+res.status(200).json({message:"Payment Failure"})
+}
+
+
+async function renderPaymentFailurePage(req, res, next) {
+  try {
+  
+      res
+        .status(200)
+        .render(
+          path.join(
+            '../',
+            'views',
+            'UserPages',
+            'orderSide',
+            'paymentFailurePage'
+          )
+        );
+  
+  } catch (err) {
+    console.log(err);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
+}
+
 module.exports = {
   renderOrderPage,
   placeOrder,
@@ -369,4 +688,7 @@ module.exports = {
   cancelOrder,
   returnOrder,
   renderOrderSuccessPage,
+  cancelSingleOrder,
+  failOrderPayment,
+  renderPaymentFailurePage
 };

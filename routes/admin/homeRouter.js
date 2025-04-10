@@ -145,7 +145,7 @@ router.put('/orderDetail/changeStatus', orderController.changeStatus);
 
 //return order
 router.put('/orderDetail/returnProduct', orderController.returnProduct);
-
+router.get('/orderDetail/fetchReturnReason',orderController.fetchReturnProduct)
 //coupon
 
 router.get('/coupon', adminAuthMiddleware, couponController.renderCouponPage);

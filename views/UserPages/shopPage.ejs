@@ -2194,8 +2194,8 @@ console.log(minPrice, maxPrice); //
                 let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 				console.log(discountPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
-                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold">₹${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">₹${basePrice}</span>` : ""}
                 `;
             } else {
                 let variety = product.varietyDetails[0] || {};
@@ -2203,8 +2203,8 @@ console.log(minPrice, maxPrice); //
                 let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 				console.log(discountedPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
-                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold">₹${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">₹${originalPrice}</span>` : ""}
                 `;
             }
 
@@ -2238,18 +2238,7 @@ console.log(minPrice, maxPrice); //
                             <div class="flex justify-between items-center">
                                 <div>${priceHTML}</div>
                                 <div>
-                                    <button type="button"
-                                        class="btn inline-flex items-center gap-x-1 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-plus" width="14" height="14"
-                                            viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M12 5l0 14" />
-                                            <path d="M5 12l14 0" />
-                                        </svg>
-                                        <span>Add</span>
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -2347,8 +2336,8 @@ console.log(minPrice, maxPrice); //
                 let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 				console.log(discountPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
-                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold">₹${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">₹${basePrice}</span>` : ""}
                 `;
             } else {
                 let variety = product.varietyDetails[0] || {};
@@ -2356,8 +2345,8 @@ console.log(minPrice, maxPrice); //
                 let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 				console.log(discountedPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
-                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold"₹${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">₹${originalPrice}</span>` : ""}
                 `;
             }
 
@@ -2490,8 +2479,8 @@ console.log(minPrice, maxPrice); //
                 let discountPrice = variety.varietyDiscount ? basePrice - (basePrice * variety.varietyDiscount / 100) : basePrice;
 				console.log(discountPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${discountPrice.toFixed(1)}</span>
-                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">$${basePrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold">₹${discountPrice.toFixed(1)}</span>
+                    ${discountPrice !== basePrice ? `<span class="line-through text-gray-500">₹${basePrice}</span>` : ""}
                 `;
             } else {
                 let variety = product.varietyDetails[0] || {};
@@ -2499,8 +2488,8 @@ console.log(minPrice, maxPrice); //
                 let discountedPrice = variety.varietyDiscount ? originalPrice - (originalPrice * variety.varietyDiscount / 100) : originalPrice;
 				console.log(discountedPrice)
                 priceHTML = `
-                    <span class="text-gray-900 font-semibold">$${Number(discountedPrice).toFixed(1)}</span>
-                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">$${originalPrice}</span>` : ""}
+                    <span class="text-gray-900 font-semibold">₹${Number(discountedPrice).toFixed(1)}</span>
+                    ${discountedPrice !== originalPrice ? `<span class="line-through text-gray-500">₹${originalPrice}</span>` : ""}
                 `;
             }
 

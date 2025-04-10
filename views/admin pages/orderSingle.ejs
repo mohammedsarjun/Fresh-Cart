@@ -44,14 +44,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+            <input type="text" id="productReturnId" hidden>
+            <input type="text" id="productReturnVarietyMeasurement" hidden>
           <h5 class="modal-title" id="staticBackdropLabel">User Want to return this order</h5>
           <button type="button" class="btn-close"  ></button>
         </div>
         <div class="modal-body">
-          <p>Return Reason : <%=order?.returnDetails?.reason%></p>
-          <%if(order?.returnDetails?.additionalDetails!=""){%>
-          <p>Additional Details:<%=order?.returnDetails?.additionalDetails%></p>
-          <%}%>
+            <p id="returnReasonText">Return Reason: </p>
+  <p id="additionalDetailsText" style="display: none;">Additional Details: </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="rejectRequest('<%=order._id%>')" data-bs-dismiss="modal">Close</button>
@@ -77,53 +77,10 @@
                             <div class="flex flex-col md:flex-row gap-4 justify-between">
                                 <div class="flex items-center">
                                     <h3 class="mb-0 mr-3">Order ID: <%=order.orderId%></h3>
-                                    <span
-                                        class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%=order.orderStatus%></span>
+                                    <span class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%=order.orderStatus%></span>
                                 </div>
-                                <!-- select option -->
-                                <div class="flex flex-col md:flex-row gap-3 md:items-center">
-                                    <div class="">
-                                        <% if (order?.orderStatus === "Shipped") { %>
-                                            <select
-                                            class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Shipped" selected>Shipped</option>
-                                            <option value="Delivered">Delivered</option>
-                                            
-                                        </select>
-                                        <% } else if (order?.orderStatus === "Delivered") { %>
-                                            <button class="btn btn-success">Order Delivered</button>
-                                        <% } else if (order?.orderStatus === "Pending"){ %>
-                                            <select
-                                            class="statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
-                                            <option value="Pending" selected>Pending</option>
-                                            <option value="Shipped">Shipped</option>
-                                            <option value="Delivered">Delivered</option>
-                                        </select>
-                                        <% } else if (order?.orderStatus === "Cancelled"){%>
-                                           <button class="btn btn-secondary">Order Cancelled</button>
-                                         
-                                         <% } else if (order?.orderStatus === "Returning"){%>
-                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">User Returned This Product Click Here To Verify!</button>
-                                                 <%}%>
-                                        
-                                    </div>
-                                    <!-- button -->
-                                    <div class="flex gap-2 items-center">
-                                    <% if (order?.orderStatus != "Cancelled" && order?.orderStatus !="Delivered" && order?.orderStatus != "Returning") { %>
-                                        <a href="#"
-                                        onclick="changeStatus('<%=order?._id%>')"
-                                            class="btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
-                                            Save
-                                        </a>
-                                        <%}%>
-                                    
-                                      
-                                        <a href="#"
-                                            class="btn inline-flex items-center gap-x-2 bg-gray-200 text-gray-800 border-gray-200 border disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-gray-700 hover:border-gray-700 active:bg-gray-700 active:border-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300">
-                                            Download Invoice
-                                        </a>
-                                    </div>
+                         
+                   
                                 </div>
                             </div>
                             <div class="mt-8">
@@ -173,6 +130,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            
                         </div>
                         <div class="grid grid-cols-1">
                             <div class="relative overflow-x-auto">
@@ -184,30 +143,74 @@
                                             <th scope="col" class="px-6 py-3">Variety</th>
                                             <th scope="col" class="px-6 py-3">Vareity Measurement</th>
                                             <th scope="col" class="px-6 py-3">Total</th>
+                                            <th scope="col" class="px-6 py-3">Action</th>
                                         </tr>
                                     </thead>
                                     <!-- tbody -->
                                     <tbody>
-                                        <%order?.products?.forEach((order)=>{%>
+                                        <%order?.products?.forEach((orders)=>{%>
                                             <tr class="border-b border-gray-300">
                                                 <td class="py-3 px-6 text-left">
                                                     <a href="#" class="text-inherit">
                                                         <div class="flex items-center gap-2 w-full">
                                                             <div class="flex-0">
-                                                                <img src="<%=order.productPic%>"
+                                                                <img src="<%=orders.productPic%>"
                                                                     alt="" class="h-12 w-12" />
                                                             </div>
                                                             <div class="">
-                                                                <h5 class="mb-0 text-base"><%=order?.name%></h5>
+                                                                <h5 class="mb-0 text-base"><%=orders?.name%></h5>
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </td>
                                                 
-                                                <td class="py-3 px-6 text-left"><%=order?.quantity%></td>
-                                                <td class="py-3 px-6 text-left"><%=order?.variety%></td>
-                                                <td class="py-3 px-6 text-left"><%=order?.varietyMeasurement%></td>
-                                                <td class="py-3 px-6 text-left">₹<%=order?.price%></td>
+                                                <td class="py-3 px-6 text-left"><%=orders?.quantity%></td>
+                                                <td class="py-3 px-6 text-left"><%=orders?.variety%></td>
+                                                <td class="py-3 px-6 text-left"><%=orders?.varietyMeasurement%></td>
+                                                <td class="py-3 px-6 text-left">₹<%=orders?.price%></td>
+                                                <td class="">
+                                                    <% if (orders?.orderStatus === "Shipped") { %>
+                                                        <select
+                                                        id="<%=orders?.productId%>statusSelect"
+                                                        class="mt-3 statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Shipped" selected>Shipped</option>
+                                                        <option value="Delivered">Delivered</option>
+                                                        
+                                                    </select>
+
+                                                    <a href="#"
+                                                    onclick="changeStatus('<%=order?._id%>','<%=orders?.productId%>','<%=orders?.varietyMeasurement%>','<%=orders?.productId%>statusSelect')"
+                                                        class="mt-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
+                                                        Save
+                                                    </a>
+                                                    <% } else if (orders?.orderStatus === "Delivered") { %>
+                                                        <button class="btn btn-success">Order Delivered</button>
+                                                    <% } else if (orders?.orderStatus === "Pending"){ %>
+                                                        <select
+                                                        id="<%=orders?.productId%>statusSelect"
+                                                        class=" mt-3 statusSelect text-base py-2 block w-full border-gray-300 rounded-lg focus:border-green-600 focus:ring-green-600 disabled:opacity-50 disabled:pointer-events-none">
+                                                        <option value="Pending" selected>Pending</option>
+                                                        <option value="Shipped">Shipped</option>
+                                                        <option value="Delivered">Delivered</option>
+                                                    </select>
+                                                    <a href="#"
+                                                    onclick="changeStatus('<%=order?._id%>','<%=orders?.productId%>','<%=orders?.varietyMeasurement%>','<%=orders?.productId%>statusSelect')"
+                                                        class=" mt-3 btn inline-flex items-center gap-x-2 bg-green-600 text-white border-green-600 disabled:opacity-50 disabled:pointer-events-none hover:text-white hover:bg-green-700 hover:border-green-700 active:bg-green-700 active:border-green-700 focus:outline-none focus:ring-4 focus:ring-green-100">
+                                                        Save
+                                                    </a>
+                                                    <% } else if (orders?.orderStatus === "Cancelled"){%>
+                                                       <button class="btn btn-secondary">Order Cancelled</button>
+                                                     
+                                                     <% } else if (orders?.orderStatus === "Returning"){%>
+                                                            <button class="btn btn-danger" onclick="verifyReturnProduct('<%=order?._id%>','<%=orders?.productId%>','<%=orders?.varietyMeasurement%>')">User Returned This Product Click Here To Verify!</button>
+                                                        
+                                                             <% } else if (orders?.orderStatus === "Returned"){%>
+                                                                <button class="btn btn-secondary" disabled>Returned</button>
+                                                                 <%}%>
+                                                    
+                                                     </td>
+                                              
                                             </tr>
                                             <%})%>
                                       
@@ -300,10 +303,12 @@
 <script>
     async function returnProduct(orderId){
         try{
+            let productId=document.getElementById("productReturnId").value
+            let varietyMeasurement=document.getElementById("productReturnVarietyMeasurement").value
             fetch("/admin/orderDetail/returnProduct",{
                   method: "put",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({orderId:orderId}),
+                  body: JSON.stringify({orderId:orderId,productId,varietyMeasurement}),
               }).then((response)=>response.json())
               .then((data)=>{
                   if(data.message){
@@ -330,16 +335,15 @@
             console.log(err)
         }
     }
-   async function changeStatus(orderId){
-        console.log(orderId)
-        let statusSelect=document.querySelector(".statusSelect").value
-        
+   async function changeStatus(orderId,productId,varietyMeasurement,fieldId){
+        let statusSelect=document.getElementById(fieldId).value
+        console.log(varietyMeasurement||null)
         try{
 
               fetch("/admin/orderDetail/changeStatus",{
                   method: "put",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({orderId:orderId,selectedStatus:statusSelect}),
+                  body: JSON.stringify({orderId:orderId,selectedStatus:statusSelect,productId,varietyMeasurement:varietyMeasurement||null}),
               }).then((response)=>response.json())
               .then((data)=>{
                   if(data.message){
@@ -365,6 +369,32 @@
             }catch (error) {
                 console.error("An error occurred:", error);
             } 
+    }
+
+    async function verifyReturnProduct(orderId,productId,varietyMeasurement){
+
+
+       let response= await fetch(`/admin/orderDetail/fetchReturnReason?orderId=${orderId}&productId=${productId}&varietyMeasurement=${varietyMeasurement}`)
+       let data = await response.json();
+       console.log(data)
+
+       document.getElementById("productReturnId").value=data.response.productId
+       document.getElementById("productReturnVarietyMeasurement").value=data.response.varietyMeasurement
+       document.getElementById("returnReasonText").textContent = `Return Reason: ${data.response.returnDetails.reason}`;
+
+// Set additional details only if not empty
+const additionalDetailsEl = document.getElementById("additionalDetailsText");
+if (data.response.returnDetails.additionalDetails?.trim()) {
+  additionalDetailsEl.textContent = `Additional Details: ${data.response.returnDetails.additionalDetails}`;
+  additionalDetailsEl.style.display = "block";
+} else {
+  additionalDetailsEl.style.display = "none";
+}
+
+
+// Show modal
+const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+myModal.show();
     }
 </script>
 

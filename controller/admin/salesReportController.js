@@ -4,29 +4,51 @@ const User = require('../../model/userSchema');
 const AppError = require('../../middleware/errorHandling');
 async function salesReport(req, res, next) {
   try {
+
+
+
     const totalRevenue = await Order.aggregate([
       {
-        $match: { orderStatus: 'Delivered' }, // Filter orders with status "delivered"
+        $unwind: '$products'
+      },{
+        $match: { 'products.orderStatus': 'Delivered' }, // Filter orders with status "delivered"
       },
       {
         $group: {
           _id: null,
-          totalRevenue: { $sum: '$subTotal' }, // Sum only "delivered" orders' subTotal
+          totalRevenue: { $sum: '$products.price' }, // Sum only "delivered" orders' subTotal
         },
       },
     ]);
 
     const totalOrderRevenue =
       totalRevenue.length > 0 ? totalRevenue[0].totalRevenue : 0;
-    let totalDiscount = await Order.aggregate([
-      { $match: { orderStatus: 'Delivered' } },
-      {
-        $group: {
-          _id: null,
-          totalDiscount: { $sum: { $ifNull: ['$overallDiscountAmount', 0] } },
+
+      let totalDiscount = await Order.aggregate([
+        {
+          $unwind: '$products'
         },
-      },
-    ]);
+        {
+          $match: {
+            'products.orderStatus': 'Delivered'
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalDiscount: {
+              $sum: {
+                $subtract: [
+                  
+                  '$products.productPrice', // original price (MRP)
+                  '$products.price', // discounted/selling price
+                ]
+              }
+            }
+          }
+        }
+      ]);
+      
 
     totalDiscount =
       totalDiscount.length > 0 ? totalDiscount[0].totalDiscount : 0;
@@ -67,24 +89,45 @@ async function salesReport(req, res, next) {
       }
     }
 
-    const orders = await Order.find({
-      shippingDate: {
-        $ne: null,
-        $gte: startDate,
-        $lte: endDate,
+    const orderDetail = await Order.aggregate([
+      { $unwind: '$products' },
+      {
+        $match: {
+          'products.shippingDate': {
+            $ne: null,
+            $gte: startDate,
+            $lte: endDate,
+          },
+            'products.orderStatus': 'Delivered'
+        },
+      
       },
-    }).lean();
-
-    for (const order of orders) {
+    ]).exec();
+    
+    
+let orders=[]
+    for (const order of orderDetail) {
       const user = await User.findOne({ _id: order.userId }).lean();
-      order.userName = `${user?.firstName || ''} ${
-        user?.secondName || ''
-      }`.trim();
+      orders.push({
+        userName: `${user?.firstName || ''} ${
+          user?.secondName || ''
+        }`.trim(),
 
-      order.shippingDate = new Date(order.shippingDate).toLocaleDateString(
-        'en-GB'
-      ); // DD/MM/YYYY format
+        shippingDate:new Date(order.products.shippingDate).toLocaleDateString(
+          'en-GB'
+        ),
+        productName:order.products.name,
+        quantity:order.products.quantity,
+        total:order.products.price,
+        paymentMethod:order.paymentDetails.method
+      })
+      
+      
+
+    
     }
+
+    console.log(orders)
     const isFetchRequest =
       req.headers['accept']?.includes('application/json') ||
       req.headers['x-requested-with'] === 'XMLHttpRequest';

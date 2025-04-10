@@ -51,9 +51,7 @@ const OrderSchema = new mongoose.Schema({
     ],
     default: 'Pending',
   },
-  shippingDate: {
-    type: Date,
-  },
+
   shippingCost: {
     type: Number,
   },
@@ -65,6 +63,25 @@ const OrderSchema = new mongoose.Schema({
       price: Number,
       productPrice: Number,
       varietyMeasurement: Number,
+      shippingDate: {
+        type: Date,
+        default:null
+      },
+      orderStatus:{
+        type: String,
+        enum: [
+          'Pending',
+          'Shipped',
+          'Delivered',
+          'Cancelled',
+          'Returning',
+          'Returned',
+        ],
+        default: 'Pending',
+      }, returnDetails: {
+        reason: String,
+        additionalDetails: String,
+      },
     },
   ],
   coupon: {
@@ -82,10 +99,7 @@ const OrderSchema = new mongoose.Schema({
     country: String,
     zipCode: String,
   },
-  returnDetails: {
-    reason: String,
-    additionalDetails: String,
-  },
+ 
 });
 
 module.exports = mongoose.model('orders', OrderSchema);

@@ -302,9 +302,9 @@
   
 <script>
   // Define the ordersData array server-side and stringify it
-  <% const ordersData = [["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"]]; %>
+  <% const ordersData = [["S.No", "Name", "Product Name", "Quantity", "Total", "Payment Method"]]; %>
   <% orders.forEach((order, i) => { %>
-    <% ordersData.push([i + 1, order.userName, order.shippingDate, order.products.length, `₹${order.subTotal}`, order.paymentDetails.method]); %>
+    <% ordersData.push([i + 1, order.userName, order.shippingDate, order.productName, order.quantity, order.total,order.paymentMethod]); %>
   <% }); %>
 </script>
   
@@ -381,8 +381,9 @@
                             <th>S.No</th>
                             <th>Name</th>
                             <th>Delivery Date</th>
-                            <th>No of Products</th>
-                            <th>Total Cost</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
                             <th>Payment Method</th>
                         </tr>
                     </thead>
@@ -392,9 +393,10 @@
                                 <td><%=i+1%></td>
                                 <td><%=order.userName%></td>
                                 <td><%=order.shippingDate%></td>
-                                <td><%=order.products.length%></td>
-                                <td>₹<%=order.subTotal%></td>
-                                <td><%=order.paymentDetails.method%></td>
+                                <td><%=order.productName%></td>
+                                <td><%=order.quantity%></td>
+                                <td>₹<%=order.total%></td>
+                                <td><%=order.paymentMethod%></td>
                             </tr>
                         <%})%>
                     </tbody>
@@ -444,7 +446,7 @@
             const toastContainer = document.querySelector(".toast-container");
             const toast = document.createElement("div");
             toast.className = "toast";
-            
+            console.log(result)
             if (result.orders) {
                 const table = document.querySelector(".table tbody");
                 
@@ -456,30 +458,34 @@
                 table.innerHTML = "";
 
          // Build the table (unchanged)
+         
 result.orders.forEach((order, i) => {
     table.innerHTML += `
         <tr>
             <td>${i + 1}</td>
             <td>${order.userName}</td>
             <td>${order.shippingDate}</td>
-            <td>${order.products.length}</td>
-            <td>₹${order.subTotal}</td>
-            <td>${order.paymentDetails.method}</td>
+            <td>${order.productName}</td>
+            <td>${order.quantity}</td>
+            <td>₹${order.total}</td>
+             <td>${order.paymentMethod}</td>
         </tr>`;
 });
+
 
 // Select the download button
 const downloadButton = document.getElementById("download-pdf");
 
 // Prepare the data for downloadPdf
-const headers = ["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"];
+const headers = ["S.No", "Name","Delivery Date", "Product Name", "Quantity", "Total", "Payment Method"];
 const orderData = result.orders.map((order, i) => [
     i + 1,
     order.userName,
     order.shippingDate,
-    order.products.length,
-    `₹${order.subTotal}`,
-    order.paymentDetails.method
+    order.productName,
+    order.quantity,
+    order.total,
+    order.paymentMethod
 ]);
 
 // Combine headers and order data into a single 2D array
@@ -541,6 +547,7 @@ downloadButton.onclick = function() {
             });
             
             const result = await response.json();
+            console.log(result)
             const toastContainer = document.querySelector(".toast-container");
             const toast = document.createElement("div");
             toast.className = "toast";
@@ -560,23 +567,24 @@ downloadButton.onclick = function() {
                             <td>${i + 1}</td>
                             <td>${order.userName}</td>
                             <td>${order.shippingDate}</td>
-                            <td>${order.products.length}</td>
-                            <td>₹${order.subTotal}</td>
-                            <td>${order.paymentDetails.method}</td>
+                            <td>${order.productName}</td>
+                            <td>${order.quantity}</td>
+                            <td>₹${order.total}</td>
+                             <td>${order.paymentMethod}</td>
                         </tr>`;
                 });
-
+                
                 const downloadButton = document.getElementById("download-pdf");
 
 // Prepare the data for downloadPdf
-const headers = ["S.No", "Name", "Delivery Date", "No of Products", "Total Cost", "Payment Method"];
+const headers = ["S.No", "Name", "Product Name", "Quantity", "Total", "Payment Method"];
 const orderData = result.orders.map((order, i) => [
     i + 1,
     order.userName,
     order.shippingDate,
-    order.products.length,
-    `₹${order.subTotal}`,
-    order.paymentDetails.method
+    order.quantity,
+    order.total,
+    order.paymentMethod
 ]);
 
 // Combine headers and order data into a single 2D array

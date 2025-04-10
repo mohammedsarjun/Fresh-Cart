@@ -50,7 +50,7 @@
 <script>window.lemonSqueezyAffiliateConfig = { store: "codescandy" };</script>
 <script src="../lmsqueezy.com/affiliate.js" defer></script> <!-- buy now template button Remove if you do not want. -->
 
-	<title>SOrders</title>
+	<title>Orders</title>
 </head>
 
 <body>
@@ -228,8 +228,15 @@
 												<td class="align-middle px-6 py-3"><%= orders.renderOrderDateAndTime%></td>
 											
 												<td class="align-middle px-6 py-3">
-													<span
-														class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%= orders.orderStatus%></span></span>
+
+													<%if(orders.paymentDetails.status=="Failed"){%>
+														<span
+														class="inline-block p-1 text-sm align-baseline leading-none rounded bg-red-100 text-red-800 border border-red-200 font-semibold">Payment Failed</span>
+														<%}else{%>
+															<span
+															class="inline-block p-1 text-sm align-baseline leading-none rounded bg-yellow-100 text-yellow-800 border border-yellow-200 font-semibold"><%= orders.orderStatus%></span>
+															<%}%>
+													
 												</td>
 												<td class="align-middle px-6 py-3">₹<%= orders.subTotal%></td>
 												<td class="text-gray-500 align-middle px-6 py-3">

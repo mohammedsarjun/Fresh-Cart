@@ -159,6 +159,21 @@ app.use((err, req, res, next) => {
   }
 });
 
+// Webhook endpoint
+app.post('/webhook', express.json(), (req, res) => {
+  const event = req.body;
+
+  if (event.event === "payment.failed") {
+    const failureDetails = event.payload.payment.entity;
+    console.log("Payment failed:", failureDetails);
+
+    // Optional: Save to DB or alert the user
+  }
+
+  res.status(200).send("Webhook received");
+});
+
+
 app.listen(PORT, (err) => {
   console.log(`server is running on port ${PORT}`);
 });

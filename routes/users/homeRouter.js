@@ -24,7 +24,6 @@ router.get(
   shopController.loadProductReview
 );
 
-
 //post
 router.post('/shop/product/checkStock', shopController.checkStockContoller);
 router.post('/shop/productDetail/add-review', shopController.addReview);
@@ -137,12 +136,19 @@ router.get(
   orderController.renderOrderSuccessPage
 );
 
+router.get("/order/orderFailure",authMiddleware,orderController.renderPaymentFailurePage)
+
 //post
 router.post('/cart/placeOrder', (req, res) => {
   orderController.placeOrder(req, res, null, null);
 });
 
+router.post("/order/failOrderPayment",orderController.failOrderPayment)
 //cancel order
+
+//cancelSingleOrder
+
+router.put('/order/cancelSingleOrder', orderController.cancelSingleOrder)
 //put
 router.put('/order/cancelOrder', orderController.cancelOrder);
 
