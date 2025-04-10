@@ -974,10 +974,10 @@
 											<div><%if(cart?.coupon?.name){%>
 												<%if(cart?.coupon?.isMax==true){%>
 												<span class="text-danger pe-3" style="text-decoration: line-through;">
-													₹<%= cart.grandTotal + cart.coupon.maxPurchase%>
+													₹<%= (cart.grandTotal + cart.coupon.maxPurchase).toFixed(1) %>
 												</span><%} else{%>
 													<span class="text-danger pe-3" style="text-decoration: line-through;">
-														₹<%= cart.grandTotal / (1 - cart.coupon.discount / 100)%>
+														₹<%= (cart.grandTotal / (1 - cart.coupon.discount / 100)).toFixed(1) %>
 													</span>
 												<%}%>
 												<%}%>
@@ -1470,6 +1470,22 @@
                 window.location.href=verifyData.redirectTo
             }
 				}
+				, modal: {
+        ondismiss:async  function () {
+            // User closed the payment modal without completing payment
+			let response = await fetch("/order/failOrderPayment", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ selectedAddress, selectedPayment }),
+});
+
+
+  window.location = "/order/orderFailure"; // redirect after success
+
+        }
+    }
 			};
 
 			const rzp = new Razorpay(options);

@@ -16,23 +16,25 @@ async function renderDashboardPage(req, res, next) {
    
     const monthlyRevenue = await Order.aggregate([
       {
+        $unwind: '$products'
+      },{
         $match: {
-          shippingDate: { $gte: startOfMonth, $lte: today },
-          orderStatus: 'Delivered',
+          'products.shippingDate': { $gte: startOfMonth, $lte: today },
+        'products.orderStatus' : 'Delivered',
         },
       },
+     
       {
-        $project: { montlyRevenue: '$subTotal' },
-      },
-      {
-        $group: { _id: null, monthlyRevenue: { $sum: '$montlyRevenue' } },
+        $group: { _id: null, monthlyRevenue: { $sum: '$products.price' } },
       },
     ]);
 
     let ordersToShip = await Order.aggregate([
       {
+        $unwind: '$products'
+      },{
         $match: {
-          orderStatus: 'Pending',
+         'products.orderStatus': 'Pending',
         },
       },
       {
@@ -42,14 +44,19 @@ async function renderDashboardPage(req, res, next) {
         },
       },
     ]);
+
+
 
     ordersToShip = ordersToShip[0]?.count;
     console.log(ordersToShip);
 
     let ordersDelivered = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          orderStatus: 'Delivered',
+         'products.orderStatus': 'Delivered'
         },
       },
       {
@@ -59,6 +66,8 @@ async function renderDashboardPage(req, res, next) {
         },
       },
     ]);
+
+
 
     ordersDelivered = ordersDelivered[0]?.count;
 
@@ -84,20 +93,25 @@ async function renderDashboardPage(req, res, next) {
     // Fetch sales data from MongoDB
     const salesData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          shippingDate: { $gte: startOfWeek, $lte: endOfWeek },
-          orderStatus: 'Delivered',
-        },
+          'products.shippingDate': { $gte: startOfWeek, $lte: endOfWeek },
+          'products.orderStatus': 'Delivered'
+        }
       },
       {
         $group: {
           _id: {
-            $dateToString: { format: '%Y-%m-%d', date: '$shippingDate' },
+            $dateToString: { format: '%Y-%m-%d', date: '$products.shippingDate' }
           },
-          totalRevenue: { $sum: '$subTotal' },
-        },
+          totalRevenue: { $sum: '$products.price' }
+        }
       },
-      { $sort: { _id: 1 } },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
 
     console.log(salesData);
@@ -122,20 +136,24 @@ async function renderDashboardPage(req, res, next) {
 
     //Order Filter result
 
+  
+
     let orderData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },{
         $match: {
           orderDateAndTime: { $gte: startOfWeek, $lte: endOfWeek },
         },
       },
       {
         $group: {
-          _id: '$orderStatus',
+          _id: '$products.orderStatus',
           count: { $sum: 1 },
         },
       },
     ]);
-    
+    console.log(orderData)
     // Define all possible order statuses
     const allStatuses = ["Delivered", "Returned", "Cancelled", "Pending"];
     
@@ -174,25 +192,33 @@ async function changeFilter(req, res, next) {
     startDate.setUTCHours(0, 0, 0, 0);
     const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     endDate.setUTCHours(23, 59, 59, 999);
+
     const salesData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          shippingDate: { $gte: startDate, $lte: endDate },
-          orderStatus: 'Delivered',
-        },
+          'products.shippingDate': { $gte: startDate, $lte: endDate },
+          'products.orderStatus': 'Delivered'
+        }
       },
       {
         $project: {
-          week: { $ceil: { $divide: [{ $dayOfMonth: '$shippingDate' }, 7] } },
-          totalSold: '$subTotal',
+          week: { $ceil: { $divide: [{ $dayOfMonth: '$products.shippingDate' }, 7] } },
+          totalSold: { $sum: '$products.price' },
         },
       },
       {
-        $group: { _id: '$week', totalRevenue: { $sum: '$totalSold' } },
+        $group: {
+          _id:'$week',
+          totalRevenue: { $sum: '$totalSold' }
+        }
       },
-      { $sort: { _id: 1 } },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
-
     const result = {
       data: [0, 0, 0, 0],
       category: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
@@ -219,22 +245,27 @@ async function changeFilter(req, res, next) {
     // Fetch sales data from MongoDB
     const salesData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          shippingDate: { $gte: startOfWeek, $lte: endOfWeek },
-          orderStatus: 'Delivered',
-        },
+          'products.shippingDate': { $gte: startOfWeek, $lte: endOfWeek },
+          'products.orderStatus': 'Delivered'
+        }
       },
       {
         $group: {
           _id: {
-            $dateToString: { format: '%Y-%m-%d', date: '$shippingDate' },
+            $dateToString: { format: '%Y-%m-%d', date: '$products.shippingDate' }
           },
-          totalRevenue: { $sum: '$subTotal' },
-        },
+          totalRevenue: { $sum: '$products.price' }
+        }
       },
-      { $sort: { _id: 1 } },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
-
+    
     console.log(salesData);
     // Prepare result with all days of the week
     const result = {
@@ -264,17 +295,22 @@ async function changeFilter(req, res, next) {
     const startOfYear = new Date(today.getFullYear(), 0, 1); // January 1st
     const endOfYear = new Date(today.getFullYear(), today.getMonth() + 1, 0); // End of the current month
 
+
+
     const salesData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          shippingDate: { $gte: startOfYear, $lte: endOfYear },
-          orderStatus: 'Delivered',
-        },
+          'products.shippingDate': { $gte: startOfYear, $lte: endOfYear },
+          'products.orderStatus': 'Delivered'
+        }
       },
       {
         $project: {
-          month: { $month: '$shippingDate' }, // Extract month number (1-12)
-          totalSold: '$subTotal',
+          month: { $month: '$products.shippingDate' }, // Extract month number (1-12)
+          totalSold: { $sum: '$products.price' },
         },
       },
       {
@@ -282,6 +318,7 @@ async function changeFilter(req, res, next) {
       },
       { $sort: { _id: 1 } },
     ]);
+    
 
     const months = [
       'Jan',
@@ -322,28 +359,45 @@ async function changeFilter(req, res, next) {
     if (!startDate || !endDate) {
       return res.status(400).json({ error: 'Missing startDate or endDate' });
     }
-
     const salesData = await Order.aggregate([
       {
+        $unwind: '$products'
+      },
+      {
         $match: {
-          shippingDate: { $gte: startDate, $lte: endDate },
-          orderStatus: 'Delivered',
-        },
+          'products.shippingDate': { $gte: startDate, $lte: endDate },
+          'products.orderStatus': 'Delivered',
+        }
       },
       {
         $project: {
           date: {
-            $dateToString: { format: '%d/%m/%Y', date: '$shippingDate' },
-          }, // Format as DD/MM/YYYY
-          totalSold: '$subTotal',
-        },
+            $dateToString: {
+              format: '%d/%m/%Y',
+              date: { $toDate: '$products.shippingDate' } // 👈 Ensure it's a Date type
+            }
+          },
+          totalSold: '$products.price' // 👈 Just pass the price directly
+        }
       },
       {
-        $group: { _id: '$date', totalRevenue: { $sum: '$totalSold' } },
+        $group: {
+          _id: '$date',
+          totalRevenue: { $sum: '$totalSold' }
+        }
       },
-      { $sort: { _id: 1 } },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
+    
 
+  
+
+
+    
+    
+    
     const result = {
       data: [],
       category: [],
@@ -369,8 +423,9 @@ async function changeFilter(req, res, next) {
 async function top10productsrender(req, res, next) {
   try {
     let topProducts = await Order.aggregate([
-      { $match: { orderStatus: 'Delivered' } },
+   
       { $unwind: '$products' }, // Break array into individual documents
+      { $match: { 'products.orderStatus': 'Delivered' } },
       {
         $group: {
           _id: '$products.productId', // Group by productId
@@ -389,6 +444,7 @@ async function top10productsrender(req, res, next) {
         },
       },
       { $unwind: '$productDetails' }, // Convert array to object
+      {$match:{'productDetails.isDeleted':false}},
       {
         $project: {
           // Select fields to return
@@ -486,20 +542,22 @@ async function changeOrderFilter(req, res, next) {
       const endOfWeek = new Date();
       endOfWeek.setUTCHours(23, 59, 59, 999);
       // Fetch sales data from MongoDB
+ 
       let orderData = await Order.aggregate([
         {
+          $unwind: '$products'
+        },{
           $match: {
             orderDateAndTime: { $gte: startOfWeek, $lte: endOfWeek },
           },
         },
         {
           $group: {
-            _id: '$orderStatus',
+            _id: '$products.orderStatus',
             count: { $sum: 1 },
           },
         },
       ]);
-      
       // Define all possible order statuses
       const allStatuses = ["Delivered", "Returned", "Cancelled", "Pending"];
       
@@ -529,19 +587,27 @@ async function changeOrderFilter(req, res, next) {
       endDate.setUTCHours(23, 59, 59, 999);
 
       // Fetch sales data from MongoDB
+
+
       let orderData = await Order.aggregate([
         {
+          $unwind: '$products'
+        },{
           $match: {
             orderDateAndTime: { $gte: startDate, $lte: endDate },
           },
         },
         {
           $group: {
-            _id: '$orderStatus',
+            _id: '$products.orderStatus',
             count: { $sum: 1 },
           },
         },
       ]);
+
+
+
+      
       
       // Define all possible order statuses
       const allStatuses = ["Delivered", "Returned", "Cancelled", "Pending"];
@@ -569,19 +635,25 @@ async function changeOrderFilter(req, res, next) {
       const endOfYear = new Date(today.getFullYear(), today.getMonth() + 1, 0); // End of the current month
 
       // Fetch sales data from MongoDB
+
       let orderData = await Order.aggregate([
         {
+          $unwind: '$products'
+        },{
           $match: {
             orderDateAndTime: { $gte: startOfYear, $lte: endOfYear },
           },
         },
         {
           $group: {
-            _id: '$orderStatus',
+            _id: '$products.orderStatus',
             count: { $sum: 1 },
           },
         },
       ]);
+
+
+
       
       // Define all possible order statuses
       const allStatuses = ["Delivered", "Returned", "Cancelled", "Pending"];

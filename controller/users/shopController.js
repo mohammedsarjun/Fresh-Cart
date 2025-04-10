@@ -45,9 +45,10 @@ async function shopPageRender(req, res, next) {
     for (let product of products) {
       const offers = await productOffer.find({ selectProduct: product._id }); // "offers" since find() returns an array
       const categoryOffer = await CategoryOffer.findOne({
-        category: product.categoryId,
+        category: product.categoryId
       });
 
+     console.log(categoryOffer)
       if (offers.length > 0) {
         for (let offer of offers) {
           let offerPercentage =
@@ -59,6 +60,7 @@ async function shopPageRender(req, res, next) {
             categoryOffer?.startDate < Date.now() &&
             categoryOffer?.isListed == true
           ) {
+           
             if (offer.selectVariety !== 'items') {
               for (let i = 0; i < product.varietyDetails.length; i++) {
                 if (
@@ -124,7 +126,11 @@ async function shopPageRender(req, res, next) {
         const categoryOffer = await CategoryOffer.findOne({
           category: product.categoryId,
         });
-        if (categoryOffer) {
+        if  (
+        categoryOffer?.endDate > Date.now() &&
+        categoryOffer?.startDate < Date.now() &&
+        categoryOffer?.isListed == true
+      ){
           product.varietyDetails.forEach((varietyDetail) => {
             varietyDetail.varietyDiscount = categoryOffer.offerPercentage;
           });
@@ -193,6 +199,7 @@ async function shopPageRender(req, res, next) {
     let categoryListFilter = req?.query?.category?.trim() || randomCategory;
     const categoryUnlist=await Category.findOne({_id:categoryListFilter})
 
+    products=products.filter((product)=>product.isDeleted==false)
     if(categoryUnlist.isPublished==false){
       return res.status(200).render(path.join('UserPages', 'shopPage'), {
         products:[],
@@ -698,6 +705,8 @@ async function filterProduct(req, res, next) {
   }
   }
 
+  products = products.filter((product)=>product.isDeleted==false)
+
 return  res.status(200).json({ products });
   
    }
@@ -869,7 +878,7 @@ console.log(products,req.body.minPrice,req.body.maxPrice)
         );
       });
     }
-   
+    products = products.filter((product)=>product.isDeleted==false)
     res.status(200).json({ products });
     console.log(products.length);
   } catch (err) {

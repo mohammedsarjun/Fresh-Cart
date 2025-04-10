@@ -142,7 +142,7 @@ async function productEditAction(
   perRate,
   productDescription
 ) {
-  console.log(productName.productName)
+  console.log(productDescription)
   var myModal = new bootstrap.Modal(
     document.getElementById('editProductModal')
   );
@@ -179,8 +179,7 @@ async function productEditAction(
       );
     });
   }
-  document.getElementById('productEditDescription').value =
-    JSON.parse(productDescription);
+  document.getElementById('productEditDescription').value =productDescription;
 }
 
 //clicking events

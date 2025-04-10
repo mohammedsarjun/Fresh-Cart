@@ -201,7 +201,11 @@ async function cartPageRender(req, res, next) {
         const categoryOffer = await CategoryOffer.findOne({
           category: productDetail.categoryId,
         });
-        if (categoryOffer) {
+        if  (
+          categoryOffer?.endDate > Date.now() &&
+          categoryOffer?.startDate < Date.now() &&
+          categoryOffer?.isListed == true
+        ){
           productDetail.varietyDetails.forEach((varietyDetail) => {
             varietyDetail.varietyDiscount = categoryOffer.offerPercentage;
           });

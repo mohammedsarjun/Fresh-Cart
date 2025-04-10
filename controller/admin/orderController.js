@@ -9,6 +9,7 @@ const Wishlist = require('../../model/wishlistSchema');
 const orderSchema = require('../../model/orderSchema');
 const Wallet = require('../../model/walletSchema');
 const AppError = require('../../middleware/errorHandling');
+const { ObjectId } = require('mongodb');
 const { v4: uuidv4 } = require('uuid');
 async function renderOrderPage(req, res, next) {
   try {
@@ -102,7 +103,40 @@ async function renderOrderDetailPage(req, res, next) {
       order.products[i].variety = productDetails.variety;
     }
 
-    console.log(order);
+      let orders = await orderSchema.findOne({ _id: req.params.id });
+        let cancelledProducts = orders.products.filter(
+          product => product.orderStatus === "Cancelled"
+        );
+    
+        let returnedProducts=orders.products.filter(
+          product => product.orderStatus === "Returned"
+        );
+    
+        let shippedProducts=orders.products.filter(
+          product => product.orderStatus === "Shipped"
+        );
+        let deliveredProducts=orders.products.filter(
+          product => product.orderStatus === "Delivered"
+        );
+        let isWholeCancelled = cancelledProducts.length === orders.products.length;
+        let isWholeReturned= returnedProducts.length===orders.products.length;
+        let isWholeShipped= shippedProducts.length===orders.products.length;
+        let isWholeDelivered=deliveredProducts.length===orders.products.length;
+        if (isWholeCancelled) {
+          orders.orderStatus = "Cancelled";
+        }
+        if (isWholeReturned) {
+          orders.orderStatus = "Returned";
+        }
+        if (isWholeShipped) {
+          orders.orderStatus = "Shipped";
+        }
+    
+        if(isWholeDelivered){
+          orders.orderStatus = "Delivered";
+        }
+        
+        await orders.save()
     res
       .status(200)
       .render(path.join('../', 'views', 'admin pages', 'orderSingle'), {
@@ -116,22 +150,27 @@ async function renderOrderDetailPage(req, res, next) {
 
 async function changeStatus(req, res, next) {
   try {
-    let order = await orderSchema.findOne({ _id: req.body.orderId });
-    order.orderStatus = req.body.selectedStatus;
+    console.log(req.body.orderId)
+    let order = await orderSchema.findOne({ _id:new ObjectId(req.body.orderId) });
+console.log(order)
+    order.products.find((product)=>product.productId==req.body.productId&&product.varietyMeasurement==req.body.varietyMeasurement).orderStatus=req.body.selectedStatus
     if (req.body.selectedStatus == 'Delivered') {
-      order.shippingDate = Date.now();
+      order.products.find((product)=>product.productId==req.body.productId&&product.varietyMeasurement==req.body.varietyMeasurement).shippingDate=Date.now()
     }
+    order.markModified("products")
     await order.save();
     res.status(200).json({
       message: 'Status Changed SuccessFully',
     });
   } catch (err) {
+    console.log(err)
     next(new AppError('Sorry...Something went wrong', 500));
   }
 }
 
 async function returnProduct(req, res, next) {
   try {
+    console.log(req.body)
     const order = await orderSchema.findOne({ _id: req.body.orderId });
 
     if (!order) {
@@ -165,7 +204,10 @@ async function returnProduct(req, res, next) {
 
     await wallet.save();
 
-    order.orderStatus = 'Returned';
+  
+
+    order.products.find((product)=>(product.productId==req.body.productId&&product.varietyMeasurement==req.body.varietyMeasurement)).orderStatus="Returned"
+    order.markModified("products")
     await order.save();
     res.status(200).json({
       message: 'Product Returned Successfully',
@@ -175,9 +217,20 @@ async function returnProduct(req, res, next) {
     next(new AppError('Sorry...Something went wrong', 500));
   }
 }
+
+async function fetchReturnProduct(req,res){
+const order=await orderSchema.findOne({_id:req.query.orderId})
+let product =order.products.find((product)=>(product.productId==req.query.productId&&product.varietyMeasurement==req.query.varietyMeasurement))
+let response={}
+response.returnDetails=product.returnDetails
+response.productId=product.productId
+response.varietyMeasurement=product.varietyMeasurement
+res.status(200).json({response})
+}
 module.exports = {
   renderOrderPage,
   renderOrderDetailPage,
   changeStatus,
   returnProduct,
+  fetchReturnProduct
 };

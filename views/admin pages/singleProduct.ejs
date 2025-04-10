@@ -457,7 +457,7 @@
                         '<%= updatedProducts?.availability %>',
                         '<%= updatedProducts?.variety %>',
                         JSON.parse('<%= JSON.stringify(Object.values(updatedProducts?.productPrice)?.filter(product => product != null)) %>'),
-                        JSON.parse('<%= JSON.stringify(updatedProducts?.productDescription) %>')
+                        <%= JSON.stringify(updatedProducts?.productDescription) %>
                     )">
                     Edit
                 </button>

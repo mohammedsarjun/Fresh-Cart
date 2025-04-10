@@ -4,6 +4,7 @@ require('dotenv').config();
 const orderController = require('./orderController');
 const walletController = require('./walletController');
 const AppError = require('../../middleware/errorHandling');
+const orderSchema = require('../../model/orderSchema');
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -71,4 +72,40 @@ async function verifyPayment(req, res, next) {
   }
 }
 
-module.exports = { createOrder, verifyPayment };
+
+async function retryVerifyPayment(req, res, next) {
+  try {
+    console.log(req.body.orderId)
+
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body.response;
+    const generated_signature = crypto
+      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+      .update(razorpay_order_id + '|' + razorpay_payment_id)
+      .digest('hex');
+
+    if (generated_signature === razorpay_signature) {
+      let isOnlinePayment = true;
+
+      const paymentDetails = await razorpay.payments.fetch(razorpay_payment_id);
+      if (!paymentDetails || paymentDetails?.status !== 'captured') {
+        return res
+          .status(400)
+          .json({ success: false, message: 'Payment not captured' });
+      }
+      const order=await orderSchema.findOne({_id:req.body.orderId})
+      console.log(order)
+      order.paymentDetails.status="Completed"
+      order.markModified("paymentDetails")
+      await order.save()
+      res.status(200).json({message:"Order Placed Successfully",redirectTo:true})
+    } else {
+  
+      res.status(400).json({ success: false, message: 'Invalid Payment' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(new AppError('Sorry...Something went wrong', 500));
+  }
+}
+module.exports = { createOrder, verifyPayment,retryVerifyPayment };
