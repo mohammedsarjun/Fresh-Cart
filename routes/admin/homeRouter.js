@@ -163,7 +163,7 @@ router.delete('/coupon/deleteCoupon', couponController.deleteCoupon);
 
 //Product Offers
 
-router.get('/productOffers', productOfferController.renderProductOffersPage);
+router.get('/productOffers', adminAuthMiddleware,productOfferController.renderProductOffersPage);
 
 router.get(
   '/productOffers/fetchVarietyDetail/:id',
@@ -189,7 +189,7 @@ router.delete(
 
 //Category offer
 
-router.get('/categoryOffers', categoryOfferController.renderCategoryOffersPage);
+router.get('/categoryOffers', adminAuthMiddleware,categoryOfferController.renderCategoryOffersPage);
 
 //add category offer
 
@@ -213,5 +213,5 @@ router.delete(
 
 //Sales Report
 
-router.get('/salesReport', salesReportController.salesReport);
+router.get('/salesReport',adminAuthMiddleware, salesReportController.salesReport);
 module.exports = router;

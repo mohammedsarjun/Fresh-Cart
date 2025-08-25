@@ -444,8 +444,7 @@ async function renderOrderSuccessPage(req, res, next) {
 
 async function cancelSingleOrder(req,res,next){
   try {
-    console.log(req.body);
-    console.log("It's cancel single order");
+  
   
     let order = await orderSchema.findOne({ _id: req.body.orderId });
 
@@ -488,11 +487,19 @@ async function cancelSingleOrder(req,res,next){
       product.productId==req.body.productId &&
       product.varietyMeasurement == req.body.varietyMeasurement
     );
-  console.log(changeOrderStatus)
+
     if (changeOrderStatus) {
       changeOrderStatus.orderStatus = "Cancelled";
       order.markModified("products");
-  
+
+      let singleProductDocument= await Product.findOne({_id:product.productId})
+      let singleProductVariety= singleProductDocument.varietyDetails.find((variety)=>variety.varietyMeasurement==product.varietyMeasurement)
+     console.log(singleProductVariety)
+      singleProductVariety.varietyStock=singleProductVariety.varietyStock+product.quantity
+      singleProductDocument.markModified('varietyDetails')
+     await singleProductDocument.save()
+      console.log(product)
+      console.log(singleProductDocument)
       let cancelledProducts = order.products.filter(
         product => product.orderStatus === "Cancelled"
       );
