@@ -59,6 +59,7 @@ async function userUpdate(req, res, next) {
           error: 'Entered email is already Exist',
         });
       }
+
       req.session.isUserEmailChanged = true;
       req.session.updatingEmail = req.body.email;
 
