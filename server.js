@@ -16,7 +16,7 @@ const adminAuthRouter = require('./routes/admin/authRouter');
 const adminHomeRouter = require('./routes/admin/homeRouter');
 const razorpayRouter = require('./routes/users/razorPay');
 
-const PORT = process.env.DB_PORT;
+const PORT = process.env.PORT;
 
 //initializing the App
 const app = express();
@@ -167,7 +167,6 @@ app.post('/webhook', express.json(), (req, res) => {
     const failureDetails = event.payload.payment.entity;
     console.log("Payment failed:", failureDetails);
 
-    // Optional: Save to DB or alert the user
   }
 
   res.status(200).send("Webhook received");
