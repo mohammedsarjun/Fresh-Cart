@@ -12,3 +12,6 @@ node_modules/
 # Ignore compiled files
 *.exe
 *.out
+
+#Ignore Uploads
+uploads/

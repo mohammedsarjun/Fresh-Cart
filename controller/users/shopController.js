@@ -26,8 +26,7 @@ async function shopPageRender(req, res, next) {
     let randomCategory=await Category.findOne({categoryName:"Snacks and munchies"})
 
     if (!searchQuery) {
-
-      categoryFilter =req.query.category ||String(randomCategory._id);
+      categoryFilter = req.query.category || String(randomCategory?._id);
     }
 
     let filter = { isListed: true ,isDeleted: { $ne: true }};
@@ -48,33 +47,28 @@ async function shopPageRender(req, res, next) {
         category: product.categoryId
       });
 
-     console.log(categoryOffer)
+      console.log(categoryOffer);
       if (offers.length > 0) {
         for (let offer of offers) {
-          let offerPercentage =
-            offer?.offerPercentage != undefined ? offer?.offerPercentage : 0;
+          let offerPercentage = offer?.offerPercentage != undefined ? offer?.offerPercentage : 0;
           if (
-            (offerPercentage < categoryOffer?.offerPercentage ||
-              offer.isListed == false) &&
-            categoryOffer?.endDate > Date.now() &&
-            categoryOffer?.startDate < Date.now() &&
+            (offerPercentage < (categoryOffer?.offerPercentage ?? 0) || offer.isListed == false) &&
+            (categoryOffer?.endDate ?? 0) > Date.now() &&
+            (categoryOffer?.startDate ?? 0) < Date.now() &&
             categoryOffer?.isListed == true
           ) {
-           
             if (offer.selectVariety !== 'items') {
               for (let i = 0; i < product.varietyDetails.length; i++) {
                 if (
-                  product.varietyDetails[i].varietyMeasurement ===
-                  offer.selectedVarietyMeasurement
+                  product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement
                 ) {
-                  product.varietyDetails[i].varietyDiscount =
-                    categoryOffer.offerPercentage;
+                  product.varietyDetails[i].varietyDiscount = categoryOffer?.offerPercentage ?? 0;
                   modified = true;
                 }
               }
             } else {
               product.varietyDetails.forEach((variety) => {
-                variety.varietyDiscount = categoryOffer.offerPercentage;
+                variety.varietyDiscount = categoryOffer?.offerPercentage ?? 0;
               });
               modified = true;
             }
@@ -126,13 +120,13 @@ async function shopPageRender(req, res, next) {
         const categoryOffer = await CategoryOffer.findOne({
           category: product.categoryId,
         });
-        if  (
-        categoryOffer?.endDate > Date.now() &&
-        categoryOffer?.startDate < Date.now() &&
-        categoryOffer?.isListed == true
-      ){
+        if (
+          (categoryOffer?.endDate ?? 0) > Date.now() &&
+          (categoryOffer?.startDate ?? 0) < Date.now() &&
+          categoryOffer?.isListed == true
+        ) {
           product.varietyDetails.forEach((varietyDetail) => {
-            varietyDetail.varietyDiscount = categoryOffer.offerPercentage;
+            varietyDetail.varietyDiscount = categoryOffer?.offerPercentage ?? 0;
           });
           modified = true;
         } else {
@@ -162,7 +156,7 @@ async function shopPageRender(req, res, next) {
     let categoryFilterName = [];
     if (categoryFilter) {
       categoryFilterName = await Category.findOne(
-        { _id: categoryFilter.trim() },
+        { _id: categoryFilter?.trim?.() },
         { categoryName: 1 }
       );
     }
@@ -196,13 +190,13 @@ async function shopPageRender(req, res, next) {
     );
 
 
-    let categoryListFilter = req?.query?.category?.trim() || randomCategory;
-    const categoryUnlist=await Category.findOne({_id:categoryListFilter})
+    let categoryListFilter = req?.query?.category?.trim() || randomCategory?._id;
+    const categoryUnlist = await Category.findOne({ _id: categoryListFilter });
 
-    products=products.filter((product)=>product.isDeleted==false)
-    if(categoryUnlist.isPublished==false){
+    products = products.filter((product) => product.isDeleted == false);
+    if (categoryUnlist?.isPublished == false) {
       return res.status(200).render(path.join('UserPages', 'shopPage'), {
-        products:[],
+        products: [],
         category,
         page,
         totalPages,
