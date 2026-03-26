@@ -306,7 +306,6 @@ console.log(req.body.productName )
     const existingProduct = await Product.findOne({ productName: req.body.productName });
     console.log(existingProduct)
     if (existingProduct) {
-      console.log("hi da pumda")
       return res.status(200).json({
         error: 'Product already exists',
       });
@@ -317,13 +316,13 @@ console.log(req.body.productName )
       const productImages = {};
 
       if (images['productImageOne']) {
-        productImages.productImage1 = `/uploads/products/${images['productImageOne'][0].filename}`;
+        productImages.productImage1 = images['productImageOne'][0].path;
       }
       if (images['productImageTwo']) {
-        productImages.productImage2 = `/uploads/products/${images['productImageTwo'][0].filename}`;
+        productImages.productImage2 = images['productImageTwo'][0].path;
       }
       if (images['productImageThree']) {
-        productImages.productImage3 = `/uploads/products/${images['productImageThree'][0].filename}`;
+        productImages.productImage3 = images['productImageThree'][0].path;
       }
 
       // Check for the presence of image files and store their paths
@@ -355,13 +354,13 @@ console.log(req.body.productName )
       const productImages = {};
 
       if (images['productImageOne']) {
-        productImages.productImage1 = `/uploads/products/${images['productImageOne'][0].filename}`;
+        productImages.productImage1 = images['productImageOne'][0].path;
       }
       if (images['productImageTwo']) {
-        productImages.productImage2 = `/uploads/products/${images['productImageTwo'][0].filename}`;
+        productImages.productImage2 = images['productImageTwo'][0].path;
       }
       if (images['productImageThree']) {
-        productImages.productImage3 = `/uploads/products/${images['productImageThree'][0].filename}`;
+        productImages.productImage3 = images['productImageThree'][0].path;
       }
 
       const product = new Product({
@@ -484,17 +483,17 @@ async function updateProduct(req, res, next) {
       const varietyDetails = [{}, {}, {}];
 
       if (images['editProductImageOne']) {
-        productImages.productImage1 = `/uploads/products/${images['editProductImageOne'][0].filename}`;
+        productImages.productImage1 = images['editProductImageOne'][0].path;
       } else {
         productImages.productImage1 = product.productPic.productImage1;
       }
       if (images['editProductImageTwo']) {
-        productImages.productImage2 = `/uploads/products/${images['editProductImageTwo'][0].filename}`;
+        productImages.productImage2 = images['editProductImageTwo'][0].path;
       } else {
         productImages.productImage2 = product.productPic.productImage2;
       }
       if (images['editProductImageThree']) {
-        productImages.productImage3 = `/uploads/products/${images['editProductImageThree'][0].filename}`;
+        productImages.productImage3 = images['editProductImageThree'][0].path;
       } else {
         productImages.productImage3 = product.productPic.productImage3;
       }
@@ -544,17 +543,17 @@ async function updateProduct(req, res, next) {
       const productImages = {};
 
       if (images['editProductImageOne']) {
-        productImages.productImage1 = `/uploads/products/${images['editProductImageOne'][0].filename}`;
+        productImages.productImage1 = images['editProductImageOne'][0].path;
       } else {
         productImages.productImage1 = product.productPic.productImage1;
       }
       if (images['editProductImageTwo']) {
-        productImages.productImage2 = `/uploads/products/${images['editProductImageTwo'][0].filename}`;
+        productImages.productImage2 = images['editProductImageTwo'][0].path;
       } else {
         productImages.productImage2 = product.productPic.productImage2;
       }
       if (images['editProductImageThree']) {
-        productImages.productImage3 = `/uploads/products/${images['editProductImageThree'][0].filename}`;
+        productImages.productImage3 = images['editProductImageThree'][0].path;
       } else {
         productImages.productImage3 = product.productPic.productImage3;
       }

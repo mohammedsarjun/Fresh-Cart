@@ -19,8 +19,8 @@ async function addCategories(req, res, next) {
         error: 'Category already Exist',
       });
     } else {
-      const { categoryName, categoryDescription, categoryImage } = req.body;
-      const imageUrl = `/uploads/categories/${req.file.filename}`; // Store correct path
+      const { categoryName, categoryDescription } = req.body;
+      const imageUrl = req.file.path; // Store Cloudinary path
 
       // Save category to MongoDB
       const category = new Category({
@@ -117,7 +117,7 @@ async function updateCategory(req, res) {
   try {
     const { categoryId, categoryName, categoryDescription } = req.body;
     const newImageUrl = req.file
-      ? `/uploads/categories/${req.file.filename}`
+      ? req.file.path // Store Cloudinary URL
       : null;
 
     const category = await Category.findById(categoryId);
@@ -130,12 +130,7 @@ async function updateCategory(req, res) {
       return res.status(409).json({ error: 'Category name already exists' });
     }
 
-    if (newImageUrl && category.imageUrl) {
-      const oldImagePath = path.join(__dirname, '../../', category.imageUrl);
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-    }
+    // Old local image cleanup removed, as images are now stored on Cloudinary.
 
     category.imageUrl = newImageUrl || category.imageUrl;
     category.categoryName = categoryName;
@@ -159,10 +154,7 @@ async function categoryDelete(req, res) {
       return res.status(404).json({ error: 'Category not found.' });
     }
 
-    const ImagePath = path.join(__dirname, '../../', category.imageUrl);
-    if (fs.existsSync(ImagePath)) {
-      fs.unlinkSync(ImagePath);
-    }
+    // Old local image cleanup removed
 
     // Delete the user
     await Category.findByIdAndDelete(categoryId);

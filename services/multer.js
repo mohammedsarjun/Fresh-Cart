@@ -1,49 +1,38 @@
 const multer = require('multer');
+const { v2: cloudinary } = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const path = require('path');
-const fs = require('fs');
 
-// Ensure upload directories exist
-const categoriesDir = 'uploads/categories';
-const productsDir = 'uploads/products';
-
-if (!fs.existsSync(categoriesDir))
-  fs.mkdirSync(categoriesDir, { recursive: true });
-if (!fs.existsSync(productsDir)) fs.mkdirSync(productsDir, { recursive: true });
-
-// Function to create storage dynamically based on upload type
-const createStorage = (uploadPath) =>
-  multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, uploadPath);
-    },
-    filename: function (req, file, cb) {
-      cb(
-        null,
-        file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-      );
-    },
-  });
-
-// File filter to allow only images
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Only images are allowed!'), false);
-  }
-};
-
-// Multer instances for categories and products
-const uploadCategory = multer({
-  storage: createStorage(categoriesDir),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: fileFilter,
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadProduct = multer({
-  storage: createStorage(productsDir),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: fileFilter,
+// Create storage instance for Categories
+const categoryStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'fresh-cart/categories',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    public_id: (req, file) => file.fieldname + '-' + Date.now(),
+  },
 });
+
+// Create storage instance for Products
+const productStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'fresh-cart/products',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    public_id: (req, file) => file.fieldname + '-' + Date.now(),
+  },
+});
+
+// Multer instances
+const uploadCategory = multer({ storage: categoryStorage });
+const uploadProduct = multer({ storage: productStorage });
 
 module.exports = { uploadCategory, uploadProduct };
+
