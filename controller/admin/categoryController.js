@@ -19,6 +19,12 @@ async function addCategories(req, res, next) {
         error: 'Category already Exist',
       });
     } else {
+      if (!req.file) {
+        return res.status(400).json({
+          error: 'Category image is required.',
+        });
+      }
+
       const { categoryName, categoryDescription } = req.body;
       const imageUrl = req.file.path; // Store Cloudinary path
 
@@ -34,9 +40,10 @@ async function addCategories(req, res, next) {
         message: 'Category added successfully',
       });
     }
+
   } catch (error) {
-    console.error('Error adding category:', error);
-    next(new AppError('Sorry...Something went wrong', 500));
+    console.error('SERVER ERROR (addCategories):', error);
+    next(new AppError('Internal Server Error while adding category', 500));
   }
 }
 
@@ -141,8 +148,10 @@ async function updateCategory(req, res) {
       .status(200)
       .json({ message: 'Category updated successfully', category });
   } catch (error) {
-    next(new AppError('Sorry...Something went wrong', 500));
+    console.error('SERVER ERROR (updateCategory):', error);
+    next(new AppError('Internal Server Error while updating category', 500));
   }
+
 }
 
 async function categoryDelete(req, res) {
