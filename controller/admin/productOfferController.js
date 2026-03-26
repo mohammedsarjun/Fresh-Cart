@@ -86,7 +86,12 @@ async function renderProductOffersPage(req, res, next) {
 async function fetchVarietyDetail(req, res, next) {
   try {
     const product = await Product.findOne({ _id: req.params.id });
-    const productVariety = product.varietyDetails.filter(
+    
+    // Use helper to sort varieties
+    const { sortProductVarieties } = require('../../helper/productHelper');
+    const sortedProduct = sortProductVarieties(product);
+
+    const productVariety = sortedProduct.varietyDetails.filter(
       (varietyDetail) => varietyDetail.varietyMeasurement != ''
     );
     let productVarietyArr = [];
@@ -95,13 +100,14 @@ async function fetchVarietyDetail(req, res, next) {
     }
 
     res.status(200).json({
-      productVariety: product.variety,
+      productVariety: sortedProduct.variety,
       productMeasurement: productVarietyArr == '' ? null : productVarietyArr,
     });
   } catch (err) {
     next(new AppError('Sorry...Something went wrong', 500));
   }
 }
+
 
 async function addProductOffer(req, res, next) {
   try {
