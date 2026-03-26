@@ -153,11 +153,16 @@ app.use((err, req, res, next) => {
     req.headers['sec-fetch-mode'] === 'cors';
 
   if (isFetchRequest) {
-    res.status(statusCode).json({ statusCode, errorMessage });
+    res.status(statusCode).json({ 
+      statusCode, 
+      errorMessage,
+      error: errorMessage // Added for compatibility with frontend code expecting .error
+    });
   } else {
     res.status(statusCode).render('errorPage', { statusCode, errorMessage });
   }
 });
+
 
 // Webhook endpoint
 app.post('/webhook', express.json(), (req, res) => {

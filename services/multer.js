@@ -4,11 +4,16 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const path = require('path');
 
 // Configure Cloudinary
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  console.error("CRITICAL: Cloudinary environment variables are missing! Cloudinary storage won't work correctly.");
+}
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
 
 // Create storage instance for Categories
 const categoryStorage = new CloudinaryStorage({
