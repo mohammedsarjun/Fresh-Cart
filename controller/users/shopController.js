@@ -8,12 +8,13 @@ const { ObjectId } = require('mongoose').Types;
 const productOffer = require('../../model/productOffers');
 const CategoryOffer = require('../../model/categoryOffer');
 const productReview = require('../../model/productReview');
-const category = require('../../model/category');
+const { sortProductVarieties } = require('../../helper/productHelper');
 const User = require('../../model/userSchema');
 const mongoose = require('mongoose');
 const AppError = require('../../middleware/errorHandling');
 
 async function shopPageRender(req, res, next) {
+
   try {
    
 
@@ -166,7 +167,10 @@ async function shopPageRender(req, res, next) {
     const totalProducts = await Product.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / limit);
 
-    products = products.map((product) => product.toObject());
+    // Sort varieties for all products
+    products = sortProductVarieties(products);
+
+
 
     await Promise.all(
       products.map(async (product) => {
@@ -381,7 +385,14 @@ async function shopSinglePageRender(req, res, next) {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
+    // Sort varieties for single product
+    const sortedProduct = sortProductVarieties(product);
+    product.varietyDetails = sortedProduct.varietyDetails;
+
+
     const productVariety = product.variety;
+
     let varietyArr = [];
     let varietyPrice = 0;
     let varietyDiscount = 0;

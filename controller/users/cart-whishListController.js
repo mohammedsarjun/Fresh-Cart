@@ -10,6 +10,8 @@ const Product = require('../../model/productModel');
 const productOffer = require('../../model/productOffers');
 const CategoryOffer = require('../../model/categoryOffer');
 const AppError = require('../../middleware/errorHandling');
+const { sortProductVarieties } = require('../../helper/productHelper');
+
 //cart
 
 async function cartPageRender(req, res, next) {
@@ -39,6 +41,8 @@ async function cartPageRender(req, res, next) {
     await userCart.save();
     for (let product of userCart.products) {
       productDetail = await Product.findOne({ _id: product.productId });
+      productDetail = sortProductVarieties(productDetail);
+
 
       const offers = await productOffer.find({
         selectProduct: productDetail?._id,
@@ -743,10 +747,12 @@ async function wishlistPageRender(req, res, next) {
     let wishlistObj = [];
 
     for (let i = 0; i < wishlist?.products?.length; i++) {
-      if (wishlist.products[i].variety.varietyName != 'items') {
         let productDetail = await Product.findOne({
           _id: wishlist.products[i].productId,
         });
+        productDetail = sortProductVarieties(productDetail);
+        
+        if (wishlist.products[i].variety.varietyName != 'items') {
         wishlistObj.push({
           ...wishlist.products[i].toObject(),
           productName: productDetail.productName,

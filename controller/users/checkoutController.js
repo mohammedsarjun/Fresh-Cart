@@ -51,7 +51,10 @@ async function checkoutPageRender(req, res, next) {
     // Fetch product details and update the cart.products array
     cart.products = await Promise.all(
       cart.products.map(async (product) => {
-        const productDetail = await Product.findOne({ _id: product.productId });
+        const { sortProductVarieties } = require('../../helper/productHelper');
+        let productDetail = await Product.findOne({ _id: product.productId });
+        productDetail = sortProductVarieties(productDetail);
+
         if (product.selectedVariety.type != 'items') {
           productPrice =
             product?.selectedVariety?.value *
