@@ -1,13 +1,6 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com', // SMTP host
-  port: 587,
-  service: 'gmail', // Use the email provider (e.g., Gmail)
-  auth: {
-    user: process.env.NODE_MAILER_EMAIL, // Your email address
-    pass: process.env.NODE_MAILER_PASSWORD, // Your email password or app password
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-module.exports = transporter;
+module.exports = resend;
+

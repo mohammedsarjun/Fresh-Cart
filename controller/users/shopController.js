@@ -51,30 +51,26 @@ async function shopPageRender(req, res, next) {
      console.log(categoryOffer)
       if (offers.length > 0) {
         for (let offer of offers) {
-          let offerPercentage =
-            offer?.offerPercentage != undefined ? offer?.offerPercentage : 0;
+          let offerPercentage = offer?.offerPercentage != undefined ? offer?.offerPercentage : 0;
           if (
-            (offerPercentage < categoryOffer?.offerPercentage ||
-              offer.isListed == false) &&
-            categoryOffer?.endDate > Date.now() &&
-            categoryOffer?.startDate < Date.now() &&
+            (offerPercentage < (categoryOffer?.offerPercentage ?? 0) || offer.isListed == false) &&
+            (categoryOffer?.endDate ?? 0) > Date.now() &&
+            (categoryOffer?.startDate ?? 0) < Date.now() &&
             categoryOffer?.isListed == true
           ) {
            
             if (offer.selectVariety !== 'items') {
               for (let i = 0; i < product.varietyDetails.length; i++) {
                 if (
-                  product.varietyDetails[i].varietyMeasurement ===
-                  offer.selectedVarietyMeasurement
+                  product.varietyDetails[i].varietyMeasurement === offer.selectedVarietyMeasurement
                 ) {
-                  product.varietyDetails[i].varietyDiscount =
-                    categoryOffer.offerPercentage;
+                  product.varietyDetails[i].varietyDiscount = categoryOffer?.offerPercentage ?? 0;
                   modified = true;
                 }
               }
             } else {
               product.varietyDetails.forEach((variety) => {
-                variety.varietyDiscount = categoryOffer.offerPercentage;
+                variety.varietyDiscount = categoryOffer?.offerPercentage ?? 0;
               });
               modified = true;
             }
@@ -132,7 +128,7 @@ async function shopPageRender(req, res, next) {
         categoryOffer?.isListed == true
       ){
           product.varietyDetails.forEach((varietyDetail) => {
-            varietyDetail.varietyDiscount = categoryOffer.offerPercentage;
+            varietyDetail.varietyDiscount = categoryOffer?.offerPercentage ?? 0;
           });
           modified = true;
         } else {
@@ -162,7 +158,7 @@ async function shopPageRender(req, res, next) {
     let categoryFilterName = [];
     if (categoryFilter) {
       categoryFilterName = await Category.findOne(
-        { _id: categoryFilter.trim() },
+        { _id: categoryFilter?.trim?.() },
         { categoryName: 1 }
       );
     }

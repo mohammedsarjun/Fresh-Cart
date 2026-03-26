@@ -10,7 +10,7 @@ module.exports = async function (req, res, next) {
         next();
       }
     } else {
-      console.log('dahks');
+
       return res.redirect('/auth/signin');
     }
   } catch (err) {
