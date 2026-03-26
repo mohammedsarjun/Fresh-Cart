@@ -5,15 +5,19 @@ const Product = require('../../model/productModel');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const { ObjectId } = require('mongoose').Types;
+const { sortProductVarieties } = require('../../helper/productHelper');
 const AppError = require('../../middleware/errorHandling');
 
 async function homePageRender(req, res, next) {
+
   try {
     let categoryFilter = { isPublished: true };
     let categories = await Category.find(categoryFilter);
     let productFilter = { isListed: true,  isDeleted: false  };
     let products = await Product.find(productFilter).lean();
-    console.log(products)
+
+    // Sort varieties for each product before filtering
+    products = sortProductVarieties(products);
 
     for(let i=0;i<products.length;i++){
      let isListedCategory=await Category.findOne({_id:products[i].categoryId})
@@ -31,6 +35,7 @@ async function homePageRender(req, res, next) {
     next(new AppError('Sorry...Something went wrong', 500));
   }
 }
+
 
 module.exports = {
   homePageRender,

@@ -8,12 +8,13 @@ const { ObjectId } = require('mongoose').Types;
 const productOffer = require('../../model/productOffers');
 const CategoryOffer = require('../../model/categoryOffer');
 const productReview = require('../../model/productReview');
-const category = require('../../model/category');
+const { sortProductVarieties } = require('../../helper/productHelper');
 const User = require('../../model/userSchema');
 const mongoose = require('mongoose');
 const AppError = require('../../middleware/errorHandling');
 
 async function shopPageRender(req, res, next) {
+
   try {
    
 
@@ -164,17 +165,9 @@ async function shopPageRender(req, res, next) {
     const totalProducts = await Product.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / limit);
 
-    products = products.map((product) => {
-      const productObj = product.toObject();
-      if (productObj.varietyDetails && Array.isArray(productObj.varietyDetails)) {
-        productObj.varietyDetails.sort((a, b) => {
-          const valA = parseFloat(a.varietyMeasurement) || 0;
-          const valB = parseFloat(b.varietyMeasurement) || 0;
-          return valA - valB;
-        });
-      }
-      return productObj;
-    });
+    // Sort varieties for all products
+    products = sortProductVarieties(products);
+
 
 
     await Promise.all(
@@ -391,14 +384,10 @@ async function shopSinglePageRender(req, res, next) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Sort varieties by measurement
-    if (product.varietyDetails && Array.isArray(product.varietyDetails)) {
-      product.varietyDetails.sort((a, b) => {
-        const valA = parseFloat(a.varietyMeasurement) || 0;
-        const valB = parseFloat(b.varietyMeasurement) || 0;
-        return valA - valB;
-      });
-    }
+    // Sort varieties for single product
+    const sortedProduct = sortProductVarieties(product);
+    product.varietyDetails = sortedProduct.varietyDetails;
+
 
     const productVariety = product.variety;
 
