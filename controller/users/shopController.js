@@ -164,7 +164,18 @@ async function shopPageRender(req, res, next) {
     const totalProducts = await Product.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / limit);
 
-    products = products.map((product) => product.toObject());
+    products = products.map((product) => {
+      const productObj = product.toObject();
+      if (productObj.varietyDetails && Array.isArray(productObj.varietyDetails)) {
+        productObj.varietyDetails.sort((a, b) => {
+          const valA = parseFloat(a.varietyMeasurement) || 0;
+          const valB = parseFloat(b.varietyMeasurement) || 0;
+          return valA - valB;
+        });
+      }
+      return productObj;
+    });
+
 
     await Promise.all(
       products.map(async (product) => {
@@ -379,7 +390,18 @@ async function shopSinglePageRender(req, res, next) {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
+    // Sort varieties by measurement
+    if (product.varietyDetails && Array.isArray(product.varietyDetails)) {
+      product.varietyDetails.sort((a, b) => {
+        const valA = parseFloat(a.varietyMeasurement) || 0;
+        const valB = parseFloat(b.varietyMeasurement) || 0;
+        return valA - valB;
+      });
+    }
+
     const productVariety = product.variety;
+
     let varietyArr = [];
     let varietyPrice = 0;
     let varietyDiscount = 0;

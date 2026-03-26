@@ -96,18 +96,30 @@ async function renderProductDetails(req, res, next) {
     // Fetch categories
     const categories = await Category.find();
 
-    // Use Promise.all() to attach category names properly
+    // Use Promise.all() to attach category names properly and sort varietyDetails
     const updatedProducts = await Promise.all(
       products.map(async (product) => {
         const category = await Category.findOne({
           _id: new ObjectId(product.categoryId),
         });
+
+        // Convert to plain object and sort varietyDetails
+        const productObj = product.toObject();
+        if (productObj.varietyDetails && Array.isArray(productObj.varietyDetails)) {
+          productObj.varietyDetails.sort((a, b) => {
+            const valA = parseFloat(a.varietyMeasurement) || 0;
+            const valB = parseFloat(b.varietyMeasurement) || 0;
+            return valA - valB;
+          });
+        }
+
         return {
-          ...product.toObject(),
+          ...productObj,
           categoryName: category ? category.categoryName : 'Unknown',
         };
       })
     );
+
 
     console.log(updatedProducts)
 
@@ -283,10 +295,20 @@ async function renderSingleProductDetails(req, res, next) {
       _id: new ObjectId(productDetail.categoryId),
     });
 
+    const productObj = productDetail.toObject();
+    if (productObj.varietyDetails && Array.isArray(productObj.varietyDetails)) {
+      productObj.varietyDetails.sort((a, b) => {
+        const valA = parseFloat(a.varietyMeasurement) || 0;
+        const valB = parseFloat(b.varietyMeasurement) || 0;
+        return valA - valB;
+      });
+    }
+
     const updatedProducts = {
-      ...productDetail.toObject(),
+      ...productObj,
       categoryName: category ? category.categoryName : 'Unknown',
     };
+
 
     const categories = await Category.find();
 console.log(updatedProducts)
