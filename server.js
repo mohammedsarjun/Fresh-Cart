@@ -16,7 +16,7 @@ const adminAuthRouter = require('./routes/admin/authRouter');
 const adminHomeRouter = require('./routes/admin/homeRouter');
 const razorpayRouter = require('./routes/users/razorPay');
 
-const PORT = process.env.DB_PORT;
+const PORT = process.env.PORT;
 
 //initializing the App
 const app = express();

@@ -306,6 +306,7 @@ console.log(req.body.productName )
     const existingProduct = await Product.findOne({ productName: req.body.productName });
     console.log(existingProduct)
     if (existingProduct) {
+      console.log("hi da pumda")
       return res.status(200).json({
         error: 'Product already exists',
       });
