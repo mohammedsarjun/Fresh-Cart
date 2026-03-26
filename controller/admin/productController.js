@@ -291,11 +291,13 @@ async function renderSingleProductDetails(req, res, next) {
     });
 
     const sortedProduct = sortProductVarieties(productDetail);
+    const productObj = typeof sortedProduct.toObject === 'function' ? sortedProduct.toObject() : sortedProduct;
 
     const updatedProducts = {
-      ...sortedProduct,
+      ...productObj,
       categoryName: category ? category.categoryName : 'Unknown',
     };
+
 
 
 

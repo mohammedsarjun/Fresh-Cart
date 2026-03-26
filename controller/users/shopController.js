@@ -408,10 +408,11 @@ async function shopSinglePageRender(req, res, next) {
             )
           : [];
 
-        varietyPrice = perMl * product.varietyDetails[0].varietyMeasurement;
+        varietyPrice = Math.round(perMl * product.varietyDetails[0].varietyMeasurement);
         varietyDiscount = product.varietyDetails[0].varietyDiscount;
-        varietyTotalPrice =
-          varietyPrice - (varietyPrice * varietyDiscount) / 100;
+        varietyTotalPrice = Math.round(
+          varietyPrice - (varietyPrice * varietyDiscount) / 100
+        );
         varietyStock = product.varietyDetails[0].varietyStock;
       } else {
         console.log('jio');
@@ -422,12 +423,13 @@ async function shopSinglePageRender(req, res, next) {
             )
           : [];
 
-        varietyPrice = perMl * req.query.ml;
+        varietyPrice = Math.round(perMl * req.query.ml);
         varietyDiscount =
           product.varietyDetails[varietyDetailIndex].varietyDiscount;
         varietyStock = product.varietyDetails[varietyDetailIndex].varietyStock;
-        varietyTotalPrice =
-          varietyPrice - (varietyPrice * varietyDiscount) / 100;
+        varietyTotalPrice = Math.round(
+          varietyPrice - (varietyPrice * varietyDiscount) / 100
+        );
       }
     }
 
@@ -438,11 +440,12 @@ async function shopSinglePageRender(req, res, next) {
               (productPrice) => productPrice != null
             )
           : [];
-        varietyPrice = perGram * product.varietyDetails[0].varietyMeasurement;
+        varietyPrice = Math.round(perGram * product.varietyDetails[0].varietyMeasurement);
         varietyDiscount = product.varietyDetails[0].varietyDiscount;
         varietyStock = product.varietyDetails[0].varietyStock;
-        varietyTotalPrice =
-          varietyPrice - (varietyPrice * varietyDiscount) / 100;
+        varietyTotalPrice = Math.round(
+          varietyPrice - (varietyPrice * varietyDiscount) / 100
+        );
       } else {
         const varietyDetailIndex = varietyArr.indexOf(req.query.grams);
         const perGrams = product.productPrice
@@ -451,12 +454,13 @@ async function shopSinglePageRender(req, res, next) {
             )
           : [];
 
-        varietyPrice = perGrams * req.query.grams;
+        varietyPrice = Math.round(perGrams * req.query.grams);
         varietyDiscount =
           product.varietyDetails[varietyDetailIndex].varietyDiscount;
         varietyStock = product.varietyDetails[varietyDetailIndex].varietyStock;
-        varietyTotalPrice =
-          varietyPrice - (varietyPrice * varietyDiscount) / 100;
+        varietyTotalPrice = Math.round(
+          varietyPrice - (varietyPrice * varietyDiscount) / 100
+        );
       }
     }
 
@@ -464,10 +468,10 @@ async function shopSinglePageRender(req, res, next) {
       varietyPrice = product.varietyDetails[0].varietyPrice;
       varietyStock = product.varietyDetails[0].itemStock;
       varietyDiscount = product.varietyDetails[0].varietyDiscount;
-      varietyTotalPrice = (
+      varietyTotalPrice = Math.round(
         varietyPrice -
         (varietyPrice * varietyDiscount) / 100
-      ).toFixed(1);
+      );
     }
     console.log(varietyDiscount)
 

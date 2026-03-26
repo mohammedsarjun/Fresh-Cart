@@ -376,7 +376,7 @@ async function cartPageRender(req, res, next) {
             Object.entries(productDetail?.productPrice || {}).filter(
               ([_, value]) => value != null
             )[0][1];
-          discountPrice = (
+          discountPrice = Math.round(
             productPrice -
             (productPrice *
               productDetail.varietyDetails.filter(
@@ -385,7 +385,7 @@ async function cartPageRender(req, res, next) {
                   product.selectedVariety.value
               )[0].varietyDiscount) /
               100
-          ).toFixed(1);
+          );
           let varietyStock = productDetail.varietyDetails.filter(
             (varietyDetail) =>
               varietyDetail.varietyMeasurement == product.selectedVariety.value
@@ -394,10 +394,10 @@ async function cartPageRender(req, res, next) {
           isStock = varietyStock > 0 ? true : false;
         } else {
           productPrice = productDetail.varietyDetails[0].varietyPrice;
-          discountPrice = (
+          discountPrice = Math.round(
             productPrice *
             (1 - productDetail.varietyDetails[0].varietyDiscount / 100)
-          ).toFixed(1);
+          );
           isStock =
             productDetail.varietyDetails[0].itemStock > 0 ? true : false;
         }

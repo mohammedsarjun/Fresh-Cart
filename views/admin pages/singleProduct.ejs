@@ -397,11 +397,12 @@
                             <div class="detail price-detail">
                                 <span>Price</span>
                                 <p>
-                                  ₹<%= (Object.values(updatedProducts?.productPrice)
+                                  ₹<%= Math.round((Object.values(updatedProducts?.productPrice)
                                     .filter(product => product != null)
                                     .reduce((acc, price) => acc + price, 0) * (varietyDetail?.varietyMeasurement || 1)) * 
-                                    (1 - (varietyDetail?.varietyDiscount || 0) / 100) %>
+                                    (1 - (varietyDetail?.varietyDiscount || 0) / 100)) %>
                                 </p>
+
                                 
                             </div>
                             <div class="detail price-detail">
@@ -430,7 +431,7 @@
                           <div class="detail price-detail">
                               <span>Price</span>
                               <p>
-                                ₹<%= varietyDetail?.varietyPrice%>
+                                ₹<%= Math.round(varietyDetail?.varietyPrice) %>
                               </p>   
                           </div>
                       </div>

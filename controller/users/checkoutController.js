@@ -61,7 +61,7 @@ async function checkoutPageRender(req, res, next) {
             Object.entries(productDetail?.productPrice || {}).filter(
               ([_, value]) => value != null
             )[0][1];
-          discountPrice = (
+          discountPrice = Math.round(
             productPrice -
             (productPrice *
               productDetail.varietyDetails.filter(
@@ -70,13 +70,13 @@ async function checkoutPageRender(req, res, next) {
                   product.selectedVariety.value
               )[0].varietyDiscount) /
               100
-          ).toFixed(1);
+          );
         } else {
           productPrice = productDetail.varietyDetails[0].varietyPrice;
-          discountPrice = (
+          discountPrice = Math.round(
             productPrice *
             (1 - productDetail.varietyDetails[0].varietyDiscount / 100)
-          ).toFixed(1);
+          );
         }
         return {
           ...product,
